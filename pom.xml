@@ -6,7 +6,7 @@
     <artifactId>asteroids.serviceloader</artifactId>
     <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>AsteroidsServiceLoader</name>
+    <name>G5-semesterprojekt</name>
     <repositories>
     </repositories>
 
