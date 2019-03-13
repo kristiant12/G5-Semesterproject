@@ -33,6 +33,16 @@ public class MovingPart
         this.rotationSpeed = rotationSpeed;
     }
 
+    public float getDx() {
+        return dx;
+    }
+
+    public float getDy() {
+        return dy;
+    }
+    
+    
+
     public void setDeceleration(float deceleration) {
         this.deceleration = deceleration;
     }
@@ -43,6 +53,11 @@ public class MovingPart
 
     public void setMaxSpeed(float maxSpeed) {
         this.maxSpeed = maxSpeed;
+    }
+    
+    public void setSpeed(float speed) {
+        this.acceleration = speed;
+        this.maxSpeed = speed;
     }
 
     public void setRotationSpeed(float rotationSpeed) {
