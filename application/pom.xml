@@ -11,7 +11,7 @@
     <artifactId>AsteroidsNetbeansModules-app</artifactId>
     <packaging>nbm-application</packaging>
 
-    <name>AsteroidsNetbeansModules-app</name>
+    <name>semesterprojekt-app</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -65,6 +65,16 @@
             <version>${project.version}</version>
         </dependency>
 -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>Core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>Asteroid</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
