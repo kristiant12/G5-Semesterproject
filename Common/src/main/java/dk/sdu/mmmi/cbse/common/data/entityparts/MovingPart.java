@@ -126,7 +126,7 @@ public class MovingPart
         else if (y < 0) {
             y = gameData.getDisplayHeight();
         }
-
+        
         positionPart.setX(x);
         positionPart.setY(y);
 

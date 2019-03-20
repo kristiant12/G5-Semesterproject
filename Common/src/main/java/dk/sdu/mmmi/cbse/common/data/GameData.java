@@ -6,13 +6,15 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameData {
-
     private float delta;
     private int displayWidth;
     private int displayHeight;
     private final GameKeys keys = new GameKeys();
     private List<Event> events = new CopyOnWriteArrayList<>();
 
+    
+   
+    
     public void addEvent(Event e) {
         events.add(e);
     }

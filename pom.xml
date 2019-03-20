@@ -69,6 +69,7 @@
         <module>SilentUpdate</module>
         <module>Common</module>
         <module>Map</module>
+        <module>../SB4-KOM-F19/AsteroidsNetbeansModules/Player</module>
     </modules>
 
     <properties>

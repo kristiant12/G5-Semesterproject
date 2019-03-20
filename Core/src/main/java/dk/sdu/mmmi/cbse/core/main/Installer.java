@@ -6,7 +6,7 @@ import org.openide.modules.ModuleInstall;
 
 public class Installer extends ModuleInstall {    
 
-    private static GameEngine g;
+    private GameEngine g;
 
     @Override
     public void restored() {
@@ -17,8 +17,8 @@ public class Installer extends ModuleInstall {
         cfg.title = "Asteroids";
         cfg.width = 800;
         cfg.height = 600;
-        cfg.useGL30 = true;
-        cfg.resizable = false;
+        cfg.useGL30 = false;
+        cfg.resizable = true;
 
         new LwjglApplication(g, cfg);
     }
