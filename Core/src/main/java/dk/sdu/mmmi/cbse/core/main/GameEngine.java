@@ -40,7 +40,7 @@ public class GameEngine implements ApplicationListener {
 
     @Override
     public void create() {
-        tileMap = new TmxMapLoader().load("assets\\images\\gameMap.tmx");
+        tileMap = new TmxMapLoader().load("assets\\images\\Map.tmx");
         tmr = new OrthogonalTiledMapRenderer(tileMap);
 
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
