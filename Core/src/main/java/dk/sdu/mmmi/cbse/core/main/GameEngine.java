@@ -8,13 +8,17 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector3;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
+import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 import dk.sdu.mmmi.cbse.core.managers.GameInputProcessor;
+import dk.sdu.mmmi.cbse.playersystem.Player;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -68,8 +72,18 @@ public class GameEngine implements ApplicationListener {
         tmr.setView(cam);
         tmr.render();
         
-       
-         
+        for(Entity player: world.getEntities(Player.class)){
+             PositionPart positionPart = player.getPart(PositionPart.class);
+             cam.position.set(positionPart.getX(),positionPart.getY(),0);
+           MovingPart m = player.getPart(MovingPart.class);
+           
+//           Vector3 postion = this.cam.position;
+//            postion.x += (positionPart.getX()-postion.x)*2 * gameData.getDelta();
+//            postion.y += (positionPart.getY()-postion.y)*2* gameData.getDelta();
+             cam.update();
+
+        }
+
         gameData.setDelta(Gdx.graphics.getDeltaTime());
         update();
         draw();
