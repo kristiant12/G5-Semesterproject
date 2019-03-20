@@ -20,7 +20,7 @@ import static java.lang.Math.sqrt;
  */
 public class MovingPart
         implements EntityPart {
-
+    private boolean a,b,c,d;
     private float dx, dy;
     private float deceleration, acceleration;
     private float maxSpeed, rotationSpeed;
@@ -32,6 +32,23 @@ public class MovingPart
         this.maxSpeed = maxSpeed;
         this.rotationSpeed = rotationSpeed;
     }
+
+    public boolean isA() {
+        return a;
+    }
+
+    public boolean isB() {
+        return b;
+    }
+
+    public boolean isC() {
+        return c;
+    }
+
+    public boolean isD() {
+        return d;
+    }
+      
 
     public float getDx() {
         return dx;
@@ -112,20 +129,20 @@ public class MovingPart
 
         // set position
         x += dx * dt;
-//        if (x > gameData.getDisplayWidth()) {
-//            x = 0;
-//        }
-//        else if (x < 0) {
-//            x = gameData.getDisplayWidth();
-//        }
+        if (x > gameData.getDisplayWidth()) {
+            a = true;
+        }
+        else if (x < 0) {
+            b = true;
+        }
 
         y += dy * dt;
-//        if (y > gameData.getDisplayHeight()) {
-//            y = 0;
-//        }
-//        else if (y < 0) {
-//            y = gameData.getDisplayHeight();
-//        }
+        if (y > gameData.getDisplayHeight()) {
+            c = true;
+        }
+        else if (y < 0) {
+            d = true;
+        }
         
         positionPart.setX(x);
         positionPart.setY(y);

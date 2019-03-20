@@ -26,13 +26,11 @@ import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
 
-
 public class GameEngine implements ApplicationListener {
 
-    
     private TiledMap tileMap;
     private OrthogonalTiledMapRenderer tmr;
-    private static OrthographicCamera cam = new OrthographicCamera(); 
+    private static OrthographicCamera cam = new OrthographicCamera();
     private ShapeRenderer sr;
     private final Lookup lookup = Lookup.getDefault();
     private final GameData gameData = new GameData();
@@ -42,8 +40,8 @@ public class GameEngine implements ApplicationListener {
 
     @Override
     public void create() {
-            tileMap = new TmxMapLoader().load("assets\\images\\gameMap.tmx");
-            tmr = new OrthogonalTiledMapRenderer(tileMap);
+        tileMap = new TmxMapLoader().load("assets\\images\\gameMap.tmx");
+        tmr = new OrthogonalTiledMapRenderer(tileMap);
 
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
@@ -51,7 +49,7 @@ public class GameEngine implements ApplicationListener {
         cam.update();
 
         sr = new ShapeRenderer();
-        
+
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
         result = lookup.lookupResult(IGamePluginService.class);
@@ -71,26 +69,36 @@ public class GameEngine implements ApplicationListener {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         tmr.setView(cam);
         tmr.render();
-        
-        for(Entity player: world.getEntities(Player.class)){
-             PositionPart positionPart = player.getPart(PositionPart.class);
-             cam.position.set(positionPart.getX(),positionPart.getY(),0);
-           MovingPart m = player.getPart(MovingPart.class);
-           
+        update();
+        draw();
+        for (Entity player : world.getEntities(Player.class)) {
+            PositionPart positionPart = player.getPart(PositionPart.class);
+//            Vector3 test = new Vector3();
+//            test.x = positionPart.getX();
+//            test.y = positionPart.getY();
+//            test.z = 0;
+             
+            sr.setProjectionMatrix(cam.combined);
+            cam.position.x = positionPart.getX();
+            cam.position.y = positionPart.getY();
+            
+           // cam.position.lerp(test, 1f);
+            //MovingPart m = player.getPart(MovingPart.class);
+
 //           Vector3 postion = this.cam.position;
 //            postion.x += (positionPart.getX()-postion.x)*2 * gameData.getDelta();
 //            postion.y += (positionPart.getY()-postion.y)*2* gameData.getDelta();
-             cam.update();
+                cam.update();
 
         }
-
+       
+        
+        //tmr.setView(cam);
+        
         gameData.setDelta(Gdx.graphics.getDeltaTime());
-        update();
-        draw();
-       gameData.getKeys().update();
-       //renderer.setView(cam);
 
-
+        gameData.getKeys().update();
+        //renderer.setView(cam);
 
     }
 
