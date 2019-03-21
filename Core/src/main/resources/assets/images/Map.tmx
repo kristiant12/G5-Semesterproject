@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="27" nextobjectid="1">
- <tileset firstgid="1" source="../Documents/Terrain.tsx"/>
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="27" nextobjectid="1">
+ <tileset firstgid="1" source="Terrain.tsx"/>
  <tileset firstgid="257" name="Asets" tilewidth="32" tileheight="32" tilecount="112" columns="14">
-  <image source="../Pictures/TIlesets/Asets.png" width="448" height="256"/>
+  <image source="Asets.png" width="448" height="256"/>
  </tileset>
  <tileset firstgid="369" name="base_out_atlas" tilewidth="32" tileheight="32" tilecount="1024" columns="32">
-  <image source="../Pictures/TIlesets/base_out_atlas.png" width="1024" height="1024"/>
+  <image source="base_out_atlas.png" width="1024" height="1024"/>
   <tile id="361">
    <properties>
     <property name="blocked" value=""/>

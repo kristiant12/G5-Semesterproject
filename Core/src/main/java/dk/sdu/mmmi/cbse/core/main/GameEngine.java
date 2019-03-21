@@ -5,7 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
@@ -42,7 +44,7 @@ public class GameEngine implements ApplicationListener {
     public void create() {
         tileMap = new TmxMapLoader().load("assets\\images\\Map.tmx");
         tmr = new OrthogonalTiledMapRenderer(tileMap);
-
+        
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
         cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
@@ -77,10 +79,10 @@ public class GameEngine implements ApplicationListener {
 //            test.x = positionPart.getX();
 //            test.y = positionPart.getY();
 //            test.z = 0;
-             
-            sr.setProjectionMatrix(cam.combined);
             cam.position.x = positionPart.getX();
             cam.position.y = positionPart.getY();
+            sr.setProjectionMatrix(cam.combined);
+            
             
            // cam.position.lerp(test, 1f);
             //MovingPart m = player.getPart(MovingPart.class);
