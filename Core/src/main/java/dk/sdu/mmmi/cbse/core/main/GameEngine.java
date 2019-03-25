@@ -43,7 +43,8 @@ public class GameEngine implements ApplicationListener {
     private World world = new World();
     private List<IGamePluginService> gamePlugins = new CopyOnWriteArrayList<>();
     private Lookup.Result<IGamePluginService> result;
-    //private SpriteBatch ab = new SpriteBatch();
+   private SpriteBatch ab; 
+   private Texture Testplayer;
 
     @Override
     public void create() {
@@ -56,6 +57,8 @@ public class GameEngine implements ApplicationListener {
         cam.update();
 
         sr = new ShapeRenderer();
+        ab = new SpriteBatch();
+        Testplayer = new Texture("assets\\images\\player.png");
 
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
@@ -140,11 +143,11 @@ public class GameEngine implements ApplicationListener {
 
     private void drawTextur() {
         for (Entity entity : world.getEntities(TexturPlayer.class)) {
-            SpriteBatch ab = new SpriteBatch();
+           // SpriteBatch ab = new SpriteBatch();
             ab.setProjectionMatrix(cam.combined);
             ab.begin();
             PositionPart positionPart = entity.getPart(PositionPart.class);
-            ab.draw(new Texture("assets\\images\\player.png"),positionPart.getX(),positionPart.getY(),127,107,255,215,0.25f,0.25f, (float) Math.toDegrees(positionPart.getRadians()),0,0,255,215,false,false);
+            ab.draw(Testplayer,positionPart.getX(),positionPart.getY(),127,107,255,215,0.25f,0.25f, (float) Math.toDegrees(positionPart.getRadians()),0,0,255,215,false,false);
            
           //  ab.draw(new Texture("assets\\images\\player1.png"),positionPart.getX() , positionPart.getY());
             ab.end();
