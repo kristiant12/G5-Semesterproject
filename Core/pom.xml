@@ -93,12 +93,6 @@
             <artifactId>Player</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>dk.sdu.mmmi.cbse</groupId>
-            <artifactId>TexturPlayer</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
     </dependencies>
     <properties>
         <libGDX.version>1.5.0</libGDX.version>
@@ -111,6 +105,9 @@
                 <extensions>true</extensions>
                 <configuration>
                     <useOSGiDependencies>true</useOSGiDependencies>
+                    <publicPackages>
+                        <publicPackage>dk.sdu.mmmi.cbse.core.managers</publicPackage>
+                    </publicPackages>
                 </configuration>
             </plugin>
             <plugin>

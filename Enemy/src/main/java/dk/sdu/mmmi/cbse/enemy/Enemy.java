@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dk.sdu.mmmi.cbse.texturplayer;
+package dk.sdu.mmmi.cbse.enemy;
 
 import dk.sdu.mmmi.cbse.common.data.Entity;
-import dk.sdu.mmmi.cbse.common.services.IPlayer;
+import dk.sdu.mmmi.cbse.common.services.IEnemy;
 
 /**
  *
  * @author tfvg-pc11
  */
-public class TexturPlayer extends Entity implements IPlayer {
+public class Enemy extends Entity implements IEnemy{
     
 }

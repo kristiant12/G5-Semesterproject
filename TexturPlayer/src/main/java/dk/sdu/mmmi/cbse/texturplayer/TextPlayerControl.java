@@ -5,10 +5,7 @@
  */
 package dk.sdu.mmmi.cbse.texturplayer;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.GameKeys;
@@ -17,6 +14,7 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
+import dk.sdu.mmmi.cbse.common.services.IPlayer;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
 
@@ -29,7 +27,7 @@ import org.openide.util.lookup.ServiceProviders;
     ,
     @ServiceProvider(service = IGamePluginService.class)})
 
-public class TextPlayerControl extends Sprite implements IEntityProcessingService, IGamePluginService {
+public class TextPlayerControl  implements IEntityProcessingService, IGamePluginService{
 
     private Entity player;
 

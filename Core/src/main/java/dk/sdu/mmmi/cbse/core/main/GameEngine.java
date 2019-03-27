@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapProperties;
@@ -18,13 +19,15 @@ import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
+import dk.sdu.mmmi.cbse.common.services.IEnemy;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
+import dk.sdu.mmmi.cbse.common.services.IPlayer;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
+import dk.sdu.mmmi.cbse.core.managers.Assets;
 import dk.sdu.mmmi.cbse.core.managers.GameInputProcessor;
 import dk.sdu.mmmi.cbse.playersystem.Player;
-import dk.sdu.mmmi.cbse.texturplayer.TextPlayerControl;
-import dk.sdu.mmmi.cbse.texturplayer.TexturPlayer;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -43,8 +46,9 @@ public class GameEngine implements ApplicationListener {
     private World world = new World();
     private List<IGamePluginService> gamePlugins = new CopyOnWriteArrayList<>();
     private Lookup.Result<IGamePluginService> result;
-   private SpriteBatch ab; 
-   private Texture Testplayer;
+    private SpriteBatch ab;
+    private Texture Testplayer;
+    private Texture Enemy;
 
     @Override
     public void create() {
@@ -58,8 +62,9 @@ public class GameEngine implements ApplicationListener {
 
         sr = new ShapeRenderer();
         ab = new SpriteBatch();
-        Testplayer = new Texture("assets\\images\\player.png");
-
+        System.out.println(Assets.getInstance().getManger().getAssetNames());
+        Testplayer = (Assets.getInstance().getManger().get("assets/images/player5.png", Texture.class));
+        Enemy = (Assets.getInstance().getManger().get("assets/images/Enemy.png", Texture.class));
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
         result = lookup.lookupResult(IGamePluginService.class);
@@ -80,8 +85,9 @@ public class GameEngine implements ApplicationListener {
         tmr.setView(cam);
         tmr.render();
         update();
-      //  draw();
-        drawTextur();
+        //  draw();
+        drawTextur();  
+        drawEnemyTextur();
         for (Entity player : world.getEntities(Player.class)) {
             PositionPart positionPart = player.getPart(PositionPart.class);
 //            Vector3 test = new Vector3();
@@ -142,17 +148,31 @@ public class GameEngine implements ApplicationListener {
     }
 
     private void drawTextur() {
-        for (Entity entity : world.getEntities(TexturPlayer.class)) {
-           // SpriteBatch ab = new SpriteBatch();
-            ab.setProjectionMatrix(cam.combined);
-            ab.begin();
-            PositionPart positionPart = entity.getPart(PositionPart.class);
-            ab.draw(Testplayer,positionPart.getX(),positionPart.getY(),127,107,255,215,0.25f,0.25f, (float) Math.toDegrees(positionPart.getRadians()),0,0,255,215,false,false);
-           
-          //  ab.draw(new Texture("assets\\images\\player1.png"),positionPart.getX() , positionPart.getY());
-            ab.end();
+        for (Entity entity : world.getEntities()) {
+            if (entity instanceof IPlayer) {
+                ab.setProjectionMatrix(cam.combined);
+                ab.begin();
+                PositionPart positionPart = entity.getPart(PositionPart.class);
+                ab.draw(Testplayer, positionPart.getX(), positionPart.getY(), 32.5f, 27.5f, 65, 55, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 65, 55, false, false);
+
+                //  ab.draw(new Texture("assets\\images\\player1.png"),positionPart.getX() , positionPart.getY());
+                ab.end();
+            }
+            // SpriteBatch ab = new SpriteBatch();
+
         }
 
+    }
+
+    private void drawEnemyTextur() {
+        for (Entity entity : world.getEntities()) {
+            if (entity instanceof IEnemy) {
+                ab.begin();
+                PositionPart positionPart = entity.getPart(PositionPart.class);
+                ab.draw(Enemy, positionPart.getX(), positionPart.getY(), 159f, 147f, 318, 294, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 318, 294, false, false);
+                ab.end();
+            }
+        }
     }
 
     @Override
