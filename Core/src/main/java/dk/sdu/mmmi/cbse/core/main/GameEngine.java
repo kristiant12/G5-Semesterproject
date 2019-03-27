@@ -26,7 +26,6 @@ import dk.sdu.mmmi.cbse.common.services.IPlayer;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 import dk.sdu.mmmi.cbse.core.managers.Assets;
 import dk.sdu.mmmi.cbse.core.managers.GameInputProcessor;
-import dk.sdu.mmmi.cbse.playersystem.Player;
 
 import java.util.Collection;
 import java.util.List;
@@ -86,27 +85,12 @@ public class GameEngine implements ApplicationListener {
         tmr.render();
         update();
         //  draw();
-        drawTextur();  
+        drawTextur();
         drawEnemyTextur();
-        for (Entity player : world.getEntities(Player.class)) {
-            PositionPart positionPart = player.getPart(PositionPart.class);
-//            Vector3 test = new Vector3();
-//            test.x = positionPart.getX();
-//            test.y = positionPart.getY();
-//            test.z = 0;
-            cam.position.x = positionPart.getX();
-            cam.position.y = positionPart.getY();
-            sr.setProjectionMatrix(cam.combined);
-
-            // cam.position.lerp(test, 1f);
-            //MovingPart m = player.getPart(MovingPart.class);
-//           Vector3 postion = this.cam.position;
-//            postion.x += (positionPart.getX()-postion.x)*2 * gameData.getDelta();
-//            postion.y += (positionPart.getY()-postion.y)*2* gameData.getDelta();
-            cam.update();
-
-        }
-
+     
+        
+    
+        
         //tmr.setView(cam);
         gameData.setDelta(Gdx.graphics.getDeltaTime());
 
@@ -154,9 +138,12 @@ public class GameEngine implements ApplicationListener {
                 ab.begin();
                 PositionPart positionPart = entity.getPart(PositionPart.class);
                 ab.draw(Testplayer, positionPart.getX(), positionPart.getY(), 32.5f, 27.5f, 65, 55, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 65, 55, false, false);
-
+                cam.position.x = positionPart.getX();
+                cam.position.y = positionPart.getY();
+                sr.setProjectionMatrix(cam.combined);
                 //  ab.draw(new Texture("assets\\images\\player1.png"),positionPart.getX() , positionPart.getY());
                 ab.end();
+                cam.update();
             }
             // SpriteBatch ab = new SpriteBatch();
 
