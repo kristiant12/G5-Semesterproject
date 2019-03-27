@@ -9,6 +9,8 @@ public class GameData {
     private float delta;
     private int displayWidth;
     private int displayHeight;
+    private int mouseX;
+    private int mouseY;
     private final GameKeys keys = new GameKeys();
     private List<Event> events = new CopyOnWriteArrayList<>();
 
@@ -54,6 +56,24 @@ public class GameData {
     public int getDisplayHeight() {
         return displayHeight;
     }
+
+    public int getMouseX() {
+        return mouseX;
+    }
+
+    public void setMouseX(int mouseX) {
+        this.mouseX = mouseX;
+    }
+
+    public int getMouseY() {
+        return mouseY;
+    }
+
+    public void setMouseY(int mouseY) {
+        this.mouseY = mouseY;
+    }
+    
+    
 
     public <E extends Event> List<Event> getEvents(Class<E> type, String sourceID) {
         List<Event> r = new ArrayList();

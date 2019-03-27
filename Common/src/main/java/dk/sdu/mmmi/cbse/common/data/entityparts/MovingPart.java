@@ -5,6 +5,7 @@
  */
 package dk.sdu.mmmi.cbse.common.data.entityparts;
 
+import com.badlogic.gdx.Gdx;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import static dk.sdu.mmmi.cbse.common.data.GameKeys.LEFT;
@@ -81,6 +82,11 @@ public class MovingPart implements EntityPart {
         float y = positionPart.getY();
         float radians = positionPart.getRadians();
         float dt = gameData.getDelta();
+        
+        System.out.println("PPX = " + x);
+        System.out.println("PPY = " + y);
+        System.out.println("Pre radians = " + radians);
+        System.out.println("");
 
         // turning
         if (left) {
@@ -90,11 +96,15 @@ public class MovingPart implements EntityPart {
         if (right) {
             radians -= rotationSpeed * dt;
         }
+        
+        
 
         // accelerating            
         if (up) {
             dx += cos(radians) * acceleration * dt;
             dy += sin(radians) * acceleration * dt;
+        } else {
+            deceleration = 200;
         }
 
         // deccelerating
@@ -107,6 +117,8 @@ public class MovingPart implements EntityPart {
             dx = (dx / vec) * maxSpeed;
             dy = (dy / vec) * maxSpeed;
         }
+        
+        deceleration = 10;
 
         // set position
         x += dx * dt;
@@ -127,7 +139,8 @@ public class MovingPart implements EntityPart {
         
         positionPart.setX(x);
         positionPart.setY(y);
-
+        
+        System.out.println("Post radians = " + radians);
         positionPart.setRadians(radians);
     }
 

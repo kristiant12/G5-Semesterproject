@@ -92,7 +92,10 @@ public class GameEngine implements ApplicationListener {
 
         gameData.getKeys().update();
         //renderer.setView(cam);
-
+//        System.out.println("X = " + (Gdx.input.getY() - Gdx.graphics.getHeight()/2));
+//        System.out.println("Y = " + (Gdx.input.getX() - Gdx.graphics.getWidth()/2));
+        System.out.println("");
+        gameData.setMouseX(Gdx.input.getX());
     }
 
     private void update() {
