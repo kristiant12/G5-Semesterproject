@@ -63,7 +63,7 @@ public class GameEngine implements ApplicationListener {
         ab = new SpriteBatch();
         System.out.println(Assets.getInstance().getManger().getAssetNames());
         Testplayer = (Assets.getInstance().getManger().get("assets/images/player5.png", Texture.class));
-        Enemy = (Assets.getInstance().getManger().get("assets/images/Enemy.png", Texture.class));
+        Enemy = (Assets.getInstance().getManger().get("assets/images/Enemies.png", Texture.class));
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
         result = lookup.lookupResult(IGamePluginService.class);
@@ -156,7 +156,7 @@ public class GameEngine implements ApplicationListener {
             if (entity instanceof IEnemy) {
                 ab.begin();
                 PositionPart positionPart = entity.getPart(PositionPart.class);
-                ab.draw(Enemy, positionPart.getX(), positionPart.getY(), 159f, 147f, 318, 294, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 318, 294, false, false);
+                ab.draw(Enemy, positionPart.getX(), positionPart.getY(), 40f, 37f, 80, 74, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 80, 74, false, false);
                 ab.end();
             }
         }
