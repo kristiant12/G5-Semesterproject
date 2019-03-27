@@ -86,11 +86,7 @@ public class GameEngine implements ApplicationListener {
         update();
         //  draw();
         drawTextur();
-        drawEnemyTextur();
-     
-        
-    
-        
+
         //tmr.setView(cam);
         gameData.setDelta(Gdx.graphics.getDeltaTime());
 
@@ -144,22 +140,16 @@ public class GameEngine implements ApplicationListener {
                 //  ab.draw(new Texture("assets\\images\\player1.png"),positionPart.getX() , positionPart.getY());
                 ab.end();
                 cam.update();
-            }
-            // SpriteBatch ab = new SpriteBatch();
-
-        }
-
-    }
-
-    private void drawEnemyTextur() {
-        for (Entity entity : world.getEntities()) {
-            if (entity instanceof IEnemy) {
+            } else if (entity instanceof IEnemy) {
                 ab.begin();
                 PositionPart positionPart = entity.getPart(PositionPart.class);
                 ab.draw(Enemy, positionPart.getX(), positionPart.getY(), 40f, 37f, 80, 74, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 80, 74, false, false);
                 ab.end();
             }
+            // SpriteBatch ab = new SpriteBatch();
+
         }
+
     }
 
     @Override
