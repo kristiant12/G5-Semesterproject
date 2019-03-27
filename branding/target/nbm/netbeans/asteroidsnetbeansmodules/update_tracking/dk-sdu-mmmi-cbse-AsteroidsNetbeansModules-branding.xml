@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><module codename="dk.sdu.mmmi.cbse.AsteroidsNetbeansModules.branding">
-    <module_version install_time="1553603293683" last="true" origin="installer" specification_version="1.0">
+    <module_version install_time="1553683279746" last="true" origin="installer" specification_version="1.0">
         <file crc="3878683297" name="config/Modules/dk-sdu-mmmi-cbse-AsteroidsNetbeansModules-branding.xml"/>
-        <file crc="1427726294" name="modules/dk-sdu-mmmi-cbse-AsteroidsNetbeansModules-branding.jar"/>
+        <file crc="2388512238" name="modules/dk-sdu-mmmi-cbse-AsteroidsNetbeansModules-branding.jar"/>
     </module_version>
 </module>

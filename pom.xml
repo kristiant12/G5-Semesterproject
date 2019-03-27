@@ -68,7 +68,6 @@
         <module>Core</module>
         <module>SilentUpdate</module>
         <module>Common</module>
-        <module>Player</module>
         <module>TexturPlayer</module>
         <module>MapCollision</module>
         <module>Enemy</module>
