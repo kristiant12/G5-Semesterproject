@@ -5,19 +5,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector3;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
-import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IEnemy;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
@@ -137,7 +132,7 @@ public class GameEngine implements ApplicationListener {
                 ab.setProjectionMatrix(cam.combined);
                 ab.begin();
                 PositionPart positionPart = entity.getPart(PositionPart.class);
-                ab.draw(Testplayer, positionPart.getX(), positionPart.getY(), 32.5f, 27.5f, 65, 55, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 65, 55, false, false);
+                ab.draw(Testplayer, positionPart.getX() - 32, positionPart.getY() - 27, 32.5f, 27.5f, 65, 55, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 65, 55, false, false);
                 cam.position.x = positionPart.getX();
                 cam.position.y = positionPart.getY();
                 sr.setProjectionMatrix(cam.combined);
@@ -147,7 +142,7 @@ public class GameEngine implements ApplicationListener {
             } else if (entity instanceof IEnemy) {
                 ab.begin();
                 PositionPart positionPart = entity.getPart(PositionPart.class);
-                ab.draw(Enemy, positionPart.getX(), positionPart.getY(), 40f, 37f, 80, 74, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 80, 74, false, false);
+                ab.draw(Enemy, positionPart.getX() - 40, positionPart.getY() - 37, 40f, 37f, 80, 74, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 80, 74, false, false);
                 ab.end();
             }
             // SpriteBatch ab = new SpriteBatch();
