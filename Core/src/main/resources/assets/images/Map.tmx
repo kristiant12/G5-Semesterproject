@@ -183,12 +183,12 @@
   </tile>
   <tile id="634">
    <properties>
-    <property name="Blocked" value=""/>
+    <property name="blocked" value=""/>
    </properties>
   </tile>
   <tile id="637">
    <properties>
-    <property name="Blocked" value=""/>
+    <property name="blocked" value=""/>
    </properties>
   </tile>
  </tileset>
