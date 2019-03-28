@@ -83,10 +83,8 @@ public class MovingPart implements EntityPart {
         float radians = positionPart.getRadians();
         float dt = gameData.getDelta();
         
-        System.out.println("PPX = " + x);
-        System.out.println("PPY = " + y);
-        System.out.println("Pre radians = " + radians);
-        System.out.println("");
+        float radians2 = (float) Math.atan2(gameData.getMouseY(), gameData.getMouseX());
+        System.out.println("Radians2 " + radians2);
 
         // turning
         if (left) {
@@ -97,6 +95,7 @@ public class MovingPart implements EntityPart {
             radians -= rotationSpeed * dt;
         }
         
+        radians = radians2;
         
 
         // accelerating            
