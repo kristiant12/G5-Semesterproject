@@ -26,6 +26,7 @@ import org.openide.util.lookup.ServiceProviders;
 public class EnemyControlSystem implements IEntityProcessingService,IGamePluginService{
 
     private Entity enemy;
+    private Entity runner;
     
     @Override
     public void process(GameData gameData, World world) {
@@ -41,14 +42,16 @@ public class EnemyControlSystem implements IEntityProcessingService,IGamePluginS
     @Override
     public void start(GameData gameData, World world) {
         enemy = createEnemy(gameData, world);
+        runner = createRunnerEnemy(gameData, world);
         world.addEntity(enemy);
+        world.addEntity(runner);
     }
     
     private Entity createEnemy(GameData gameData,World world){
         
         float speed = 50;
         
-        Entity enemyEntity = new Enemy();
+        Entity enemyEntity = new Enemy(EnemyType.NORMAL);
         enemyEntity.add(new EnemyMove(speed, world));
         enemyEntity.add(new PositionPart(100, 100,3));
         
@@ -56,6 +59,19 @@ public class EnemyControlSystem implements IEntityProcessingService,IGamePluginS
         
         
     }
+    
+    
+    private Entity createRunnerEnemy(GameData gameData, World world){
+        
+        float speed = 275;
+        
+        Entity runner = new Enemy(EnemyType.RUNNERS);
+        runner.add(new EnemyMove(speed, world));
+        runner.add(new PositionPart(100, 100, 3));
+        
+        return runner;
+    }
+    
     
     @Override
     public void stop(GameData gameData, World world) {

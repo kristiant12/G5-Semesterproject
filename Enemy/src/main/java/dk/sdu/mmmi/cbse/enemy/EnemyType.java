@@ -5,24 +5,24 @@
  */
 package dk.sdu.mmmi.cbse.enemy;
 
-import dk.sdu.mmmi.cbse.common.data.Entity;
-import dk.sdu.mmmi.cbse.common.services.IEnemy;
-
 /**
  *
- * @author tfvg-pc11
+ * @author nitra
  */
-public class Enemy extends Entity implements IEnemy{
+public enum EnemyType {
+    BOSS("BOSS"),
+    NORMAL("NORMAL"),
+    RUNNERS("RUNNERS"),
+    FATTIES("FATTIES");
     
-    private EnemyType type;
+    private String type;
     
-    public Enemy(EnemyType type){
+    private EnemyType(String type){
         this.type = type;
     }
     
-    
     public String getType(){
-        return type.getType();
+        return type;
     }
-    
+
 }

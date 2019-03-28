@@ -51,6 +51,7 @@ public class GameEngine implements ApplicationListener {
     private SpriteBatch ab;
     private Texture Testplayer;
     private Texture Enemy;
+    private Texture Runner;
     // prøver Map collision
     private ArrayList<TiledMapTileLayer> mapList;
     private String blockedKey = "blocked";
@@ -72,6 +73,7 @@ public class GameEngine implements ApplicationListener {
         System.out.println(Assets.getInstance().getManger().getAssetNames());
         Testplayer = (Assets.getInstance().getManger().get("assets/images/player5.png", Texture.class));
         Enemy = (Assets.getInstance().getManger().get("assets/images/Enemies.png", Texture.class));
+        Runner = (Assets.getInstance().getManger().get("assets/images/Enemies.png", Texture.class));
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
         result = lookup.lookupResult(IGamePluginService.class);
@@ -154,6 +156,7 @@ public class GameEngine implements ApplicationListener {
                 ab.begin();
                 PositionPart positionPart = entity.getPart(PositionPart.class);
                 ab.draw(Enemy, positionPart.getX(), positionPart.getY(), 40f, 37f, 80, 74, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 80, 74, false, false);
+                ab.draw(Runner, positionPart.getX(), positionPart.getY(), 40f, 37f, 80, 74, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 80, 74, false, false);
                 ab.end();
             }
             // SpriteBatch ab = new SpriteBatch();
