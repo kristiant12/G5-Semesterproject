@@ -3,6 +3,7 @@ package dk.sdu.mmmi.cbse.common.data;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import dk.sdu.mmmi.cbse.common.data.entityparts.EntityPart;
+import dk.sdu.mmmi.cbse.common.data.entityparts.EntityType;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
@@ -16,11 +17,17 @@ public class Entity extends Sprite implements Serializable {
     private float[] shapeY = new float[4];
     private float radius;
     private Map<Class, EntityPart> parts;
+    private EntityType entityType;
 //    private Texture texture;
     
     
-    public Entity() {
+    public Entity(EntityType entityType) {
         parts = new ConcurrentHashMap<>();
+        this.entityType = entityType;
+    }
+    
+    public EntityType getEntityType(){
+        return entityType;
     }
     
     public void add(EntityPart part) {

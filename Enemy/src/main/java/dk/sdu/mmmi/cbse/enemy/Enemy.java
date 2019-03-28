@@ -6,6 +6,7 @@
 package dk.sdu.mmmi.cbse.enemy;
 
 import dk.sdu.mmmi.cbse.common.data.Entity;
+import dk.sdu.mmmi.cbse.common.data.entityparts.EntityType;
 import dk.sdu.mmmi.cbse.common.services.IEnemy;
 
 /**
@@ -17,6 +18,7 @@ public class Enemy extends Entity implements IEnemy{
     private EnemyType type;
     
     public Enemy(EnemyType type){
+        super(EntityType.ENEMY);
         this.type = type;
     }
     
