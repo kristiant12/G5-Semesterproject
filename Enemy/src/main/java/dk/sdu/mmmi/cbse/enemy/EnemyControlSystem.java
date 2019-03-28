@@ -46,10 +46,10 @@ public class EnemyControlSystem implements IEntityProcessingService, IGamePlugin
         runner = createRunnerEnemy(gameData, world);
         fatty = createFattyEnemy(gameData, world);
         boss = createBossEnemy(gameData, world);
-//        world.addEntity(enemy);
+        world.addEntity(enemy);
         world.addEntity(runner);
-//        world.addEntity(fatty);
-//        world.addEntity(boss);
+        world.addEntity(fatty);
+        world.addEntity(boss);
     }
 
     private Entity createNormalEnemy(GameData gameData, World world) {
