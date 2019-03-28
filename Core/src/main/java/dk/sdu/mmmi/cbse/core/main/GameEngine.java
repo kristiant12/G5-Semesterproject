@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
@@ -26,6 +27,7 @@ import dk.sdu.mmmi.cbse.common.services.IPlayer;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 import dk.sdu.mmmi.cbse.core.managers.Assets;
 import dk.sdu.mmmi.cbse.core.managers.GameInputProcessor;
+import java.util.ArrayList;
 
 import java.util.Collection;
 import java.util.List;
@@ -35,7 +37,8 @@ import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
 
 public class GameEngine implements ApplicationListener {
-
+    private int tingRamtPåX = 0;
+    private int tingRampPåY = 0;
     private TiledMap tileMap;
     private OrthogonalTiledMapRenderer tmr;
     private static OrthographicCamera cam = new OrthographicCamera();
@@ -48,6 +51,10 @@ public class GameEngine implements ApplicationListener {
     private SpriteBatch ab;
     private Texture Testplayer;
     private Texture Enemy;
+    // prøver Map collision
+    private ArrayList<TiledMapTileLayer> mapList;
+    private String blockedKey = "blocked";
+    private Vector2 velocity;
 
     @Override
     public void create() {
@@ -61,6 +68,7 @@ public class GameEngine implements ApplicationListener {
 
         sr = new ShapeRenderer();
         ab = new SpriteBatch();
+        this.mapList = new ArrayList<>();
         System.out.println(Assets.getInstance().getManger().getAssetNames());
         Testplayer = (Assets.getInstance().getManger().get("assets/images/player5.png", Texture.class));
         Enemy = (Assets.getInstance().getManger().get("assets/images/Enemies.png", Texture.class));
@@ -69,7 +77,7 @@ public class GameEngine implements ApplicationListener {
         result = lookup.lookupResult(IGamePluginService.class);
         result.addLookupListener(lookupListener);
         result.allItems();
-
+        getLayer();
         for (IGamePluginService plugin : result.allInstances()) {
             plugin.start(gameData, world);
             gamePlugins.add(plugin);
@@ -86,6 +94,8 @@ public class GameEngine implements ApplicationListener {
         update();
         //  draw();
         drawTextur();
+        mapCollision(world);
+
 
         //tmr.setView(cam);
         gameData.setDelta(Gdx.graphics.getDeltaTime());
@@ -151,6 +161,11 @@ public class GameEngine implements ApplicationListener {
         }
 
     }
+    public void getLayer(){
+        for (int i = 0; i < 18; i++) {
+            this.mapList.add((TiledMapTileLayer) tileMap.getLayers().get(i));
+        }
+    }
 
     @Override
     public void resize(int width, int height) {
@@ -158,6 +173,89 @@ public class GameEngine implements ApplicationListener {
         cam.viewportHeight = height;
         cam.update();
     }
+    
+    public void mapCollision(World world){
+       for(Entity entity : world.getEntities()){
+           PositionPart positionPart = entity.getPart(PositionPart.class);
+           
+       float oldX = positionPart.getX(),oldY = positionPart.getY(),tiledWith = mapList.get(0).getTileWidth(),tiledHeight = mapList.get(0).getTileHeight();
+       boolean collisoinX = false;
+       boolean CollisionY = false;
+       // move on x
+       
+       if(positionPart.getX() < 0){
+           collisoinX = isCellBlocked(positionPart.getX(),positionPart.getY()+entity.getHeight());
+           
+           if(!collisoinX){
+           collisoinX = isCellBlocked(positionPart.getX(), positionPart.getY() + entity.getHeight()/2);
+           }
+           if(!collisoinX){
+           collisoinX = isCellBlocked(positionPart.getX(), positionPart.getY());
+           }
+       }else if(positionPart.getX() > 0){
+         collisoinX = isCellBlocked(positionPart.getX()+entity.getWidth(), positionPart.getY()+entity.getHeight());
+       
+         if(!collisoinX){
+             collisoinX = isCellBlocked(positionPart.getX()+ entity.getWidth(),positionPart.getY()+ entity.getHeight()/2);
+         }
+         if(!collisoinX){
+            collisoinX = isCellBlocked(positionPart.getX() + entity.getWidth(), positionPart.getY());
+         }
+       }
+       
+       if(collisoinX){
+          // positionPart.setX(positionPart.getX());
+//           setX(oldX);
+//           velocity.x = 0;
+        System.out.println("det virker"+ tingRamtPåX++);
+       }
+       
+    //   setY(getY()+ velocity.y * delta);
+       if(positionPart.getY() < 0){
+           
+             CollisionY = isCellBlocked(positionPart.getX(), positionPart.getY());
+             
+            if(!CollisionY){
+             CollisionY = isCellBlocked(positionPart.getX() +entity.getWidth()/2, positionPart.getY());
+            }
+            if(!CollisionY){
+            CollisionY = isCellBlocked(positionPart.getX()+ entity.getWidth(),positionPart.getY());
+            }
+             
+       }else if(positionPart.getY() > 0){
+                CollisionY = isCellBlocked(positionPart.getX(), positionPart.getY()+entity.getHeight());
+                
+                if(!CollisionY){
+                    CollisionY = isCellBlocked(positionPart.getX()+entity.getWidth()/2, positionPart.getY()+entity.getHeight());
+                }
+                
+                if(!CollisionY){
+                 CollisionY = isCellBlocked(positionPart.getX()+entity.getWidth(), positionPart.getY()+entity.getHeight());
+
+                }
+
+            
+       }
+       if(CollisionY){
+           System.out.println("pls virk"+ tingRampPåY++);
+          // positionPart.setY(positionPart.getY());
+//                setY(oldY);
+//                velocity.y = 0;
+            }
+       }
+    }
+    
+     private boolean isCellBlocked(float x, float y){
+         for (int i = 0; i < mapList.size(); i++) {
+             TiledMapTileLayer.Cell cell = mapList.get(i).getCell((int)(x/mapList.get(i).getTileWidth()), (int)(y/mapList.get(i).getTileHeight()));
+             if(cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey(blockedKey)){
+                 return true;
+             }
+
+         }
+               
+        return false;
+   }
 
     @Override
     public void pause() {
