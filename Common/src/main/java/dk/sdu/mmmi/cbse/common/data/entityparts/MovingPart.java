@@ -5,14 +5,8 @@
  */
 package dk.sdu.mmmi.cbse.common.data.entityparts;
 
-import com.badlogic.gdx.Gdx;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
-import static dk.sdu.mmmi.cbse.common.data.GameKeys.LEFT;
-import static dk.sdu.mmmi.cbse.common.data.GameKeys.RIGHT;
-import static dk.sdu.mmmi.cbse.common.data.GameKeys.UP;
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
 import static java.lang.Math.sqrt;
 
 /**
@@ -21,12 +15,13 @@ import static java.lang.Math.sqrt;
  */
 public class MovingPart implements EntityPart {
     private float dx, dy;
-    private float deceleration, acceleration;
+    private float vDeceleration, hDeceleration, acceleration;
     private float maxSpeed, rotationSpeed;
-    private boolean left, right, up;
+    private boolean left, right, up, down;
 
     public MovingPart(float deceleration, float acceleration, float maxSpeed, float rotationSpeed) {
-        this.deceleration = deceleration;
+        this.vDeceleration = deceleration;
+        this.hDeceleration = deceleration;
         this.acceleration = acceleration;
         this.maxSpeed = maxSpeed;
         this.rotationSpeed = rotationSpeed;
@@ -43,7 +38,8 @@ public class MovingPart implements EntityPart {
     
 
     public void setDeceleration(float deceleration) {
-        this.deceleration = deceleration;
+        this.vDeceleration = deceleration;
+        this.hDeceleration = deceleration;
     }
 
     public void setAcceleration(float acceleration) {
@@ -74,50 +70,57 @@ public class MovingPart implements EntityPart {
     public void setUp(boolean up) {
         this.up = up;
     }
+    
+    public void setDown(boolean down) {
+        this.down = down;
+    }
 
     @Override
     public void process(GameData gameData, Entity entity) {
         PositionPart positionPart = entity.getPart(PositionPart.class);
         float x = positionPart.getX();
         float y = positionPart.getY();
-        float radians = positionPart.getRadians();
+        float radians = (float) Math.atan2(gameData.getMouseY(), gameData.getMouseX());
         float dt = gameData.getDelta();
         
-        float radians2 = (float) Math.atan2(gameData.getMouseY(), gameData.getMouseX());
-        System.out.println("Radians2 " + radians2);
-
         // turning
         if (left) {
-            radians += rotationSpeed * dt;
+            //radians += rotationSpeed * dt;
+            dx -= acceleration * dt;
+        } else if (right) {
+            //radians -= rotationSpeed * dt;
+            dx += acceleration * dt;
+            System.out.println(!right);
+        } else {
+            hDeceleration = 200;
         }
-
-        if (right) {
-            radians -= rotationSpeed * dt;
-        }
-        
-        radians = radians2;
-        
 
         // accelerating            
         if (up) {
-            dx += cos(radians) * acceleration * dt;
-            dy += sin(radians) * acceleration * dt;
+//            dx += cos(radians) * acceleration * dt;
+//            dy += sin(radians) * acceleration * dt;
+            dy += acceleration * dt;
+        } else if (down) {
+            dy -= acceleration * dt;
         } else {
-            deceleration = 200;
+            vDeceleration = 200;
         }
+
+        
+        
 
         // deccelerating
         float vec = (float) sqrt(dx * dx + dy * dy);
         if (vec > 0) {
-            dx -= (dx / vec) * deceleration * dt;
-            dy -= (dy / vec) * deceleration * dt;
+            dx -= (dx / vec) * hDeceleration * dt;
+            dy -= (dy / vec) * vDeceleration * dt;
         }
         if (vec > maxSpeed) {
             dx = (dx / vec) * maxSpeed;
             dy = (dy / vec) * maxSpeed;
         }
         
-        deceleration = 10;
+        setDeceleration(10);
 
         // set position
         x += dx * dt;
@@ -138,8 +141,6 @@ public class MovingPart implements EntityPart {
         
         positionPart.setX(x);
         positionPart.setY(y);
-        
-        System.out.println("Post radians = " + radians);
         positionPart.setRadians(radians);
     }
 

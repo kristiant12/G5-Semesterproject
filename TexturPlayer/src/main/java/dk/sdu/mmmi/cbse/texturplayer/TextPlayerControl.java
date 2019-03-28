@@ -45,6 +45,7 @@ public class TextPlayerControl  implements IEntityProcessingService, IGamePlugin
             movingPart.setLeft(gameData.getKeys().isDown(GameKeys.LEFT));
             movingPart.setRight(gameData.getKeys().isDown(GameKeys.RIGHT));
             movingPart.setUp(gameData.getKeys().isDown(GameKeys.UP));
+            movingPart.setDown(gameData.getKeys().isDown(GameKeys.DOWN));
       
                
             movingPart.process(gameData, player);
