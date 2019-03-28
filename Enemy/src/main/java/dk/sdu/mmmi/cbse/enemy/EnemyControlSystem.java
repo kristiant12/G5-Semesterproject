@@ -18,22 +18,23 @@ import org.openide.util.lookup.ServiceProviders;
  *
  * @author tfvg-pc11
  */
-
 @ServiceProviders(value = {
     @ServiceProvider(service = IEntityProcessingService.class)
     ,
     @ServiceProvider(service = IGamePluginService.class)})
-public class EnemyControlSystem implements IEntityProcessingService,IGamePluginService{
+public class EnemyControlSystem implements IEntityProcessingService, IGamePluginService {
 
     private Entity enemy;
     private Entity runner;
-    
+    private Entity fatty;
+    private Entity boss;
+
     @Override
     public void process(GameData gameData, World world) {
-          for (Entity player : world.getEntities(Enemy.class)) {
+        for (Entity player : world.getEntities(Enemy.class)) {
             PositionPart positionPart = player.getPart(PositionPart.class);
             EnemyMove move = player.getPart(EnemyMove.class);
-            
+
             move.process(gameData, player);
             positionPart.process(gameData, player);
         }
@@ -41,41 +42,62 @@ public class EnemyControlSystem implements IEntityProcessingService,IGamePluginS
 
     @Override
     public void start(GameData gameData, World world) {
-        enemy = createEnemy(gameData, world);
+        enemy = createNormalEnemy(gameData, world);
         runner = createRunnerEnemy(gameData, world);
+        fatty = createFattyEnemy(gameData, world);
+        boss = createBossEnemy(gameData, world);
         world.addEntity(enemy);
         world.addEntity(runner);
+        world.addEntity(fatty);
+        world.addEntity(boss);
     }
-    
-    private Entity createEnemy(GameData gameData,World world){
-        
+
+    private Entity createNormalEnemy(GameData gameData, World world) {
+
         float speed = 50;
-        
+
         Entity enemyEntity = new Enemy(EnemyType.NORMAL);
         enemyEntity.add(new EnemyMove(speed, world));
-        enemyEntity.add(new PositionPart(100, 100,3));
-        
+        enemyEntity.add(new PositionPart(100, 100, 3));
+
         return enemyEntity;
-        
-        
+
     }
-    
-    
-    private Entity createRunnerEnemy(GameData gameData, World world){
-        
+
+    private Entity createRunnerEnemy(GameData gameData, World world) {
+
         float speed = 275;
-        
+
         Entity runner = new Enemy(EnemyType.RUNNERS);
         runner.add(new EnemyMove(speed, world));
         runner.add(new PositionPart(100, 100, 3));
-        
+
         return runner;
     }
-    
-    
+    private Entity createFattyEnemy(GameData gameData, World world) {
+
+        float speed = 35;
+
+        Entity runner = new Enemy(EnemyType.FATTIES);
+        runner.add(new EnemyMove(speed, world));
+        runner.add(new PositionPart(100, 100, 3));
+
+        return runner;
+    }
+    private Entity createBossEnemy(GameData gameData, World world) {
+
+        float speed = 25;
+
+        Entity runner = new Enemy(EnemyType.BOSS);
+        runner.add(new EnemyMove(speed, world));
+        runner.add(new PositionPart(100, 100, 3));
+
+        return runner;
+    }
+
     @Override
     public void stop(GameData gameData, World world) {
         world.removeEntity(enemy);
     }
-    
+
 }
