@@ -56,7 +56,8 @@ public class EnemyControlSystem implements IEntityProcessingService, IGamePlugin
 
         float speed = 50;
 
-        Entity enemyEntity = new Enemy(EnemyType.NORMAL);
+        Entity enemyEntity = new Enemy();
+        enemyEntity.setType(1);
         enemyEntity.add(new EnemyMove(speed, world));
         enemyEntity.add(new PositionPart(100, 100, 3));
 
@@ -66,33 +67,36 @@ public class EnemyControlSystem implements IEntityProcessingService, IGamePlugin
 
     private Entity createRunnerEnemy(GameData gameData, World world) {
 
-        float speed = 275;
+        float speed = 130;
 
-        Entity runner = new Enemy(EnemyType.RUNNERS);
-        runner.add(new EnemyMove(speed, world));
-        runner.add(new PositionPart(100, 100, 3));
+        Entity enemyEntity = new Enemy();
+        enemyEntity.setType(2);
+        enemyEntity.add(new EnemyMove(speed, world));
+        enemyEntity.add(new PositionPart(100, 100, 3));
 
-        return runner;
+        return enemyEntity;
     }
     private Entity createFattyEnemy(GameData gameData, World world) {
 
         float speed = 35;
 
-        Entity runner = new Enemy(EnemyType.FATTIES);
-        runner.add(new EnemyMove(speed, world));
-        runner.add(new PositionPart(100, 100, 3));
+        Entity enemyEntity = new Enemy();
+        enemyEntity.setType(3);
+        enemyEntity.add(new EnemyMove(speed, world));
+        enemyEntity.add(new PositionPart(100, 100, 3));
 
-        return runner;
+        return enemyEntity;
     }
     private Entity createBossEnemy(GameData gameData, World world) {
 
         float speed = 25;
 
-        Entity runner = new Enemy(EnemyType.BOSS);
-        runner.add(new EnemyMove(speed, world));
-        runner.add(new PositionPart(100, 100, 3));
+        Entity enemyEntity = new Enemy();
+        enemyEntity.setType(4);
+        enemyEntity.add(new EnemyMove(speed, world));
+        enemyEntity.add(new PositionPart(100, 100, 3));
 
-        return runner;
+        return enemyEntity;
     }
 
     @Override

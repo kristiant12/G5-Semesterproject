@@ -15,6 +15,7 @@ public class Entity extends Sprite implements Serializable {
     private float[] shapeX = new float[4];
     private float[] shapeY = new float[4];
     private float radius;
+    private int type;
     private Map<Class, EntityPart> parts;
 //    private Texture texture;
     
@@ -61,6 +62,15 @@ public class Entity extends Sprite implements Serializable {
 
     public void setShapeY(float[] shapeY) {
         this.shapeY = shapeY;
+    }
+    
+    public void setType(int type){
+        this.type = type;
+    }
+    
+    
+    public int getType(){
+        return type;
     }
     
 //    public void setTexture(Texture texture){

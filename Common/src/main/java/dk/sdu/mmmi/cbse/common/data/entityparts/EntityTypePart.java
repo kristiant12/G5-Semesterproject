@@ -12,7 +12,7 @@ import dk.sdu.mmmi.cbse.common.data.GameData;
  *
  * @author patri
  */
-public enum EntityTypePart implements EntityPart {
+public enum EntityTypePart  {
     PLAYER("PLAYER"),
     BOSS("BOSS"),
     NORMAL("NORMAL"),
@@ -30,10 +30,7 @@ public enum EntityTypePart implements EntityPart {
     }
  
 
-    @Override
-    public void process(GameData gameData, Entity entity) {
-         
-    }
+  
 
    
     
