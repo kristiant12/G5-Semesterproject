@@ -30,6 +30,7 @@ public class Assets {
     }
 
     public void load() {
+
         assetManager.load("assets\\images\\player.png", Texture.class);
         assetManager.load("assets\\images\\player5.png", Texture.class);
         assetManager.load("assets\\images\\Boss.png", Texture.class);
