@@ -31,7 +31,7 @@ public class MapCollision implements IMap{
     @Override
     public void process(GameData gameData, World world, ArrayList<TiledMapTileLayer> map) {
         mapList = map;
-        System.out.println("test");
+ //       System.out.println("test");
         mapCollision(world);
         
     }
@@ -78,7 +78,7 @@ public class MapCollision implements IMap{
           // positionPart.setX(positionPart.getX());
 //           setX(oldX);
 //           velocity.x = 0;
-        System.out.println("det virker");
+    //    System.out.println("det virker");
        }
        
     //   setY(getY()+ velocity.y * delta);
@@ -108,7 +108,7 @@ public class MapCollision implements IMap{
             
        }
        if(CollisionY){
-           System.out.println("pls virk");
+     //      System.out.println("pls virk");
           // positionPart.setY(positionPart.getY());
 //                setY(oldY);
 //                velocity.y = 0;
