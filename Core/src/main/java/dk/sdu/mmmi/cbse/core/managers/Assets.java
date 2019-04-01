@@ -30,11 +30,15 @@ public class Assets {
     }
 
     public void load() {
-//        assetManager.load("assets\\images\\player.png", Texture.class);
-//        assetManager.load("assets\\images\\player5.png", Texture.class);
-//        assetManager.load("assets\\images\\Enemy.png", Texture.class);
-//        assetManager.load("assets\\images\\Enemies.png", Texture.class);
 
+        assetManager.load("assets\\images\\player.png", Texture.class);
+        assetManager.load("assets\\images\\player5.png", Texture.class);
+        assetManager.load("assets\\images\\Boss.png", Texture.class);
+        assetManager.load("assets\\images\\Enemies.png", Texture.class);
+        assetManager.load("assets\\images\\Runner.png", Texture.class); 
+        assetManager.load("assets\\images\\Fatties.png", Texture.class);
+        
+        
         assetManager.finishLoading();
     }
 

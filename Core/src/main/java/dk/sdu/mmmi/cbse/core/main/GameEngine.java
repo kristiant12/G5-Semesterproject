@@ -38,6 +38,7 @@ import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
 
 public class GameEngine implements ApplicationListener {
+
     private int tingRamtPåX = 0;
     private int tingRampPåY = 0;
     private TiledMap tileMap;
@@ -53,6 +54,8 @@ public class GameEngine implements ApplicationListener {
     private Texture Testplayer;
     private Texture Enemy;
     private Texture Runner;
+    private Texture Fatties;
+    private Texture Boss;
     // prøver Map collision
     private ArrayList<TiledMapTileLayer> mapList;
     private String blockedKey = "blocked";
@@ -72,9 +75,12 @@ public class GameEngine implements ApplicationListener {
         ab = new SpriteBatch();
        
         System.out.println(Assets.getInstance().getManger().getAssetNames());
-//        Testplayer = (Assets.getInstance().getManger().get("assets/images/player5.png", Texture.class));
-//        Enemy = (Assets.getInstance().getManger().get("assets/images/Enemies.png", Texture.class));
-//        Runner = (Assets.getInstance().getManger().get("assets/images/Enemies.png", Texture.class));
+
+        Testplayer = (Assets.getInstance().getManger().get("assets/images/player5.png", Texture.class));
+        Enemy = (Assets.getInstance().getManger().get("assets/images/Enemies.png", Texture.class));
+        Runner = (Assets.getInstance().getManger().get("assets/images/Runner.png", Texture.class));
+        Fatties = (Assets.getInstance().getManger().get("assets/images/Fatties.png", Texture.class));
+        Boss = (Assets.getInstance().getManger().get("assets/images/Boss.png", Texture.class));
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
         result = lookup.lookupResult(IGamePluginService.class);
@@ -102,7 +108,6 @@ public class GameEngine implements ApplicationListener {
         //  draw();
        // drawTextur();
     //    mapCollision(world);
-
 
         //tmr.setView(cam);
         
@@ -160,18 +165,38 @@ public class GameEngine implements ApplicationListener {
                 ab.end();
                 cam.update();
             } else if (entity instanceof IEnemy) {
-                ab.begin();
-                PositionPart positionPart = entity.getPart(PositionPart.class);
-                ab.draw(Enemy, positionPart.getX(), positionPart.getY(), 40f, 37f, 80, 74, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 80, 74, false, false);
-                ab.draw(Runner, positionPart.getX(), positionPart.getY(), 40f, 37f, 80, 74, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 80, 74, false, false);
-                ab.end();
+                if (entity.getType() == 1) {
+                    ab.begin();
+                    PositionPart positionPart = entity.getPart(PositionPart.class);
+                    ab.draw(Enemy, positionPart.getX(), positionPart.getY(), 40f, 37f, 80, 74, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 80, 74, false, false);
+                    ab.end();
+                }
+                else if (entity.getType()== 2){
+                    ab.begin();
+                    PositionPart positionPart = entity.getPart(PositionPart.class);
+                    ab.draw(Runner, positionPart.getX(), positionPart.getY(), 24f, 22f, 48, 44, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 48, 44, false, false);
+                    ab.end();
+                }
+                else if (entity.getType()== 3){
+                    ab.begin();
+                    PositionPart positionPart = entity.getPart(PositionPart.class);
+                    ab.draw(Fatties, positionPart.getX(), positionPart.getY(), 55f, 51f, 111, 103, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 111, 103, false, false);
+                    ab.end();
+                }
+                 else if (entity.getType()== 4){
+                    ab.begin();
+                    PositionPart positionPart = entity.getPart(PositionPart.class);
+                    ab.draw(Boss, positionPart.getX(), positionPart.getY(), 159f, 147f, 318, 294, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 318, 294, false, false);
+                    ab.end();
+                }
             }
             // SpriteBatch ab = new SpriteBatch();
 
         }
 
     }
-    public void getLayer(){
+
+    public void getLayer() {
         for (int i = 0; i < 18; i++) {
             this.mapList.add((TiledMapTileLayer) tileMap.getLayers().get(i));
         }
@@ -183,89 +208,7 @@ public class GameEngine implements ApplicationListener {
         cam.viewportHeight = height;
         cam.update();
     }
-    
-//    public void mapCollision(World world){
-//       for(Entity entity : world.getEntities()){
-//           PositionPart positionPart = entity.getPart(PositionPart.class);
-//           
-//       float oldX = positionPart.getX(),oldY = positionPart.getY(),tiledWith = mapList.get(0).getTileWidth(),tiledHeight = mapList.get(0).getTileHeight();
-//       boolean collisoinX = false;
-//       boolean CollisionY = false;
-//       // move on x
-//       
-//       if(positionPart.getX() < 0){
-//           collisoinX = isCellBlocked(positionPart.getX(),positionPart.getY()+entity.getHeight());
-//           
-//           if(!collisoinX){
-//           collisoinX = isCellBlocked(positionPart.getX(), positionPart.getY() + entity.getHeight()/2);
-//           }
-//           if(!collisoinX){
-//           collisoinX = isCellBlocked(positionPart.getX(), positionPart.getY());
-//           }
-//       }else if(positionPart.getX() > 0){
-//         collisoinX = isCellBlocked(positionPart.getX()+entity.getWidth(), positionPart.getY()+entity.getHeight());
-//       
-//         if(!collisoinX){
-//             collisoinX = isCellBlocked(positionPart.getX()+ entity.getWidth(),positionPart.getY()+ entity.getHeight()/2);
-//         }
-//         if(!collisoinX){
-//            collisoinX = isCellBlocked(positionPart.getX() + entity.getWidth(), positionPart.getY());
-//         }
-//       }
-       
-//       if(collisoinX){
-//          // positionPart.setX(positionPart.getX());
-////           setX(oldX);
-////           velocity.x = 0;
-//        System.out.println("det virker"+ tingRamtPåX++);
-//       }
-//       
-//    //   setY(getY()+ velocity.y * delta);
-//       if(positionPart.getY() < 0){
-//           
-//             CollisionY = isCellBlocked(positionPart.getX(), positionPart.getY());
-//             
-//            if(!CollisionY){
-//             CollisionY = isCellBlocked(positionPart.getX() +entity.getWidth()/2, positionPart.getY());
-//            }
-//            if(!CollisionY){
-//            CollisionY = isCellBlocked(positionPart.getX()+ entity.getWidth(),positionPart.getY());
-//            }
-//             
-//       }else if(positionPart.getY() > 0){
-//                CollisionY = isCellBlocked(positionPart.getX(), positionPart.getY()+entity.getHeight());
-//                
-//                if(!CollisionY){
-//                    CollisionY = isCellBlocked(positionPart.getX()+entity.getWidth()/2, positionPart.getY()+entity.getHeight());
-//                }
-//                
-//                if(!CollisionY){
-//                 CollisionY = isCellBlocked(positionPart.getX()+entity.getWidth(), positionPart.getY()+entity.getHeight());
-//
-//                }
-//
-//            
-//       }
-//       if(CollisionY){
-//           System.out.println("pls virk"+ tingRampPåY++);
-//          // positionPart.setY(positionPart.getY());
-////                setY(oldY);
-////                velocity.y = 0;
-//            }
-//       }
-//    }
-//    
-//     private boolean isCellBlocked(float x, float y){
-//         for (int i = 0; i < mapList.size(); i++) {
-//             TiledMapTileLayer.Cell cell = mapList.get(i).getCell((int)(x/mapList.get(i).getTileWidth()), (int)(y/mapList.get(i).getTileHeight()));
-//             if(cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey(blockedKey)){
-//                 return true;
-//             }
-//
-//         }
-//               
-//        return false;
-//   }
+
 
     @Override
     public void pause() {

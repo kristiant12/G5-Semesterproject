@@ -13,16 +13,6 @@ import dk.sdu.mmmi.cbse.common.services.IEnemy;
  * @author tfvg-pc11
  */
 public class Enemy extends Entity implements IEnemy{
-    
-    private EnemyType type;
-    
-    public Enemy(EnemyType type){
-        this.type = type;
-    }
-    
-    
-    public String getType(){
-        return type.getType();
-    }
+        
     
 }
