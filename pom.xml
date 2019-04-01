@@ -71,6 +71,7 @@
         <module>TexturPlayer</module>
         <module>MapCollision</module>
         <module>Enemy</module>
+        <module>LibGDX</module>
     </modules>
 
     <properties>
