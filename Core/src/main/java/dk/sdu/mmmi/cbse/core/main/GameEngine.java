@@ -63,7 +63,7 @@ public class GameEngine implements ApplicationListener {
 
     @Override
     public void create() {
-        tileMap = new TmxMapLoader().load("C:\\Users\\tfvg-pc11\\Documents\\GitHub\\G5-Semesterproject\\Core\\src\\main\\resources\\assets\\images\\Map.tmx");
+        tileMap = new TmxMapLoader().load("assets\\images\\Map.tmx");
         tmr = new OrthogonalTiledMapRenderer(tileMap);
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
@@ -76,11 +76,11 @@ public class GameEngine implements ApplicationListener {
        
         System.out.println(Assets.getInstance().getManger().getAssetNames());
 
-        Testplayer = (Assets.getInstance().getManger().get("C:/Users/tfvg-pc11/Documents/GitHub/G5-Semesterproject/Core/src/main/resources/assets/images/player5.png", Texture.class));
-        Enemy = (Assets.getInstance().getManger().get("C:/Users/tfvg-pc11/Documents/GitHub/G5-Semesterproject/Core/src/main/resources/assets/images/Enemies.png", Texture.class));
-        Runner = (Assets.getInstance().getManger().get("C:/Users/tfvg-pc11/Documents/GitHub/G5-Semesterproject/Core/src/main/resources/assets/images/Runner.png", Texture.class));
-        Fatties = (Assets.getInstance().getManger().get("C:/Users/tfvg-pc11/Documents/GitHub/G5-Semesterproject/Core/src/main/resources/assets/images/Fatties.png", Texture.class));
-        Boss = (Assets.getInstance().getManger().get("C:/Users/tfvg-pc11/Documents/GitHub/G5-Semesterproject/Core//src/main/resources/assets/images/Boss.png", Texture.class));
+        Testplayer = (Assets.getInstance().getManger().get("assets/images/player5.png", Texture.class));
+        Enemy = (Assets.getInstance().getManger().get("assets/images/Enemies.png", Texture.class));
+        Runner = (Assets.getInstance().getManger().get("assets/images/Runner.png", Texture.class));
+        Fatties = (Assets.getInstance().getManger().get("assets/images/Fatties.png", Texture.class));
+        Boss = (Assets.getInstance().getManger().get("assets/images/Boss.png", Texture.class));
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
         result = lookup.lookupResult(IGamePluginService.class);
