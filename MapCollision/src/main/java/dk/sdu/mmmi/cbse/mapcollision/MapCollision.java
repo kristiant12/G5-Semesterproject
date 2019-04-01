@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package dk.sdu.mmmi.cbse.mapcollision;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -81,7 +77,6 @@ public class MapCollision implements IMap{
     //    System.out.println("det virker");
        }
        
-    //   setY(getY()+ velocity.y * delta);
        if(positionPart.getY() < 0){
            
              CollisionY = isCellBlocked(positionPart.getX(), positionPart.getY());
@@ -108,16 +103,12 @@ public class MapCollision implements IMap{
             
        }
        if(CollisionY){
-     //      System.out.println("pls virk");
+       //   System.out.println("pls virk");
           // positionPart.setY(positionPart.getY());
 //                setY(oldY);
 //                velocity.y = 0;
             }
        }
     }
-//        public void getLayer(TiledMap map){
-//        for (int i = 0; i < 18; i++) {
-//            this.mapList.add((TiledMapTileLayer) map.getLayers().get(i));
-//        }
-//    }
+
 }

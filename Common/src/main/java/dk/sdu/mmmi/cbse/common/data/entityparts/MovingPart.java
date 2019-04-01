@@ -109,8 +109,8 @@ public class MovingPart implements EntityPart {
         // deccelerating
         float vec = (float) sqrt(dx * dx + dy * dy);
         if (vec > 0) {
-            dx -= (dx / vec) * vDeceleration * dt;
-            dy -= (dy / vec) * hDeceleration * dt;
+            dx -= (dx / vec) * hDeceleration * dt;
+            dy -= (dy / vec) * vDeceleration * dt;
         }
         if (vec > maxSpeed) {
             dx = (dx / vec) * maxSpeed;
