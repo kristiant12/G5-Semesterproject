@@ -8,6 +8,7 @@ package dk.sdu.mmmi.cbse.enemy;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
@@ -55,11 +56,13 @@ public class EnemyControlSystem implements IEntityProcessingService, IGamePlugin
     private Entity createNormalEnemy(GameData gameData, World world) {
 
         float speed = 50;
+        int life = 50;
 
         Entity enemyEntity = new Enemy();
         enemyEntity.setType(1);
         enemyEntity.add(new EnemyMove(speed, world));
         enemyEntity.add(new PositionPart(100, 100, 3));
+        enemyEntity.add(new LifePart(life));
 
         return enemyEntity;
 
@@ -68,33 +71,41 @@ public class EnemyControlSystem implements IEntityProcessingService, IGamePlugin
     private Entity createRunnerEnemy(GameData gameData, World world) {
 
         float speed = 130;
-
+        int life = 25;
+        
         Entity enemyEntity = new Enemy();
         enemyEntity.setType(2);
         enemyEntity.add(new EnemyMove(speed, world));
         enemyEntity.add(new PositionPart(100, 100, 3));
+        enemyEntity.add(new LifePart(life));
 
         return enemyEntity;
     }
     private Entity createFattyEnemy(GameData gameData, World world) {
 
         float speed = 35;
+        int life = 100;
 
         Entity enemyEntity = new Enemy();
         enemyEntity.setType(3);
         enemyEntity.add(new EnemyMove(speed, world));
         enemyEntity.add(new PositionPart(100, 100, 3));
+        enemyEntity.add(new LifePart(life));
+
 
         return enemyEntity;
     }
     private Entity createBossEnemy(GameData gameData, World world) {
 
         float speed = 25;
+        int life = 200;
 
         Entity enemyEntity = new Enemy();
         enemyEntity.setType(4);
         enemyEntity.add(new EnemyMove(speed, world));
         enemyEntity.add(new PositionPart(100, 100, 3));
+        enemyEntity.add(new LifePart(life));
+
 
         return enemyEntity;
     }
