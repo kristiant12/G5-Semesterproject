@@ -66,7 +66,7 @@ public class GameEngine implements ApplicationListener {
 
     @Override
     public void create() {
-        tileMap = new TmxMapLoader().load("assets\\images\\Map.tmx");
+        tileMap = new TmxMapLoader().load("assets\\images\\NewMap.tmx");
         tmr = new OrthogonalTiledMapRenderer(tileMap);
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
@@ -230,7 +230,7 @@ public class GameEngine implements ApplicationListener {
     }
 
     public void getLayer() {
-        for (int i = 0; i < 18; i++) {
+        for (int i = 0; i < 5; i++) {
             this.mapList.add((TiledMapTileLayer) tileMap.getLayers().get(i));
         }
     }
