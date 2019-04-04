@@ -216,8 +216,7 @@ public class GameEngine implements ApplicationListener {
                     drawLife(x, y, width, positionPart, life);
                 }
             }
-            // SpriteBatch ab = new SpriteBatch();
-
+            
         }
 
     }
