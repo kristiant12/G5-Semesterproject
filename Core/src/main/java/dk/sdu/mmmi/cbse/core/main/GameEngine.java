@@ -127,7 +127,7 @@ public class GameEngine implements ApplicationListener {
         for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
             postEntityProcessorService.process(gameData, world);
         }
-         for (IMap mapCollision : getMapCollisonServices()) {
+        for (IMap mapCollision : getMapCollisonServices()) {
             mapCollision.process(gameData, world, mapList);
         }
         
@@ -159,39 +159,40 @@ public class GameEngine implements ApplicationListener {
                 ab.setProjectionMatrix(cam.combined);
                 ab.begin();
                 PositionPart positionPart = entity.getPart(PositionPart.class);
-                ab.draw(Testplayer, positionPart.getX(), positionPart.getY(), 32.5f, 27.5f, 65, 55, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 65, 55, false, false);
+                ab.draw(Testplayer, positionPart.getX() - 32, positionPart.getY() - 27, 32.5f, 27.5f, 65, 55, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 65, 55, false, false);
                 cam.position.x = positionPart.getX();
                 cam.position.y = positionPart.getY();
                 sr.setProjectionMatrix(cam.combined);
                 //  ab.draw(new Texture("assets\\images\\player1.png"),positionPart.getX() , positionPart.getY());
                 ab.end();
                 cam.update();
-            } else if (entity instanceof IEnemy) {
-                if (entity.getType() == 1) {
-                    ab.begin();
-                    PositionPart positionPart = entity.getPart(PositionPart.class);
-                    ab.draw(Enemy, positionPart.getX(), positionPart.getY(), 40f, 37f, 80, 74, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 80, 74, false, false);
-                    ab.end();
-                }
-                else if (entity.getType()== 2){
-                    ab.begin();
-                    PositionPart positionPart = entity.getPart(PositionPart.class);
-                    ab.draw(Runner, positionPart.getX(), positionPart.getY(), 24f, 22f, 48, 44, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 48, 44, false, false);
-                    ab.end();
-                }
-                else if (entity.getType()== 3){
-                    ab.begin();
-                    PositionPart positionPart = entity.getPart(PositionPart.class);
-                    ab.draw(Fatties, positionPart.getX(), positionPart.getY(), 55f, 51f, 111, 103, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 111, 103, false, false);
-                    ab.end();
-                }
-                 else if (entity.getType()== 4){
-                    ab.begin();
-                    PositionPart positionPart = entity.getPart(PositionPart.class);
-                    ab.draw(Boss, positionPart.getX(), positionPart.getY(), 159f, 147f, 318, 294, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 318, 294, false, false);
-                    ab.end();
-                }
-            }
+            } 
+//            else if (entity instanceof IEnemy) {
+//                if (entity.getType() == 1) {
+//                    ab.begin();
+//                    PositionPart positionPart = entity.getPart(PositionPart.class);
+//                    ab.draw(Enemy, positionPart.getX(), positionPart.getY(), 40f, 37f, 80, 74, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 80, 74, false, false);
+//                    ab.end();
+//                }
+//                else if (entity.getType()== 2){
+//                    ab.begin();
+//                    PositionPart positionPart = entity.getPart(PositionPart.class);
+//                    ab.draw(Runner, positionPart.getX(), positionPart.getY(), 24f, 22f, 48, 44, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 48, 44, false, false);
+//                    ab.end();
+//                }
+//                else if (entity.getType()== 3){
+//                    ab.begin();
+//                    PositionPart positionPart = entity.getPart(PositionPart.class);
+//                    ab.draw(Fatties, positionPart.getX(), positionPart.getY(), 55f, 51f, 111, 103, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 111, 103, false, false);
+//                    ab.end();
+//                }
+//                 else if (entity.getType()== 4){
+//                    ab.begin();
+//                    PositionPart positionPart = entity.getPart(PositionPart.class);
+//                    ab.draw(Boss, positionPart.getX(), positionPart.getY(), 159f, 147f, 318, 294, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 318, 294, false, false);
+//                    ab.end();
+//                }
+//            }
             // SpriteBatch ab = new SpriteBatch();
 
         }
