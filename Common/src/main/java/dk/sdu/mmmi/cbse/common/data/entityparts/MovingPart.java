@@ -19,7 +19,7 @@ public class MovingPart implements EntityPart {
     private float dx, dy;
     private float acceleration, vDeceleration, hDeceleration;
     private float maxSpeed, rotationSpeed;
-    private boolean left, right, up, down;
+    private boolean left, right, up, down,space;
 
     public MovingPart(float deceleration, float acceleration, float maxSpeed, float rotationSpeed) {
         this.vDeceleration = deceleration;
@@ -76,16 +76,23 @@ public class MovingPart implements EntityPart {
     public void setDown(boolean down) {
         this.down = down;
     }
+    public void setSpace(boolean space){
+        this.space = space;
+    }
 
     @Override
     public void process(GameData gameData, Entity entity) {
         PositionPart positionPart = entity.getPart(PositionPart.class);
+        ShootingPart shootingPart = entity.getPart(ShootingPart.class);
         float x = positionPart.getX();
         float y = positionPart.getY();
         float radians = (float) Math.atan2(gameData.getMouseY(), gameData.getMouseX());
         float dt = gameData.getDelta();
-
         
+        if(space && shootingPart != null){
+            shootingPart.setShoot(true);
+            System.out.println("ting");
+        }
         
         
         // turning

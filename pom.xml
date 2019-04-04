@@ -72,6 +72,7 @@
         <module>MapCollision</module>
         <module>Enemy</module>
         <module>LibGDX</module>
+        <module>Weapon</module>
     </modules>
 
     <properties>

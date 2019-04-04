@@ -108,7 +108,7 @@ public class GameEngine implements ApplicationListener {
         gameData.getKeys().update();
         //renderer.setView(cam);
         update();
-        //  draw();
+          draw();
         drawTextur();
         //    mapCollision(world);
 
