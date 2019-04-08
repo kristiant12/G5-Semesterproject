@@ -73,6 +73,7 @@
         <module>Enemy</module>
         <module>LibGDX</module>
         <module>Weapon</module>
+        <module>Map</module>
     </modules>
 
     <properties>

@@ -31,6 +31,7 @@ import dk.sdu.mmmi.cbse.common.services.IPlayer;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 import dk.sdu.mmmi.cbse.core.managers.Assets;
 import dk.sdu.mmmi.cbse.core.managers.GameInputProcessor;
+import dk.sdu.mmmi.cbse.map.Map;
 import java.util.ArrayList;
 
 import java.util.Collection;
@@ -44,7 +45,8 @@ public class GameEngine implements ApplicationListener {
 
     private int tingRamtPåX = 0;
     private int tingRampPåY = 0;
-    private TiledMap tileMap;
+   // private TiledMap tileMap;
+    private TiledMap tileMapNew;
     private OrthogonalTiledMapRenderer tmr;
     private static OrthographicCamera cam = new OrthographicCamera();
     private ShapeRenderer sr;
@@ -66,8 +68,10 @@ public class GameEngine implements ApplicationListener {
 
     @Override
     public void create() {
-        tileMap = new TmxMapLoader().load("assets\\images\\NewMap.tmx");
-        tmr = new OrthogonalTiledMapRenderer(tileMap);
+       // tileMap = new TmxMapLoader().load("assets\\images\\NewMap.tmx");
+        Map map = new Map();
+        tileMapNew = map.getMap();
+        tmr = new OrthogonalTiledMapRenderer(tileMapNew);
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
         cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
@@ -233,7 +237,7 @@ public class GameEngine implements ApplicationListener {
 
     public void getLayer() {
         for (int i = 0; i < 5; i++) {
-            this.mapList.add((TiledMapTileLayer) tileMap.getLayers().get(i));
+            this.mapList.add((TiledMapTileLayer) tileMapNew.getLayers().get(i));
         }
     }
 
