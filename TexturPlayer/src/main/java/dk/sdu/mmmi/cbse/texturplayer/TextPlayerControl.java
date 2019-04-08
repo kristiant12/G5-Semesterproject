@@ -78,7 +78,7 @@ public class TextPlayerControl  implements IEntityProcessingService, IGamePlugin
         float radians = 3.1415f / 2;
         int life = 100;
 
-        Entity playerShip = new TexturPlayer();
+        Entity playerShip = new TexturPlayer(55f, 65f);
         playerShip.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
         playerShip.add(new PositionPart(x, y, radians));
         playerShip.add(new LifePart(life));

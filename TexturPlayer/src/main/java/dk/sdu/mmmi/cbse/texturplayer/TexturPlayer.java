@@ -14,4 +14,8 @@ import dk.sdu.mmmi.cbse.common.services.IPlayer;
  */
 public class TexturPlayer extends Entity implements IPlayer {
     
+    public TexturPlayer(float height, float width){
+        super(height, width);
+    }
+    
 }
