@@ -7,6 +7,7 @@ package dk.sdu.mmmi.cbse.common.data.entityparts;
 
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
+import dk.sdu.mmmi.cbse.common.services.IWeapon;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.sqrt;
@@ -16,6 +17,7 @@ import static java.lang.Math.sqrt;
  * @author Alexander
  */
 public class MovingPart implements EntityPart {
+
     private float dx, dy;
     private float acceleration, vDeceleration, hDeceleration;
     private float maxSpeed, rotationSpeed;
@@ -37,8 +39,6 @@ public class MovingPart implements EntityPart {
     public float getDy() {
         return dy;
     }
-    
-    
 
     public void setDeceleration(float deceleration) {
         this.vDeceleration = deceleration;
@@ -52,7 +52,7 @@ public class MovingPart implements EntityPart {
     public void setMaxSpeed(float maxSpeed) {
         this.maxSpeed = maxSpeed;
     }
-    
+
     public void setSpeed(float speed) {
         this.acceleration = speed;
         this.maxSpeed = speed;
@@ -73,19 +73,20 @@ public class MovingPart implements EntityPart {
     public void setUp(boolean up) {
         this.up = up;
     }
-    
+
     public void setDown(boolean down) {
         this.down = down;
     }
-    
+
     public void setCollisionX(boolean b) {
         collisionX = b;
     }
-    
+
     public void setCollisionY(boolean b) {
         collisionY = b;
     }
-      public void setSpace(boolean space){
+
+    public void setSpace(boolean space) {
         this.space = space;
     }
 
@@ -97,67 +98,56 @@ public class MovingPart implements EntityPart {
         float y = positionPart.getY();
         float radians = (float) Math.atan2(gameData.getMouseY(), gameData.getMouseX());
         float dt = gameData.getDelta();
-
-        if (collisionX) {
-            hDeceleration = 5000;
-        } else if (collisionY) {
-            vDeceleration = 5000;
-        }
-          
-        if(space && shootingPart != null){
-            shootingPart.setShoot(true);
-            System.out.println("ting");
-        }
-        
-        
-        // turning
-        if (left) {
-            dx -= acceleration * dt;
-        } else if (right) {
-            dx += acceleration * dt;
+        if (entity instanceof IWeapon) {
+            radians = positionPart.getRadians();
+            dx += cos(radians) * acceleration * dt;
+            dy += sin(radians) * acceleration * dt;
         } else {
-            hDeceleration = 200;
-        }
+            if (collisionX) {
+                hDeceleration = 5000;
+            } else if (collisionY) {
+                vDeceleration = 5000;
+            }
 
-        // accelerating            
-        if (up) {
-            dy += acceleration * dt;
-        } else if(down) {
-            dy -= acceleration * dt;
-        } else {
-            vDeceleration = 200;
-        }
+            if (space && shootingPart != null) {
+                shootingPart.setShoot(true);
+            }
 
-        // deccelerating
-        float vec = (float) sqrt(dx * dx + dy * dy);
-        if (vec > 0) {
-            dx -= (dx / vec) * hDeceleration * dt;
-            dy -= (dy / vec) * vDeceleration * dt;
-        }
-        if (vec > maxSpeed) {
-            dx = (dx / vec) * maxSpeed;
-            dy = (dy / vec) * maxSpeed;
-        }
-        
-        setDeceleration(10);
+            // turning
+            if (left) {
+                dx -= acceleration * dt;
+            } else if (right) {
+                dx += acceleration * dt;
+            } else {
+                hDeceleration = 200;
+            }
 
+            // accelerating            
+            if (up) {
+                dy += acceleration * dt;
+            } else if (down) {
+                dy -= acceleration * dt;
+            } else {
+                vDeceleration = 200;
+            }
+
+            // deccelerating
+            float vec = (float) sqrt(dx * dx + dy * dy);
+            if (vec > 0) {
+                dx -= (dx / vec) * hDeceleration * dt;
+                dy -= (dy / vec) * vDeceleration * dt;
+            }
+            if (vec > maxSpeed) {
+                dx = (dx / vec) * maxSpeed;
+                dy = (dy / vec) * maxSpeed;
+            }
+            setDeceleration(10);
+
+        }
         // set position
         x += dx * dt;
-        if (x > gameData.getDisplayWidth()) {
-//            x = gameData.getDisplayWidth();
-        }
-        else if (x < 0) {
-//            x = 0;
-        }
-
         y += dy * dt;
-        if (y > gameData.getDisplayHeight()) {
-//            y  = gameData.getDisplayHeight();
-        }
-        else if (y < 0) {
-//            y = 0;
-        }
-        
+
         positionPart.setX(x);
         positionPart.setY(y);
 

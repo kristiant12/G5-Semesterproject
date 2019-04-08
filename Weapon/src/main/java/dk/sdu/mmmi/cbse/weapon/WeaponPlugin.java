@@ -31,21 +31,23 @@ public class WeaponPlugin implements IGamePluginService{
     }
        public static Weapon createBullet(PositionPart playerPositionPart, MovingPart playerMovingPart) {
 
-        float deacrealection = 0;
-        float accelation = 10000;
+        float deacceleration = 0;
+        float acceleration = 350;
         float maxSpeed = 350;
         float rotationSpeed = 0;
         float x = playerPositionPart.getX();
         float y = playerPositionPart.getY();
         float radians = playerPositionPart.getRadians();
+           System.out.println(radians);
 
         
         Entity bullet = new Weapon();
+        bullet.add(new PositionPart(x, y, radians));
         bullet.setRadius(1);
-        MovingPart movingPart = new MovingPart(deacrealection, accelation, maxSpeed, rotationSpeed);
+        MovingPart movingPart = new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed);
         movingPart.setUp(true);
         bullet.add(movingPart);
-        bullet.add(new PositionPart(x, y, radians));
+      
         bullet.add(new LifePart(1,3));
         
         return (Weapon)bullet;
