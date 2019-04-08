@@ -38,7 +38,6 @@ public class WeaponPlugin implements IGamePluginService{
         float x = playerPositionPart.getX();
         float y = playerPositionPart.getY();
         float radians = playerPositionPart.getRadians();
-           System.out.println(radians);
 
         
         Entity bullet = new Weapon();
