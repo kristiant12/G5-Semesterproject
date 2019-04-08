@@ -14,7 +14,7 @@ public class Installer extends ModuleInstall {
         g = new GameEngine();
 
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-        cfg.title = "Asteroids";
+        cfg.title = "Zombie Wave Survival v_2";
         cfg.width = 800;
         cfg.height = 600;
         cfg.useGL30 = false;

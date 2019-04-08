@@ -2,12 +2,14 @@ package dk.sdu.mmmi.cbse.core.main;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -18,6 +20,7 @@ import com.badlogic.gdx.math.Vector3;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IEnemy;
@@ -63,17 +66,17 @@ public class GameEngine implements ApplicationListener {
 
     @Override
     public void create() {
-        tileMap = new TmxMapLoader().load("assets\\images\\Map.tmx");
+        tileMap = new TmxMapLoader().load("assets\\images\\NewMap.tmx");
         tmr = new OrthogonalTiledMapRenderer(tileMap);
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
         cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
         cam.update();
-         this.mapList = new ArrayList<>();
+        this.mapList = new ArrayList<>();
         getLayer();
         sr = new ShapeRenderer();
         ab = new SpriteBatch();
-       
+
         System.out.println(Assets.getInstance().getManger().getAssetNames());
 
         Testplayer = (Assets.getInstance().getManger().get("assets/images/player5.png", Texture.class));
@@ -86,7 +89,7 @@ public class GameEngine implements ApplicationListener {
         result = lookup.lookupResult(IGamePluginService.class);
         result.addLookupListener(lookupListener);
         result.allItems();
-     //   getLayer();
+        //   getLayer();
         for (IGamePluginService plugin : result.allInstances()) {
             plugin.start(gameData, world);
             gamePlugins.add(plugin);
@@ -105,19 +108,18 @@ public class GameEngine implements ApplicationListener {
         gameData.getKeys().update();
         //renderer.setView(cam);
         update();
-        //  draw();
+          draw();
         drawTextur();
-    //    mapCollision(world);
+        //    mapCollision(world);
 
         //tmr.setView(cam);
-        
-        gameData.setMouseX(Gdx.input.getX() - Gdx.graphics.getWidth()/2);
-        gameData.setMouseY(Gdx.graphics.getHeight()/2 - Gdx.input.getY());
-        
+        gameData.setMouseX(Gdx.input.getX() - Gdx.graphics.getWidth() / 2);
+        gameData.setMouseY(Gdx.graphics.getHeight() / 2 - Gdx.input.getY());
+
     }
 
     private void update() {
-       
+
         // Update
         for (IEntityProcessingService entityProcessorService : getEntityProcessingServices()) {
             entityProcessorService.process(gameData, world);
@@ -127,11 +129,11 @@ public class GameEngine implements ApplicationListener {
         for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
             postEntityProcessorService.process(gameData, world);
         }
-        
+      
         for (IMap mapCollision : getMapCollisonServices()) {
             mapCollision.process(gameData, world, mapList);
         }
-        
+
     }
 
     private void draw() {
@@ -161,11 +163,16 @@ public class GameEngine implements ApplicationListener {
                 ab.begin();
                 PositionPart positionPart = entity.getPart(PositionPart.class);
                 ab.draw(Testplayer, positionPart.getX() - 32, positionPart.getY() - 27, 32.5f, 27.5f, 65, 55, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 65, 55, false, false);
+                LifePart life = entity.getPart(LifePart.class);
                 cam.position.x = positionPart.getX();
                 cam.position.y = positionPart.getY();
                 sr.setProjectionMatrix(cam.combined);
                 //  ab.draw(new Texture("assets\\images\\player1.png"),positionPart.getX() , positionPart.getY());
                 ab.end();
+                sr.begin(ShapeType.Filled);
+                sr.setColor(Color.GREEN);
+                sr.rect(positionPart.getX() - (Gdx.graphics.getWidth() / 2), positionPart.getY() + (Gdx.graphics.getHeight() / 2) - 25, life.getLife() * 2, 25);
+                sr.end();
                 cam.update();
             } 
 //            else if (entity instanceof IEnemy) {
@@ -195,12 +202,63 @@ public class GameEngine implements ApplicationListener {
 //                }
 //            }
 
+            } else if (entity instanceof IEnemy) {
+                if (entity.getType() == 1) {
+                    ab.begin();
+                    PositionPart positionPart = entity.getPart(PositionPart.class);
+                    LifePart life = entity.getPart(LifePart.class);
+                    ab.draw(Enemy, positionPart.getX(), positionPart.getY(), 40f, 37f, 80, 74, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 80, 74, false, false);
+                    ab.end();
+                    float x = 17;
+                    float y = 60;
+                    float width = 8;
+                    drawLife(x, y, width, positionPart, life);
+                } else if (entity.getType() == 2) {
+                    ab.begin();
+                    PositionPart positionPart = entity.getPart(PositionPart.class);
+                    LifePart life = entity.getPart(LifePart.class);
+                    float x = 12.5f;
+                    float y = 40;
+                    float width = 4;
+                    ab.draw(Runner, positionPart.getX(), positionPart.getY(), 24f, 22f, 48, 44, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 48, 44, false, false);
+                    ab.end();
+                    drawLife(x, y, width, positionPart, life);
+                } else if (entity.getType() == 3) {
+                    ab.begin();
+                    PositionPart positionPart = entity.getPart(PositionPart.class);
+                    LifePart life = entity.getPart(LifePart.class);
+                    float x = 10;
+                    float y = 75;
+                    float width = 8;
+                    ab.draw(Fatties, positionPart.getX(), positionPart.getY(), 55f, 51f, 111, 103, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 111, 103, false, false);
+                    ab.end();
+                    drawLife(x, y, width, positionPart, life);
+                } else if (entity.getType() == 4) {
+                    ab.begin();
+                    PositionPart positionPart = entity.getPart(PositionPart.class);
+                    LifePart life = entity.getPart(LifePart.class);
+                    float x = 70;
+                    float y = 230;
+                    float width = 8;
+                    ab.draw(Boss, positionPart.getX(), positionPart.getY(), 159f, 147f, 318, 294, 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, 318, 294, false, false);
+                    ab.end();
+                    drawLife(x, y, width, positionPart, life);
+                }
+            }
+            
         }
 
     }
 
+    private void drawLife(float xPosition, float yPosition, float width, PositionPart positionPart, LifePart life) {
+        sr.begin(ShapeType.Filled);
+        sr.setColor(Color.GREEN);
+        sr.rect(positionPart.getX() + xPosition, positionPart.getY() + yPosition, life.getLife(), width);
+        sr.end();
+    }
+
     public void getLayer() {
-        for (int i = 0; i < 18; i++) {
+        for (int i = 0; i < 5; i++) {
             this.mapList.add((TiledMapTileLayer) tileMap.getLayers().get(i));
         }
     }
@@ -211,7 +269,6 @@ public class GameEngine implements ApplicationListener {
         cam.viewportHeight = height;
         cam.update();
     }
-
 
     @Override
     public void pause() {
@@ -228,6 +285,7 @@ public class GameEngine implements ApplicationListener {
     private Collection<? extends IEntityProcessingService> getEntityProcessingServices() {
         return lookup.lookupAll(IEntityProcessingService.class);
     }
+
     private Collection<? extends IMap> getMapCollisonServices() {
         return lookup.lookupAll(IMap.class);
     }
