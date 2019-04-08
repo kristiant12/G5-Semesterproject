@@ -38,7 +38,7 @@ public class TexturPlayerPlugin implements IGamePluginService{
         float y = gameData.getDisplayHeight() / 2;
         float radians = 3.1415f / 2;
         
-        Entity playerShip = new TexturPlayer();
+        Entity playerShip = new TexturPlayer(55f, 65f);
         playerShip.add(new MovingPart(deacceleration,acceleration,maxSpeed,rotationSpeed));
         playerShip.add(new PositionPart(x,y,radians));
         

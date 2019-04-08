@@ -43,23 +43,17 @@ public class MapCollision implements IMap {
 
         return false;
     }
-    
-            
-    
-    
 
     public void mapCollision(World world, GameData gameData) {
         //long preTime = System.currentTimeMillis();
         for (Entity entity : world.getEntities()) {
         if (entity instanceof IPlayer) {
-                
-        
     
             PositionPart positionPart = entity.getPart(PositionPart.class);
-            MovingPart movingPart = null;
-            if (entity instanceof IPlayer) {
-                movingPart = entity.getPart(MovingPart.class);
-            }
+            MovingPart mp = entity.getPart(MovingPart.class);
+            mp.setCollisionX(false);
+            mp.setCollisionY(false);
+            
             float oldX = positionPart.getX(), oldY = positionPart.getY(), tiledWith = mapList.get(0).getTileWidth(), tiledHeight = mapList.get(0).getTileHeight();
             boolean collisionX = false;
             boolean collisionY = false;
@@ -67,44 +61,37 @@ public class MapCollision implements IMap {
             boolean right = false;
             boolean up = false;
             boolean down = false;
-                    
-            float dt = gameData.getDelta();
             // move on x
             
             if (isCellBlocked(positionPart.getX() - 32, positionPart.getY())) {
                 left = true;
+                mp.setCollisionX(left);
             }
             else if (isCellBlocked(positionPart.getX() + 32, positionPart.getY())) {
                 right = true;
+                mp.setCollisionX(right);
             }
             else if (isCellBlocked(positionPart.getX(), positionPart.getY() - 27)) {
                 down = true;
+                mp.setCollisionY(true);
             }
             else if (isCellBlocked(positionPart.getX(), positionPart.getY() + 27)) {
                 up = true;
+                mp.setCollisionY(true);
             }
             
             
             if (left) {
-                            System.out.println("Player is at " + oldX +", " + oldY);
-                System.out.println("Moving player to x " + (positionPart.getX()+5));
-
-                positionPart.setX(positionPart.getX()+3);
+                positionPart.setX(positionPart.getX()+1);
             }
             if (right) {
-                            System.out.println("Player is at " + oldX +", " + oldY);
-                System.out.println("Moving player to x " + (positionPart.getX()-5));
-                positionPart.setX(positionPart.getX()-3);
+                positionPart.setX(positionPart.getX()-1);
             }
             if (down) {
-                            System.out.println("Player is at " + oldX +", " + oldY);
-                System.out.println("Moving player to y " + (positionPart.getY()+5));
-                positionPart.setY(positionPart.getY()+3);
+                positionPart.setY(positionPart.getY()+1);
             }
             if (up) {
-                            System.out.println("Player is at " + oldX +", " + oldY);
-                System.out.println("Moving player to y " + (positionPart.getY()-5));
-                positionPart.setY(positionPart.getY()-3);
+                positionPart.setY(positionPart.getY()-1);
             }
             
             

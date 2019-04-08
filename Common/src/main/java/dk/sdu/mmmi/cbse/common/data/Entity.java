@@ -15,12 +15,19 @@ public class Entity extends Sprite implements Serializable {
     private float[] shapeX = new float[4];
     private float[] shapeY = new float[4];
     private float radius;
+    private float height, width;
     private int type;
     private Map<Class, EntityPart> parts;
 //    private Texture texture;
     
     
     public Entity() {
+        parts = new ConcurrentHashMap<>();
+    }
+    
+    public Entity(float height, float width) {
+        this.width = width;
+        this.height = height;
         parts = new ConcurrentHashMap<>();
     }
     
@@ -68,10 +75,11 @@ public class Entity extends Sprite implements Serializable {
         this.type = type;
     }
     
-    
     public int getType(){
         return type;
     }
+    
+    
     
 //    public void setTexture(Texture texture){
 //        this.texture = texture;
@@ -79,4 +87,22 @@ public class Entity extends Sprite implements Serializable {
 //    public Texture getTexture(){
 //        return texture;
 //    }
+
+    @Override
+    public float getHeight() {
+        return height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
+    }
+
+    @Override
+    public float getWidth() {
+        return width;
+    }
+
+    public void setWidth(float width) {
+        this.width = width;
+    }
 }

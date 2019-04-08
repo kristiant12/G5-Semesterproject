@@ -127,6 +127,7 @@ public class GameEngine implements ApplicationListener {
         for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
             postEntityProcessorService.process(gameData, world);
         }
+        
         for (IMap mapCollision : getMapCollisonServices()) {
             mapCollision.process(gameData, world, mapList);
         }
@@ -193,7 +194,6 @@ public class GameEngine implements ApplicationListener {
 //                    ab.end();
 //                }
 //            }
-            // SpriteBatch ab = new SpriteBatch();
 
         }
 

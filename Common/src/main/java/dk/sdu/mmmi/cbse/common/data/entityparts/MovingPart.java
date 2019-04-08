@@ -20,6 +20,7 @@ public class MovingPart implements EntityPart {
     private float acceleration, vDeceleration, hDeceleration;
     private float maxSpeed, rotationSpeed;
     private boolean left, right, up, down;
+    private boolean collisionX = false, collisionY = false;
 
     public MovingPart(float deceleration, float acceleration, float maxSpeed, float rotationSpeed) {
         this.vDeceleration = deceleration;
@@ -76,6 +77,14 @@ public class MovingPart implements EntityPart {
     public void setDown(boolean down) {
         this.down = down;
     }
+    
+    public void setCollisionX(boolean b) {
+        collisionX = b;
+    }
+    
+    public void setCollisionY(boolean b) {
+        collisionY = b;
+    }
 
     @Override
     public void process(GameData gameData, Entity entity) {
@@ -85,7 +94,11 @@ public class MovingPart implements EntityPart {
         float radians = (float) Math.atan2(gameData.getMouseY(), gameData.getMouseX());
         float dt = gameData.getDelta();
 
-        
+        if (collisionX) {
+            hDeceleration = 5000;
+        } else if (collisionY) {
+            vDeceleration = 5000;
+        }
         
         
         // turning
