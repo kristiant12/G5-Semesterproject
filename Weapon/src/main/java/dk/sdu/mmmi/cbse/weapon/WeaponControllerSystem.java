@@ -54,7 +54,11 @@ public class WeaponControllerSystem implements IEntityProcessingService {
             
             lifePart.reduceExpiration(delta);
             updateShape(bullet);
+            if(lifePart.getExpiration() < 0){
+                world.removeEntity(bullet);
+            }
         }
+        
         
     }
     public void spawnBullet(MovingPart movingPart, PositionPart positionPart,ShootingPart shootingPart,GameData gameData, World world){
