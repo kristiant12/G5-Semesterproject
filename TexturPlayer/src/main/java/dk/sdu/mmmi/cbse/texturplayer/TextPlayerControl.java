@@ -6,6 +6,8 @@
 package dk.sdu.mmmi.cbse.texturplayer;
 
 
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.GameKeys;
@@ -60,15 +62,16 @@ public class TextPlayerControl  implements IEntityProcessingService, IGamePlugin
     }
     
 
+    
     @Override
-    public void start(GameData gameData, World world) {
+    public void start(GameData gameData, World world, AssetManager manager) {
         
-        player = createPlayerShip(gameData);
+        player = createPlayerShip(gameData,manager);
         world.addEntity(player);
         
     }
 
-    private Entity createPlayerShip(GameData gameData) {
+    private Entity createPlayerShip(GameData gameData,AssetManager manager) {
         float deacceleration = 10;
         float acceleration = 200;
         float maxSpeed = 200;
@@ -77,8 +80,11 @@ public class TextPlayerControl  implements IEntityProcessingService, IGamePlugin
         float y = gameData.getDisplayHeight() / 2;
         float radians = 3.1415f / 2;
         int life = 100;
+        
+        
 
         Entity playerShip = new TexturPlayer(55f, 65f);
+        playerShip.setImage(manager.get("assets/images/player5.png", Texture.class));
         playerShip.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
         playerShip.add(new PositionPart(x, y, radians));
         playerShip.add(new LifePart(life));
@@ -92,5 +98,7 @@ public class TextPlayerControl  implements IEntityProcessingService, IGamePlugin
     public void stop(GameData gameData, World world) {
         world.removeEntity(player);
     }
+
+ 
 
 }

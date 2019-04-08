@@ -17,8 +17,17 @@ public class Entity extends Sprite implements Serializable {
     private float radius;
     private float height, width;
     private int type;
+    private Texture image;
     private Map<Class, EntityPart> parts;
 //    private Texture texture;
+
+    public Texture getImage() {
+        return image;
+    }
+
+    public void setImage(Texture image) {
+        this.image = image;
+    }
     
     
     public Entity() {

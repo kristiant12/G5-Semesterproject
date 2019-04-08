@@ -5,6 +5,7 @@
  */
 package dk.sdu.mmmi.cbse.weapon;
 
+import com.badlogic.gdx.assets.AssetManager;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -27,7 +28,7 @@ import org.openide.util.lookup.ServiceProviders;
 public class WeaponPlugin implements IGamePluginService{
 
     @Override
-    public void start(GameData gameData, World world) {
+    public void start(GameData gameData, World world,AssetManager manager) {
     }
        public static Weapon createBullet(PositionPart playerPositionPart, MovingPart playerMovingPart) {
 
