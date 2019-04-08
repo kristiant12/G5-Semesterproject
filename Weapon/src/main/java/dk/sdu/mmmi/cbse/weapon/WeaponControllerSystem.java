@@ -29,6 +29,7 @@ import org.openide.util.lookup.ServiceProviders;
 public class WeaponControllerSystem implements IEntityProcessingService {
 
     private float delta = 0.03f;
+    private float timeSinceLastShot;
 
     @Override
     public void process(GameData gameData, World world) {
@@ -37,10 +38,11 @@ public class WeaponControllerSystem implements IEntityProcessingService {
                 PositionPart positionPart = player.getPart(PositionPart.class);
                 MovingPart movingPart = player.getPart(MovingPart.class);
                 ShootingPart shootingPart = player.getPart(ShootingPart.class);
-                if(shootingPart.getShoot()){
+                if(shootingPart.getShoot() && timeSinceLastShot > 0.5f){
                     spawnBullet(movingPart, positionPart, shootingPart, gameData, world);
-                    System.out.println("neger");
+                    timeSinceLastShot = 0f;
                 }
+                timeSinceLastShot += gameData.getDelta();
             }
         }
         for (Entity bullet : world.getEntities(Weapon.class)) {
