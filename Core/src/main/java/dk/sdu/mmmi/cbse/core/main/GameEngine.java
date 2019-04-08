@@ -202,7 +202,7 @@ public class GameEngine implements ApplicationListener {
 //                }
 //            }
 
-            } else if (entity instanceof IEnemy) {
+             else if (entity instanceof IEnemy) {
                 if (entity.getType() == 1) {
                     ab.begin();
                     PositionPart positionPart = entity.getPart(PositionPart.class);
