@@ -7,6 +7,9 @@ package dk.sdu.mmmi.cbse.common.data.entityparts;
 
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
+import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.services.IEnemy;
+import dk.sdu.mmmi.cbse.common.services.IPlayer;
 import dk.sdu.mmmi.cbse.common.services.IWeapon;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -18,9 +21,10 @@ import static java.lang.Math.sqrt;
  */
 public class MovingPart implements EntityPart {
 
+    private World world;
     private float dx, dy;
     private float acceleration, vDeceleration, hDeceleration;
-    private float maxSpeed, rotationSpeed;
+    private float maxSpeed, rotationSpeed, speed;
     private boolean left, right, up, down, space;
     private boolean collisionX = false, collisionY = false;
 
@@ -30,6 +34,11 @@ public class MovingPart implements EntityPart {
         this.acceleration = acceleration;
         this.maxSpeed = maxSpeed;
         this.rotationSpeed = rotationSpeed;
+    }
+
+    public MovingPart(float speed, World world) {
+        this.speed = speed;
+        this.world = world;
     }
 
     public float getDx() {
@@ -102,6 +111,31 @@ public class MovingPart implements EntityPart {
             radians = positionPart.getRadians();
             dx += cos(radians) * acceleration * dt;
             dy += sin(radians) * acceleration * dt;
+        } else if (entity instanceof IEnemy) {
+            for (Entity player : world.getEntities()) {
+                if (player instanceof IPlayer) {
+                    PositionPart poPlayer = player.getPart(PositionPart.class);
+                    float playerX = poPlayer.getX();
+                    float playerY = poPlayer.getY();
+                    
+                    radians = (float) Math.atan2(playerY- y,playerX - x );
+
+                    if (x < playerX) {
+                        x += speed * dt;
+                    } else if (x > playerX) {
+                        x -= speed * dt;
+                    }
+
+                    if (y < playerY) {
+                        y += speed * dt;
+                    } else if (y > playerY) {
+                        y -= speed * dt;
+
+                    }
+
+                }
+            }
+
         } else {
             if (collisionX) {
                 hDeceleration = 5000;

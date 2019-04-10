@@ -11,6 +11,7 @@ import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
+import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
@@ -36,7 +37,7 @@ public class EnemyControlSystem implements IEntityProcessingService, IGamePlugin
     public void process(GameData gameData, World world) {
         for (Entity player : world.getEntities(Enemy.class)) {
             PositionPart positionPart = player.getPart(PositionPart.class);
-            EnemyMove move = player.getPart(EnemyMove.class);
+            MovingPart move = player.getPart(MovingPart.class);
 
             move.process(gameData, player);
             positionPart.process(gameData, player);
@@ -44,7 +45,7 @@ public class EnemyControlSystem implements IEntityProcessingService, IGamePlugin
     }
 
     @Override
-    public void start(GameData gameData, World world,AssetManager manager) {
+    public void start(GameData gameData, World world, AssetManager manager) {
         enemy = createNormalEnemy(gameData, world, manager);
         runner = createRunnerEnemy(gameData, world, manager);
         fatty = createFattyEnemy(gameData, world, manager);
@@ -55,16 +56,18 @@ public class EnemyControlSystem implements IEntityProcessingService, IGamePlugin
         world.addEntity(boss);
     }
 
-    private Entity createNormalEnemy(GameData gameData, World world,AssetManager manager) {
+    private Entity createNormalEnemy(GameData gameData, World world, AssetManager manager) {
 
         float speed = 50;
         int life = 50;
 
         Entity enemyEntity = new Enemy();
         enemyEntity.setImage(manager.get("assets/images/Enemies.png", Texture.class));
-        
+        enemyEntity.setWidth(enemyEntity.getImage().getWidth());
+        enemyEntity.setHeight(enemyEntity.getImage().getHeight());
+
         enemyEntity.setType(1);
-        enemyEntity.add(new EnemyMove(speed, world));
+        enemyEntity.add(new MovingPart(speed, world));
         enemyEntity.add(new PositionPart(100, 100, 3));
         enemyEntity.add(new LifePart(life));
 
@@ -72,49 +75,56 @@ public class EnemyControlSystem implements IEntityProcessingService, IGamePlugin
 
     }
 
-    private Entity createRunnerEnemy(GameData gameData, World world,AssetManager manager) {
+    private Entity createRunnerEnemy(GameData gameData, World world, AssetManager manager) {
 
         float speed = 130;
         int life = 25;
-        
+
         Entity enemyEntity = new Enemy();
         enemyEntity.setImage(manager.get("assets/images/Runner.png", Texture.class));
+        enemyEntity.setWidth(enemyEntity.getImage().getWidth());
+        enemyEntity.setHeight(enemyEntity.getImage().getHeight());
 
         enemyEntity.setType(2);
-        enemyEntity.add(new EnemyMove(speed, world));
+        enemyEntity.add(new MovingPart(speed, world));
         enemyEntity.add(new PositionPart(100, 100, 3));
         enemyEntity.add(new LifePart(life));
 
         return enemyEntity;
     }
-    private Entity createFattyEnemy(GameData gameData, World world,AssetManager manager) {
+
+    private Entity createFattyEnemy(GameData gameData, World world, AssetManager manager) {
 
         float speed = 35;
         int life = 100;
 
         Entity enemyEntity = new Enemy();
         enemyEntity.setImage(manager.get("assets/images/Fatties.png", Texture.class));
+        enemyEntity.setWidth(enemyEntity.getImage().getWidth());
+        enemyEntity.setHeight(enemyEntity.getImage().getHeight());
 
         enemyEntity.setType(3);
-        enemyEntity.add(new EnemyMove(speed, world));
+        enemyEntity.add(new MovingPart(speed, world));
         enemyEntity.add(new PositionPart(100, 100, 3));
         enemyEntity.add(new LifePart(life));
 
-
         return enemyEntity;
     }
-    private Entity createBossEnemy(GameData gameData, World world,AssetManager manager) {
+
+    private Entity createBossEnemy(GameData gameData, World world, AssetManager manager) {
 
         float speed = 25;
         int life = 200;
 
         Entity enemyEntity = new Enemy();
         enemyEntity.setImage(manager.get("assets/images/Boss.png", Texture.class));
+        enemyEntity.setWidth(enemyEntity.getImage().getWidth());
+        enemyEntity.setHeight(enemyEntity.getImage().getHeight());
+        
         enemyEntity.setType(4);
-        enemyEntity.add(new EnemyMove(speed, world));
+        enemyEntity.add(new MovingPart(speed, world));
         enemyEntity.add(new PositionPart(100, 100, 3));
         enemyEntity.add(new LifePart(life));
-
 
         return enemyEntity;
     }

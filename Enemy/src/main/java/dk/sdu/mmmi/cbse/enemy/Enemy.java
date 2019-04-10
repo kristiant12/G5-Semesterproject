@@ -13,6 +13,6 @@ import dk.sdu.mmmi.cbse.common.services.IEnemy;
  * @author tfvg-pc11
  */
 public class Enemy extends Entity implements IEnemy{
-        
+
     
 }

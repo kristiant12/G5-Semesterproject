@@ -47,7 +47,7 @@ public class MapCollision implements IMap {
     public void mapCollision(World world, GameData gameData) {
         //long preTime = System.currentTimeMillis();
         for (Entity entity : world.getEntities()) {
-        if (entity instanceof IPlayer) {
+      
     
             PositionPart positionPart = entity.getPart(PositionPart.class);
             MovingPart mp = entity.getPart(MovingPart.class);
@@ -63,19 +63,19 @@ public class MapCollision implements IMap {
             boolean down = false;
             // move on x
             
-            if (isCellBlocked(positionPart.getX() - 32, positionPart.getY())) {
+            if (isCellBlocked(positionPart.getX() - entity.getWidth()/2, positionPart.getY())) {
                 left = true;
                 mp.setCollisionX(left);
             }
-            else if (isCellBlocked(positionPart.getX() + 32, positionPart.getY())) {
+            else if (isCellBlocked(positionPart.getX() + entity.getWidth()/2, positionPart.getY())) {
                 right = true;
                 mp.setCollisionX(right);
             }
-            else if (isCellBlocked(positionPart.getX(), positionPart.getY() - 27)) {
+            else if (isCellBlocked(positionPart.getX(), positionPart.getY() - entity.getHeight()/2)) {
                 down = true;
                 mp.setCollisionY(true);
             }
-            else if (isCellBlocked(positionPart.getX(), positionPart.getY() + 27)) {
+            else if (isCellBlocked(positionPart.getX(), positionPart.getY() + entity.getHeight()/2)) {
                 up = true;
                 mp.setCollisionY(true);
             }
@@ -139,7 +139,7 @@ public class MapCollision implements IMap {
 //                }
 //            }
             
-        }
+        
         }
         //System.out.println("Time to run collision " + (System.currentTimeMillis()-preTime) );
     }
