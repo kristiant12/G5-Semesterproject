@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 /**
  * @author Monica
  */
@@ -11,6 +12,7 @@ public class GameScreen implements Screen {
 
     private OrthographicCamera camera;
     private GameEngine game;
+    private SpriteBatch ab;
 
     public GameScreen(GameEngine game){
         this.game=game;
@@ -26,7 +28,7 @@ public class GameScreen implements Screen {
 
         camera.update();
 
-        game.gameBatch.setProjectionMatrix(camera.combined);
+        ab.setProjectionMatrix(camera.combined);
 
     }
 
