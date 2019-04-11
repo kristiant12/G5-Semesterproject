@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 /**
  * @author Monica
+ * https://github.com/libgdx/libgdx/wiki/Sound-effects
  */
 public class GameScreen implements Screen {
 
@@ -15,11 +16,12 @@ public class GameScreen implements Screen {
     private SpriteBatch ab;
 
     public GameScreen(GameEngine game){
-        this.game=game;
+        this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false,800,480);
     }
-
+        
+    
     @Override
     public void render(float deltaTime){
         Gdx.gl.glClearColor(0,0,255,1);
