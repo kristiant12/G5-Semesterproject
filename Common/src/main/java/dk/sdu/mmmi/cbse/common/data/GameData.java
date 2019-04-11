@@ -6,17 +6,24 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameData {
+
     private float delta;
     private int displayWidth;
     private int displayHeight;
     private int mouseX;
     private int mouseY;
+    private boolean mouseClicked;
+
+    public boolean isMouseClicked() {
+        return mouseClicked;
+    }
+
+    public void setMouseClicked(boolean mouseClicked) {
+        this.mouseClicked = mouseClicked;
+    }
     private final GameKeys keys = new GameKeys();
     private List<Event> events = new CopyOnWriteArrayList<>();
 
-    
-   
-    
     public void addEvent(Event e) {
         events.add(e);
     }
@@ -72,8 +79,6 @@ public class GameData {
     public void setMouseY(int mouseY) {
         this.mouseY = mouseY;
     }
-    
-    
 
     public <E extends Event> List<Event> getEvents(Class<E> type, String sourceID) {
         List<Event> r = new ArrayList();

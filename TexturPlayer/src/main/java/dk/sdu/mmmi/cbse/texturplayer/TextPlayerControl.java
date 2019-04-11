@@ -46,11 +46,11 @@ public class TextPlayerControl implements IEntityProcessingService, IGamePluginS
             MovingPart movingPart = player.getPart(MovingPart.class);
             ShootingPart shootingPart = player.getPart(ShootingPart.class);
 
-            movingPart.setLeft(gameData.getKeys().isDown(GameKeys.LEFT));
-            movingPart.setRight(gameData.getKeys().isDown(GameKeys.RIGHT));
-            movingPart.setUp(gameData.getKeys().isDown(GameKeys.UP));
-            movingPart.setDown(gameData.getKeys().isDown(GameKeys.DOWN));
-            shootingPart.setShoot(gameData.getKeys().isDown(GameKeys.SPACE));
+            movingPart.setLeft(gameData.getKeys().isDown(GameKeys.A));
+            movingPart.setRight(gameData.getKeys().isDown(GameKeys.D));
+            movingPart.setUp(gameData.getKeys().isDown(GameKeys.W));
+            movingPart.setDown(gameData.getKeys().isDown(GameKeys.S));
+            shootingPart.setShoot(gameData.isMouseClicked());
 
             movingPart.process(gameData, player);
             positionPart.process(gameData, player);

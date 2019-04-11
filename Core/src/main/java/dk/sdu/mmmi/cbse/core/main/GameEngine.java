@@ -119,6 +119,7 @@ public class GameEngine implements ApplicationListener {
         //tmr.setView(cam);
         gameData.setMouseX(Gdx.input.getX() - Gdx.graphics.getWidth() / 2);
         gameData.setMouseY(Gdx.graphics.getHeight() / 2 - Gdx.input.getY());
+        gameData.setMouseClicked(Gdx.input.isTouched());
 
     }
 
