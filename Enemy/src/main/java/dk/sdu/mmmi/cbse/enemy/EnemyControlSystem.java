@@ -68,7 +68,7 @@ public class EnemyControlSystem implements IEntityProcessingService, IGamePlugin
 
         enemyEntity.setType(1);
         enemyEntity.add(new MovingPart(speed, world));
-        enemyEntity.add(new PositionPart(100, 100, 3));
+        enemyEntity.add(new PositionPart(300, 300, 3));
         enemyEntity.add(new LifePart(life));
 
         return enemyEntity;
@@ -87,7 +87,7 @@ public class EnemyControlSystem implements IEntityProcessingService, IGamePlugin
 
         enemyEntity.setType(2);
         enemyEntity.add(new MovingPart(speed, world));
-        enemyEntity.add(new PositionPart(100, 100, 3));
+        enemyEntity.add(new PositionPart(300, 300, 3));
         enemyEntity.add(new LifePart(life));
 
         return enemyEntity;
@@ -105,7 +105,7 @@ public class EnemyControlSystem implements IEntityProcessingService, IGamePlugin
 
         enemyEntity.setType(3);
         enemyEntity.add(new MovingPart(speed, world));
-        enemyEntity.add(new PositionPart(100, 100, 3));
+        enemyEntity.add(new PositionPart(300, 300, 3));
         enemyEntity.add(new LifePart(life));
 
         return enemyEntity;
@@ -123,7 +123,7 @@ public class EnemyControlSystem implements IEntityProcessingService, IGamePlugin
         
         enemyEntity.setType(4);
         enemyEntity.add(new MovingPart(speed, world));
-        enemyEntity.add(new PositionPart(100, 100, 3));
+        enemyEntity.add(new PositionPart(300, 300, 3));
         enemyEntity.add(new LifePart(life));
 
         return enemyEntity;

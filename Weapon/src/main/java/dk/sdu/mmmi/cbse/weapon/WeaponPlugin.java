@@ -33,7 +33,7 @@ public class WeaponPlugin implements IGamePluginService{
        public static Weapon createBullet(PositionPart playerPositionPart, MovingPart playerMovingPart) {
 
         float deacceleration = 0;
-        float acceleration = 350;
+        float acceleration = 2500;
         float maxSpeed = 350;
         float rotationSpeed = 0;
         float x = playerPositionPart.getX();

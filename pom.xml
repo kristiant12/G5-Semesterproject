@@ -74,6 +74,7 @@
         <module>LibGDX</module>
         <module>Weapon</module>
         <module>Map</module>
+        <module>EntityCollision</module>
     </modules>
 
     <properties>
