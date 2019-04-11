@@ -71,8 +71,8 @@ public class TextPlayerControl implements IEntityProcessingService, IGamePluginS
         float acceleration = 200;
         float maxSpeed = 200;
         float rotationSpeed = 5;
-        float x = gameData.getDisplayWidth() / 2;
-        float y = gameData.getDisplayHeight() / 2;
+        float x = 1615;
+        float y = 1875;
         float radians = 3.1415f / 2;
         int life = 100;
 
@@ -80,6 +80,8 @@ public class TextPlayerControl implements IEntityProcessingService, IGamePluginS
         player.setImage(manager.get("assets/images/player5.png", Texture.class));
         player.setWidth(player.getImage().getWidth());
         player.setHeight(player.getImage().getHeight());
+        player.setType(5);
+        player.setDamage(0);
         player.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
         player.add(new PositionPart(x, y, radians));
         player.add(new LifePart(life));

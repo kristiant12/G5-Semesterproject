@@ -185,43 +185,41 @@ public class GameEngine implements ApplicationListener {
                     PositionPart positionPart = entity.getPart(PositionPart.class);
                     LifePart life = entity.getPart(LifePart.class);
                     ab.draw(entity.getImage(), positionPart.getX() - entity.getWidth() / 2, positionPart.getY() - entity.getHeight() / 2, entity.getWidth() / 2, entity.getHeight() / 2, entity.getWidth(), entity.getHeight(), 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, (int) entity.getWidth(), (int) entity.getHeight(), false, false);
-
                     ab.end();
-                    float x = 17;
-                    float y = 60;
+                    float x = -entity.getWidth()/2;
+                    float y = 25;
                     float width = 8;
-                //    drawLife(x, y, width, positionPart, life);
+                    drawLife(x, y, width, positionPart, life);
                 } else if (entity.getType() == 2) {
                     ab.begin();
                     PositionPart positionPart = entity.getPart(PositionPart.class);
                     LifePart life = entity.getPart(LifePart.class);
-                    float x = 12.5f;
-                    float y = 40;
+                    float x = -entity.getWidth()/2+12.5f;
+                    float y = 20;
                     float width = 4;
                     ab.draw(entity.getImage(), positionPart.getX() - entity.getWidth() / 2, positionPart.getY() - entity.getHeight() / 2, entity.getWidth() / 2, entity.getHeight() / 2, entity.getWidth(), entity.getHeight(), 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, (int) entity.getWidth(), (int) entity.getHeight(), false, false);
                     ab.end();
-                  //  drawLife(x, y, width, positionPart, life);
+                    drawLife(x, y, width, positionPart, life);
                 } else if (entity.getType() == 3) {
                     ab.begin();
                     PositionPart positionPart = entity.getPart(PositionPart.class);
                     LifePart life = entity.getPart(LifePart.class);
-                    float x = 10;
-                    float y = 75;
+                    float x = -entity.getWidth()/2;
+                    float y = 50;
                     float width = 8;
                     ab.draw(entity.getImage(), positionPart.getX() - entity.getWidth() / 2, positionPart.getY() - entity.getHeight() / 2, entity.getWidth() / 2, entity.getHeight() / 2, entity.getWidth(), entity.getHeight(), 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, (int) entity.getWidth(), (int) entity.getHeight(), false, false);
-
                     ab.end();
-                  //  drawLife(x, y, width, positionPart, life);
+                    drawLife(x, y, width, positionPart, life);
                 } else if (entity.getType() == 4) {
                     ab.begin();
                     PositionPart positionPart = entity.getPart(PositionPart.class);
                     LifePart life = entity.getPart(LifePart.class);
-                    float x = 70;
-                    float y = 230;
+                    float x = -entity.getWidth()/2;
+                    float y = 100;
                     float width = 8;
                     ab.draw(entity.getImage(), positionPart.getX() - entity.getWidth() / 2, positionPart.getY() - entity.getHeight() / 2, entity.getWidth() / 2, entity.getHeight() / 2, entity.getWidth(), entity.getHeight(), 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, (int) entity.getWidth(), (int) entity.getHeight(), false, false);
                     ab.end();
-                //    drawLife(x, y, width, positionPart, life);
+                    drawLife(x, y, width, positionPart, life);
                 }
             }
 
@@ -230,8 +228,10 @@ public class GameEngine implements ApplicationListener {
     }
 
     private void drawLife(float xPosition, float yPosition, float width, PositionPart positionPart, LifePart life) {
+        
         sr.begin(ShapeType.Filled);
         sr.setColor(Color.GREEN);
+        
         sr.rect(positionPart.getX() + xPosition, positionPart.getY() + yPosition, life.getLife(), width);
         sr.end();
     }

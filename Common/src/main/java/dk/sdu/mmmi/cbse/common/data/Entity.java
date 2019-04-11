@@ -10,6 +10,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Entity extends Sprite implements Serializable {
+
     private final UUID ID = UUID.randomUUID();
 
     private float[] shapeX = new float[4];
@@ -18,45 +19,37 @@ public class Entity extends Sprite implements Serializable {
     private float height, width;
     private int type;
     private Texture image;
+    private int damage;
     private Map<Class, EntityPart> parts;
 //    private Texture texture;
 
-    public Texture getImage() {
-        return image;
-    }
-
-    public void setImage(Texture image) {
-        this.image = image;
-    }
-    
-    
     public Entity() {
         parts = new ConcurrentHashMap<>();
     }
-    
+
     public Entity(float height, float width) {
         this.width = width;
         this.height = height;
         parts = new ConcurrentHashMap<>();
     }
-    
+
     public void add(EntityPart part) {
         parts.put(part.getClass(), part);
     }
-    
+
     public void remove(Class partClass) {
         parts.remove(partClass);
     }
-    
+
     public <E extends EntityPart> E getPart(Class partClass) {
         return (E) parts.get(partClass);
     }
-    
-    public void setRadius(float r){
+
+    public void setRadius(float r) {
         this.radius = r;
     }
-    
-    public float getRadius(){
+
+    public float getRadius() {
         return radius;
     }
 
@@ -79,24 +72,21 @@ public class Entity extends Sprite implements Serializable {
     public void setShapeY(float[] shapeY) {
         this.shapeY = shapeY;
     }
-    
-    public void setType(int type){
+
+    public void setType(int type) {
         this.type = type;
     }
-    
-    public int getType(){
+
+    public int getType() {
         return type;
     }
-    
-    
-    
+
 //    public void setTexture(Texture texture){
 //        this.texture = texture;
 //    }
 //    public Texture getTexture(){
 //        return texture;
 //    }
-
     @Override
     public float getHeight() {
         return height;
@@ -114,4 +104,21 @@ public class Entity extends Sprite implements Serializable {
     public void setWidth(float width) {
         this.width = width;
     }
+
+    public Texture getImage() {
+        return image;
+    }
+
+    public void setImage(Texture image) {
+        this.image = image;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
 }
