@@ -22,7 +22,7 @@ import java.util.Random;
  * @author tfvg-pc11
  */
 
-public class EnemyPlugin implements IGamePluginService {
+public class EnemyPlugin {
 
     private Entity enemy;
     private Entity runner;
@@ -32,9 +32,7 @@ public class EnemyPlugin implements IGamePluginService {
     private int type;
 
 
-    @Override
-    public void start(GameData gameData, World world, AssetManager manager) {
-    }
+    
 
     public Entity createNormalEnemy(GameData gameData, World world, AssetManager manager) {
 
@@ -115,9 +113,11 @@ public class EnemyPlugin implements IGamePluginService {
         return enemyEntity;
     }
 
-    @Override
+   
     public void stop(GameData gameData, World world) {
-        world.removeEntity(enemy);
+        for(Entity enmey : world.getEntities(Enemy.class)){
+            world.removeEntity(enmey);
+        }
     }
 
 }

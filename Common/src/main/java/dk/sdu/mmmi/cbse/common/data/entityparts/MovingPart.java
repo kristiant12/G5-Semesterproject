@@ -112,11 +112,14 @@ public class MovingPart implements EntityPart {
             dx += cos(radians) * acceleration * dt;
             dy += sin(radians) * acceleration * dt;
         } else if (entity instanceof IEnemy) {
+            float playerX = 0;
+            float playerY = 0;
+            
             for (Entity player : world.getEntities()) {
                 if (player instanceof IPlayer) {
                     PositionPart poPlayer = player.getPart(PositionPart.class);
-                    float playerX = poPlayer.getX();
-                    float playerY = poPlayer.getY();
+                     playerX = poPlayer.getX();
+                     playerY = poPlayer.getY();
                     
                     radians = (float) Math.atan2(playerY- y,playerX - x );
 

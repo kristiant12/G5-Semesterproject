@@ -30,7 +30,7 @@ public class Wave implements IPostEntityProcessingService, IGamePluginService {
     private int points = 0;
     private int wave = 0;
     private Random rand = new Random();
-    private EnemyPlugin a;
+    private EnemyPlugin a = new EnemyPlugin();
    
 
     @Override
@@ -66,7 +66,7 @@ public class Wave implements IPostEntityProcessingService, IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world, AssetManager manger) {
-        a = new EnemyPlugin();
+        
     }
 
     @Override
