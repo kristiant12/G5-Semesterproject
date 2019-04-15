@@ -5,6 +5,7 @@
  */
 package dk.sdu.mmmi.cbse.entitycollision;
 
+import com.badlogic.gdx.assets.AssetManager;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -25,7 +26,7 @@ import org.openide.util.lookup.ServiceProviders;
 public class Collision implements IPostEntityProcessingService {
 
     @Override
-    public void process(GameData gameData, World world) {
+    public void process(GameData gameData, World world,AssetManager manager) {
         for (Entity entity : world.getEntities()) {
             for (Entity collisionDetection : world.getEntities()) {
                 if ((entity.getType() == 6 || entity.getType() == 5) && (collisionDetection.getType() == 6 || collisionDetection.getType() == 5)) {

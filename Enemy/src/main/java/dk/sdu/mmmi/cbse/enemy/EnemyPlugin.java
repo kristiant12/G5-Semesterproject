@@ -15,56 +15,28 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import java.util.Random;
-import org.openide.util.lookup.ServiceProvider;
-import org.openide.util.lookup.ServiceProviders;
+
 
 /**
  *
  * @author tfvg-pc11
  */
-@ServiceProviders(value = {
-    @ServiceProvider(service = IGamePluginService.class)})
+
 public class EnemyPlugin implements IGamePluginService {
 
     private Entity enemy;
     private Entity runner;
-    private Entity runner1;
-    private Entity runner2;
-    private Entity runner3;
-    private Entity runner4;
-    private Entity runner5;
-    private Entity runner6;
     private Entity fatty;
     private Entity boss;
     private Random rand = new Random();
+    private int type;
+
 
     @Override
     public void start(GameData gameData, World world, AssetManager manager) {
-        enemy = createNormalEnemy(gameData, world, manager);
-        runner = createRunnerEnemy(gameData, world, manager);
-        runner1 = createRunnerEnemy(gameData, world, manager);
-        runner2 = createRunnerEnemy(gameData, world, manager);
-        runner3 = createRunnerEnemy(gameData, world, manager);
-        runner4 = createRunnerEnemy(gameData, world, manager);
-        runner5 = createRunnerEnemy(gameData, world, manager);
-        runner6 = createRunnerEnemy(gameData, world, manager);
-
-        fatty = createFattyEnemy(gameData, world, manager);
-        boss = createBossEnemy(gameData, world, manager);
-        world.addEntity(enemy);
-        world.addEntity(runner);
-        world.addEntity(runner1);
-        world.addEntity(runner2);
-        world.addEntity(runner3);
-        world.addEntity(runner4);
-        world.addEntity(runner5);
-        world.addEntity(runner6);
-
-        world.addEntity(fatty);
-        world.addEntity(boss);
     }
 
-    private Entity createNormalEnemy(GameData gameData, World world, AssetManager manager) {
+    public Entity createNormalEnemy(GameData gameData, World world, AssetManager manager) {
 
         float speed = 50;
         int life = 50;
@@ -84,7 +56,7 @@ public class EnemyPlugin implements IGamePluginService {
 
     }
 
-    private Entity createRunnerEnemy(GameData gameData, World world, AssetManager manager) {
+    public Entity createRunnerEnemy(GameData gameData, World world, AssetManager manager) {
 
         float speed = 130;
         int life = 25;
@@ -103,7 +75,7 @@ public class EnemyPlugin implements IGamePluginService {
         return enemyEntity;
     }
 
-    private Entity createFattyEnemy(GameData gameData, World world, AssetManager manager) {
+    public Entity createFattyEnemy(GameData gameData, World world, AssetManager manager) {
 
         float speed = 35;
         int life = 100;
@@ -123,7 +95,7 @@ public class EnemyPlugin implements IGamePluginService {
         return enemyEntity;
     }
 
-    private Entity createBossEnemy(GameData gameData, World world, AssetManager manager) {
+    public Entity createBossEnemy(GameData gameData, World world, AssetManager manager) {
 
         float speed = 150;
         int life = 200;
