@@ -28,7 +28,6 @@ import org.openide.util.lookup.ServiceProviders;
 public class Wave implements IPostEntityProcessingService, IGamePluginService {
 
     private int points = 0;
-    private int wave = 0;
     private Random rand = new Random();
     private EnemyPlugin a = new EnemyPlugin();
    
@@ -43,8 +42,8 @@ public class Wave implements IPostEntityProcessingService, IGamePluginService {
 
     private void createWave(GameData gameData, World world, AssetManager manager) {
         
-        wave++;
-        points = 3 + wave * 5;
+        gameData.increaseWave();
+        points = 3 + gameData.getWave() * 5;
         while (points > 0) {
             int s = rand.nextInt(13);
             if(s < 6){

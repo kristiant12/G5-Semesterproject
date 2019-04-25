@@ -13,6 +13,15 @@ public class GameData {
     private int mouseX;
     private int mouseY;
     private boolean mouseClicked;
+    private int wave = 0;
+
+    public int getWave() {
+        return wave;
+    }
+
+    public void increaseWave() {
+        this.wave++;
+    }
 
     public boolean isMouseClicked() {
         return mouseClicked;
@@ -90,4 +99,7 @@ public class GameData {
 
         return r;
     }
+    
+    
+    
 }

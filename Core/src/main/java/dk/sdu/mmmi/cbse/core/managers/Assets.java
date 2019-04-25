@@ -6,9 +6,9 @@
 package dk.sdu.mmmi.cbse.core.managers;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import java.io.File;
 
 /**
  *
@@ -37,9 +37,10 @@ public class Assets {
         assetManager.load("assets\\images\\player5.png", Texture.class);
         assetManager.load("assets\\images\\Boss.png", Texture.class);
         assetManager.load("assets\\images\\Enemies.png", Texture.class);
-        assetManager.load("assets\\images\\Runner.png", Texture.class); 
+        assetManager.load("assets\\images\\Runner.png", Texture.class);
         assetManager.load("assets\\images\\Fatties.png", Texture.class);
-        
+        assetManager.load("assets\\images\\Oof.wav", Music.class);
+        assetManager.load("assets\\images\\Soundtrack.mp3", Music.class);
         
         assetManager.finishLoading();
     }

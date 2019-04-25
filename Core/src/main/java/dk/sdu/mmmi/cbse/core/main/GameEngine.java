@@ -2,11 +2,13 @@ package dk.sdu.mmmi.cbse.core.main;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -33,7 +35,7 @@ import dk.sdu.mmmi.cbse.core.managers.GameInputProcessor;
 import dk.sdu.mmmi.cbse.map.Map;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+
 
 import java.util.ArrayList;
 
@@ -73,6 +75,8 @@ public class GameEngine extends JPanel implements ApplicationListener,ActionList
     private boolean GameScreen = false;
     private JFrame f;
     private JButton b;
+    private BitmapFont font;
+    private Music sound; 
 
     @Override
 
@@ -80,6 +84,7 @@ public class GameEngine extends JPanel implements ApplicationListener,ActionList
         // tileMap = new TmxMapLoader().load("assets\\images\\NewMap.tmx");
         Map map = new Map();
         tileMapNew = map.getMap();
+        sound = Gdx.audio.newMusic(Gdx.files.internal("assets\\images\\Soundtrack.mp3"));
         tmr = new OrthogonalTiledMapRenderer(tileMapNew);
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
@@ -99,6 +104,7 @@ public class GameEngine extends JPanel implements ApplicationListener,ActionList
         f.setVisible(true);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         b.addActionListener(this);
+        font = new BitmapFont();
         
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
@@ -128,8 +134,9 @@ public class GameEngine extends JPanel implements ApplicationListener,ActionList
             update();
             draw();
             drawTextur();
+            sound.dispose();
         } else {
-            
+            sound.play();
         }
 
         //    mapCollision(world);
@@ -194,6 +201,9 @@ public class GameEngine extends JPanel implements ApplicationListener,ActionList
                 sr.setColor(Color.GREEN);
                 sr.rect(positionPart.getX() - (Gdx.graphics.getWidth() / 2), positionPart.getY() + (Gdx.graphics.getHeight() / 2) - 25, life.getLife() * 2, 25);
                 sr.end();
+                ab.begin();
+                font.draw(ab, "Wave: "+gameData.getWave(), positionPart.getX()-(Gdx.graphics.getWidth() / 2), positionPart.getY() + (Gdx.graphics.getHeight() / 2) - 40);
+                ab.end();
                 cam.update();
             } else if (entity instanceof IEnemy) {
                 if (entity.getType() == 1) {

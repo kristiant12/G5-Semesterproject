@@ -120,5 +120,5 @@ public class Entity extends Sprite implements Serializable {
     public void setDamage(int damage) {
         this.damage = damage;
     }
-
+    
 }

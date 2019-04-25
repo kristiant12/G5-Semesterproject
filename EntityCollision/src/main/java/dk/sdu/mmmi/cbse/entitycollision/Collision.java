@@ -5,7 +5,11 @@
  */
 package dk.sdu.mmmi.cbse.entitycollision;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -24,9 +28,11 @@ import org.openide.util.lookup.ServiceProviders;
     @ServiceProvider(service = IPostEntityProcessingService.class)
 })
 public class Collision implements IPostEntityProcessingService {
-
+    private Music sound = Gdx.audio.newMusic(Gdx.files.internal("assets\\images\\Oof.wav"));
+   
     @Override
     public void process(GameData gameData, World world,AssetManager manager) {
+       
         for (Entity entity : world.getEntities()) {
             for (Entity collisionDetection : world.getEntities()) {
                 if ((entity.getType() == 6 || entity.getType() == 5) && (collisionDetection.getType() == 6 || collisionDetection.getType() == 5)) {
@@ -53,6 +59,7 @@ public class Collision implements IPostEntityProcessingService {
                             }
                             // if entity is out of life - remove
                             if (entityLife.getLife() <= 0) {
+                                sound.play();
                                 world.removeEntity(entity);
                             }
                         }
