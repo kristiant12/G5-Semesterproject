@@ -36,7 +36,7 @@ public class EnemyPlugin {
 
     public Entity createNormalEnemy(GameData gameData, World world, AssetManager manager) {
 
-        float speed = 50;
+        float speed = 110;
         int life = 50;
 
         Entity enemyEntity = new Enemy();
@@ -56,7 +56,7 @@ public class EnemyPlugin {
 
     public Entity createRunnerEnemy(GameData gameData, World world, AssetManager manager) {
 
-        float speed = 130;
+        float speed = 160;
         int life = 25;
 
         Entity enemyEntity = new Enemy();
@@ -75,7 +75,7 @@ public class EnemyPlugin {
 
     public Entity createFattyEnemy(GameData gameData, World world, AssetManager manager) {
 
-        float speed = 35;
+        float speed = 90;
         int life = 100;
 
         Entity enemyEntity = new Enemy();
@@ -95,7 +95,7 @@ public class EnemyPlugin {
 
     public Entity createBossEnemy(GameData gameData, World world, AssetManager manager) {
 
-        float speed = 150;
+        float speed = 100;
         int life = 200;
 
         Entity enemyEntity = new Enemy();

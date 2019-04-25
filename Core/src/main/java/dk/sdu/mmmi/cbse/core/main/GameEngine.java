@@ -2,17 +2,21 @@ package dk.sdu.mmmi.cbse.core.main;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -27,20 +31,25 @@ import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 import dk.sdu.mmmi.cbse.core.managers.Assets;
 import dk.sdu.mmmi.cbse.core.managers.GameInputProcessor;
 import dk.sdu.mmmi.cbse.map.Map;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+
 import java.util.ArrayList;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
 
-public class GameEngine implements ApplicationListener {
+public class GameEngine extends JPanel implements ApplicationListener,ActionListener {
 
-    private int tingRamtPåX = 0;
-    private int tingRampPåY = 0;
-    // private TiledMap tileMap;
     private TiledMap tileMapNew;
     private OrthogonalTiledMapRenderer tmr;
     private static OrthographicCamera cam = new OrthographicCamera();
@@ -56,12 +65,17 @@ public class GameEngine implements ApplicationListener {
     private Texture Runner;
     private Texture Fatties;
     private Texture Boss;
+    private TextButton startButton;
     // prøver Map collision
     private ArrayList<TiledMapTileLayer> mapList;
     private String blockedKey = "blocked";
     private Vector2 velocity;
+    private boolean GameScreen = false;
+    private JFrame f;
+    private JButton b;
 
     @Override
+
     public void create() {
         // tileMap = new TmxMapLoader().load("assets\\images\\NewMap.tmx");
         Map map = new Map();
@@ -75,14 +89,17 @@ public class GameEngine implements ApplicationListener {
         getLayer();
         sr = new ShapeRenderer();
         ab = new SpriteBatch();
-
         System.out.println(Assets.getInstance().getManger().getAssetNames());
-
-//        Testplayer = (Assets.getInstance().getManger().get("assets/images/player5.png", Texture.class));
-//        Enemy = (Assets.getInstance().getManger().get("assets/images/Enemies.png", Texture.class));
-//        Runner = (Assets.getInstance().getManger().get("assets/images/Runner.png", Texture.class));
-//        Fatties = (Assets.getInstance().getManger().get("assets/images/Fatties.png", Texture.class));
-//        Boss = (Assets.getInstance().getManger().get("assets/images/Boss.png", Texture.class));
+        f = new JFrame();
+        b = new JButton("play");
+        b.setBounds(100, 100, 140, 40);
+        f.add(b);
+        f.setSize(300,400);
+        f.setLayout(null);
+        f.setVisible(true);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        b.addActionListener(this);
+        
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
         result = lookup.lookupResult(IGamePluginService.class);
@@ -106,11 +123,16 @@ public class GameEngine implements ApplicationListener {
 
         gameData.getKeys().update();
         //renderer.setView(cam);
-        update();
-        draw();
-        drawTextur();
-        //    mapCollision(world);
 
+        if (GameScreen == true) {
+            update();
+            draw();
+            drawTextur();
+        } else {
+            
+        }
+
+        //    mapCollision(world);
         //tmr.setView(cam);
         gameData.setMouseX(Gdx.input.getX() - Gdx.graphics.getWidth() / 2);
         gameData.setMouseY(Gdx.graphics.getHeight() / 2 - Gdx.input.getY());
@@ -180,7 +202,7 @@ public class GameEngine implements ApplicationListener {
                     LifePart life = entity.getPart(LifePart.class);
                     ab.draw(entity.getImage(), positionPart.getX() - entity.getWidth() / 2, positionPart.getY() - entity.getHeight() / 2, entity.getWidth() / 2, entity.getHeight() / 2, entity.getWidth(), entity.getHeight(), 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, (int) entity.getWidth(), (int) entity.getHeight(), false, false);
                     ab.end();
-                    float x = -entity.getWidth()/2;
+                    float x = -entity.getWidth() / 2;
                     float y = 25;
                     float width = 8;
                     drawLife(x, y, width, positionPart, life);
@@ -188,7 +210,7 @@ public class GameEngine implements ApplicationListener {
                     ab.begin();
                     PositionPart positionPart = entity.getPart(PositionPart.class);
                     LifePart life = entity.getPart(LifePart.class);
-                    float x = -entity.getWidth()/2+12.5f;
+                    float x = -entity.getWidth() / 2 + 12.5f;
                     float y = 20;
                     float width = 4;
                     ab.draw(entity.getImage(), positionPart.getX() - entity.getWidth() / 2, positionPart.getY() - entity.getHeight() / 2, entity.getWidth() / 2, entity.getHeight() / 2, entity.getWidth(), entity.getHeight(), 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, (int) entity.getWidth(), (int) entity.getHeight(), false, false);
@@ -198,7 +220,7 @@ public class GameEngine implements ApplicationListener {
                     ab.begin();
                     PositionPart positionPart = entity.getPart(PositionPart.class);
                     LifePart life = entity.getPart(LifePart.class);
-                    float x = -entity.getWidth()/2;
+                    float x = -entity.getWidth() / 2;
                     float y = 50;
                     float width = 8;
                     ab.draw(entity.getImage(), positionPart.getX() - entity.getWidth() / 2, positionPart.getY() - entity.getHeight() / 2, entity.getWidth() / 2, entity.getHeight() / 2, entity.getWidth(), entity.getHeight(), 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, (int) entity.getWidth(), (int) entity.getHeight(), false, false);
@@ -208,7 +230,7 @@ public class GameEngine implements ApplicationListener {
                     ab.begin();
                     PositionPart positionPart = entity.getPart(PositionPart.class);
                     LifePart life = entity.getPart(LifePart.class);
-                    float x = -entity.getWidth()/2;
+                    float x = -entity.getWidth() / 2;
                     float y = 100;
                     float width = 8;
                     ab.draw(entity.getImage(), positionPart.getX() - entity.getWidth() / 2, positionPart.getY() - entity.getHeight() / 2, entity.getWidth() / 2, entity.getHeight() / 2, entity.getWidth(), entity.getHeight(), 1, 1, (float) Math.toDegrees(positionPart.getRadians()), 0, 0, (int) entity.getWidth(), (int) entity.getHeight(), false, false);
@@ -222,10 +244,10 @@ public class GameEngine implements ApplicationListener {
     }
 
     private void drawLife(float xPosition, float yPosition, float width, PositionPart positionPart, LifePart life) {
-        
+
         sr.begin(ShapeType.Filled);
         sr.setColor(Color.GREEN);
-        
+
         sr.rect(positionPart.getX() + xPosition, positionPart.getY() + yPosition, life.getLife(), width);
         sr.end();
     }
@@ -245,6 +267,7 @@ public class GameEngine implements ApplicationListener {
 
     @Override
     public void pause() {
+
     }
 
     @Override
@@ -291,4 +314,14 @@ public class GameEngine implements ApplicationListener {
         }
 
     };
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        if(ae.getSource() == b){
+            GameScreen = true;
+            f.setVisible(false);
+            System.out.println("pls virk jeg er desperrat pls kk");
+        }
+    }
+
 }

@@ -42,7 +42,7 @@ public class WeaponPlugin implements IGamePluginService{
 
         
         Entity bullet = new Weapon();
-        bullet.setDamage(10);
+        bullet.setDamage(5);
         bullet.add(new PositionPart(x, y, radians));
         bullet.setRadius(1);
         MovingPart movingPart = new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed);

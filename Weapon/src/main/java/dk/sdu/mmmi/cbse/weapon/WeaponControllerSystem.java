@@ -38,7 +38,7 @@ public class WeaponControllerSystem implements IEntityProcessingService {
                 PositionPart positionPart = player.getPart(PositionPart.class);
                 MovingPart movingPart = player.getPart(MovingPart.class);
                 ShootingPart shootingPart = player.getPart(ShootingPart.class);
-                if(shootingPart.getShoot() && timeSinceLastShot > 0.5f){
+                if(shootingPart.getShoot() && timeSinceLastShot > 0.15f){
                     spawnBullet(movingPart, positionPart, shootingPart, gameData, world);
                     timeSinceLastShot = 0f;
                 }
