@@ -36,7 +36,6 @@ import dk.sdu.mmmi.cbse.map.Map;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 import java.util.ArrayList;
 
 import java.util.Collection;
@@ -50,7 +49,7 @@ import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
 
-public class GameEngine extends JPanel implements ApplicationListener,ActionListener {
+public class GameEngine extends JPanel implements ApplicationListener, ActionListener {
 
     private TiledMap tileMapNew;
     private OrthogonalTiledMapRenderer tmr;
@@ -76,7 +75,8 @@ public class GameEngine extends JPanel implements ApplicationListener,ActionList
     private JFrame f;
     private JButton b;
     private BitmapFont font;
-    private Music sound; 
+    private Music sound;
+    private Music gameSound;
 
     @Override
 
@@ -85,6 +85,8 @@ public class GameEngine extends JPanel implements ApplicationListener,ActionList
         Map map = new Map();
         tileMapNew = map.getMap();
         sound = Gdx.audio.newMusic(Gdx.files.internal("assets\\images\\Soundtrack.mp3"));
+        gameSound = Gdx.audio.newMusic(Gdx.files.internal("assets\\images\\Doom.mp3"));
+
         tmr = new OrthogonalTiledMapRenderer(tileMapNew);
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
@@ -99,13 +101,13 @@ public class GameEngine extends JPanel implements ApplicationListener,ActionList
         b = new JButton("play");
         b.setBounds(100, 100, 140, 40);
         f.add(b);
-        f.setSize(300,400);
+        f.setSize(300, 400);
         f.setLayout(null);
         f.setVisible(true);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         b.addActionListener(this);
         font = new BitmapFont();
-        
+
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
         result = lookup.lookupResult(IGamePluginService.class);
@@ -131,10 +133,12 @@ public class GameEngine extends JPanel implements ApplicationListener,ActionList
         //renderer.setView(cam);
 
         if (GameScreen == true) {
+            sound.dispose();
+            gameSound.play();
+            gameSound.setVolume(0.2f);
             update();
             draw();
             drawTextur();
-            sound.dispose();
         } else {
             sound.play();
         }
@@ -202,7 +206,7 @@ public class GameEngine extends JPanel implements ApplicationListener,ActionList
                 sr.rect(positionPart.getX() - (Gdx.graphics.getWidth() / 2), positionPart.getY() + (Gdx.graphics.getHeight() / 2) - 25, life.getLife() * 2, 25);
                 sr.end();
                 ab.begin();
-                font.draw(ab, "Wave: "+gameData.getWave(), positionPart.getX()-(Gdx.graphics.getWidth() / 2), positionPart.getY() + (Gdx.graphics.getHeight() / 2) - 40);
+                font.draw(ab, "Wave: " + gameData.getWave(), positionPart.getX() - (Gdx.graphics.getWidth() / 2), positionPart.getY() + (Gdx.graphics.getHeight() / 2) - 40);
                 ab.end();
                 cam.update();
             } else if (entity instanceof IEnemy) {
@@ -327,10 +331,10 @@ public class GameEngine extends JPanel implements ApplicationListener,ActionList
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        if(ae.getSource() == b){
+        if (ae.getSource() == b) {
             GameScreen = true;
             f.setVisible(false);
-            System.out.println("pls virk jeg er desperrat pls kk");
+            
         }
     }
 

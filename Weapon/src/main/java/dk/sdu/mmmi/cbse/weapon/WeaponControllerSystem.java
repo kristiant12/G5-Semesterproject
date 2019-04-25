@@ -5,6 +5,8 @@
  */
 package dk.sdu.mmmi.cbse.weapon;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -27,7 +29,7 @@ import org.openide.util.lookup.ServiceProviders;
 @ServiceProviders(value = {
     @ServiceProvider(service = IEntityProcessingService.class)})
 public class WeaponControllerSystem implements IEntityProcessingService {
-
+    private Music pew = Gdx.audio.newMusic(Gdx.files.internal("assets\\images\\Pew.wav"));
     private float delta = 0.03f;
     private float timeSinceLastShot;
 
@@ -38,7 +40,9 @@ public class WeaponControllerSystem implements IEntityProcessingService {
                 PositionPart positionPart = player.getPart(PositionPart.class);
                 MovingPart movingPart = player.getPart(MovingPart.class);
                 ShootingPart shootingPart = player.getPart(ShootingPart.class);
-                if(shootingPart.getShoot() && timeSinceLastShot > 0.05f){
+                if(shootingPart.getShoot() && timeSinceLastShot > 0.5f){
+                    pew.setVolume(0.2f);
+                    pew.play();
                     spawnBullet(movingPart, positionPart, shootingPart, gameData, world);
                     timeSinceLastShot = 0f;
                 }
@@ -73,8 +77,8 @@ public class WeaponControllerSystem implements IEntityProcessingService {
         PositionPart positionPart = bullet.getPart(PositionPart.class);
         float x = positionPart.getX();
         float y = positionPart.getY();
-        float width = 1;
-        float height = 1;
+        float width = 2;
+        float height = 2;
         float radians = positionPart.getRadians();
 
         shapex[0] = (float) (x + width);

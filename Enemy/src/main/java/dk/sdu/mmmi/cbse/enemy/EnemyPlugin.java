@@ -56,7 +56,7 @@ public class EnemyPlugin {
 
     public Entity createRunnerEnemy(GameData gameData, World world, AssetManager manager) {
 
-        float speed = 160;
+        float speed = 170;
         int life = 25;
 
         Entity enemyEntity = new Enemy();

@@ -4,17 +4,19 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import org.openide.modules.ModuleInstall;
 
-public class Installer extends ModuleInstall {    
+public class Installer extends ModuleInstall {
 
     private GameEngine g;
+    //private Main m;
 
     @Override
     public void restored() {
+        //     m = new Main();
 
         g = new GameEngine();
 
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-        cfg.title = "Zombie Wave Survival v_2";
+        cfg.title = "Return of the Oof";
         cfg.width = 800;
         cfg.height = 600;
         cfg.useGL30 = false;
