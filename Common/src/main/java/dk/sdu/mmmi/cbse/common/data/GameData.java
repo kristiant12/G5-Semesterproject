@@ -14,6 +14,9 @@ public class GameData {
     private int mouseY;
     private boolean mouseClicked;
     private int wave = 0;
+    private String playerName;
+    private int HighScoreIndex = 0;
+    private String[] HighScore = new String[10];
 
     public int getWave() {
         return wave;
@@ -21,6 +24,10 @@ public class GameData {
 
     public void increaseWave() {
         this.wave++;
+    }
+
+    public void newWave() {
+        wave = 0;
     }
 
     public boolean isMouseClicked() {
@@ -99,7 +106,23 @@ public class GameData {
 
         return r;
     }
-    
-    
-    
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public void addPlayerToArray(String name) {
+        if (HighScoreIndex <= 10) {
+            HighScore[HighScoreIndex] = name;
+            HighScoreIndex++;
+        }
+    }
+
+    public String[] getHighScoreArray() {
+        return HighScore;
+    }
 }

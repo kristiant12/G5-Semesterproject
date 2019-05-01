@@ -27,6 +27,7 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IEnemy;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
+import dk.sdu.mmmi.cbse.common.services.IHighScore;
 import dk.sdu.mmmi.cbse.common.services.IMap;
 import dk.sdu.mmmi.cbse.common.services.IPlayer;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
@@ -43,7 +44,10 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
@@ -72,8 +76,22 @@ public class GameEngine extends JPanel implements ApplicationListener, ActionLis
     private String blockedKey = "blocked";
     private Vector2 velocity;
     private boolean GameScreen = false;
-    private JFrame f;
-    private JButton b;
+    private JFrame MainMenu;
+    private JFrame highScoreScreen;
+    private JFrame playScreen;
+
+    private JButton playButton;
+    private JButton playScreenButton;
+    private JButton highscoreButton;
+    private JButton highscoreBackButton;
+    private JButton playBackButton;
+
+    private JLabel nameLabel;
+
+    private JTextField nameField;
+    
+    private JList<String> scoreList;
+
     private BitmapFont font;
     private Music sound;
     private Music gameSound;
@@ -97,15 +115,9 @@ public class GameEngine extends JPanel implements ApplicationListener, ActionLis
         sr = new ShapeRenderer();
         ab = new SpriteBatch();
         System.out.println(Assets.getInstance().getManger().getAssetNames());
-        f = new JFrame();
-        b = new JButton("play");
-        b.setBounds(100, 100, 140, 40);
-        f.add(b);
-        f.setSize(300, 400);
-        f.setLayout(null);
-        f.setVisible(true);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        b.addActionListener(this);
+        createJPlayScreen();
+        createJMainScreen();
+        createJHighscoreScreen();
         font = new BitmapFont();
 
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
@@ -114,9 +126,21 @@ public class GameEngine extends JPanel implements ApplicationListener, ActionLis
         result.addLookupListener(lookupListener);
         result.allItems();
         //   getLayer();
+       addPersonToHighScore();
+       createAllIGamePluginService();
+    }
+
+    public void createAllIGamePluginService() {
         for (IGamePluginService plugin : result.allInstances()) {
             plugin.start(gameData, world, Assets.getInstance().getManger());
             gamePlugins.add(plugin);
+        }
+    }
+
+    public void removeAllIGamePluginService() {
+        for (IGamePluginService plugin : result.allInstances()) {
+            plugin.stop(gameData, world);
+            gamePlugins.remove(plugin);
         }
     }
 
@@ -141,6 +165,23 @@ public class GameEngine extends JPanel implements ApplicationListener, ActionLis
             drawTextur();
         } else {
             sound.play();
+        }
+        boolean checkIfAlive = false;
+        for (Entity entity : world.getEntities()) {
+            if (entity instanceof IPlayer) {
+                checkIfAlive = true;
+            }
+        }
+        if (checkIfAlive == false && MainMenu.isVisible() == false && playScreen.isVisible() == false && highScoreScreen.isVisible() == false) {
+            GameScreen = false;
+            gameSound.stop();
+            removeAllIGamePluginService();
+            MainMenu.setVisible(true);
+            gameData.addPlayerToArray(gameData.getPlayerName()+" Wave: "+gameData.getWave());
+            highScoreScreen.remove(scoreList);
+            scoreList = new JList(gameData.getHighScoreArray());
+            scoreList.setBounds(70, 10, 200,250);
+            highScoreScreen.add(scoreList);
         }
 
         //    mapCollision(world);
@@ -331,11 +372,106 @@ public class GameEngine extends JPanel implements ApplicationListener, ActionLis
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        if (ae.getSource() == b) {
+        if (ae.getSource() == playScreenButton) {
+            // GameScreen = true;
+            playScreen.setVisible(true);
+            MainMenu.setVisible(false);
+        }
+        if (ae.getSource() == highscoreButton) {
+            MainMenu.setVisible(false);
+            highScoreScreen.setVisible(true);
+        }
+        if (ae.getSource() == highscoreBackButton) {
+            MainMenu.setVisible(true);
+            highScoreScreen.setVisible(false);
+        }
+        if (ae.getSource() == playBackButton) {
+            playScreen.setVisible(false);
+            MainMenu.setVisible(true);
+        }
+        if (ae.getSource() == playButton) {
+            playScreen.setVisible(false);
+            gameData.setPlayerName(nameField.getText());
+            gameData.newWave();
+            if (world.getEntities().isEmpty()) {
+                createAllIGamePluginService();
+            }
             GameScreen = true;
-            f.setVisible(false);
-            
         }
     }
 
+    public void createJMainScreen() {
+        MainMenu = new JFrame();
+        playScreenButton = new JButton("Start Game");
+        playScreenButton.setBounds(100, 100, 140, 40);
+        highscoreButton = new JButton("Highscore");
+        highscoreButton.setBounds(100, 200, 140, 40);
+        MainMenu.add(playScreenButton);
+        MainMenu.add(highscoreButton);
+        MainMenu.setSize(350, 400);
+        MainMenu.setLayout(null);
+        MainMenu.setVisible(true);
+
+        MainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        playScreenButton.addActionListener(this);
+        highscoreButton.addActionListener(this);
+    }
+
+    public void createJHighscoreScreen() {
+        highScoreScreen = new JFrame();
+        highscoreBackButton = new JButton("Back");
+        
+       
+        scoreList = new JList(gameData.getHighScoreArray());
+        
+        scoreList.setBounds(70, 10, 200,250);
+        
+       
+
+        highScoreScreen.setSize(350, 400);
+        highScoreScreen.setLayout(null);
+        highScoreScreen.setVisible(false);
+
+        highscoreBackButton.setBounds(25, 295, 70, 40);
+        highScoreScreen.add(highscoreBackButton);
+        highScoreScreen.add(scoreList);
+        highScoreScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        highscoreBackButton.addActionListener(this);
+
+    }
+
+    public void createJPlayScreen() {
+        playScreen = new JFrame();
+        playScreen.setSize(350, 400);
+        playScreen.setLayout(null);
+        playScreen.setVisible(false);
+
+        playBackButton = new JButton("Back");
+        playBackButton.setBounds(25, 295, 70, 40);
+
+        playButton = new JButton("Play");
+        playButton.setBounds(100, 200, 140, 40);
+
+        nameLabel = new JLabel("Enter name:");
+        nameLabel.setBounds(100, 100, 140, 40);
+
+        nameField = new JTextField();
+        nameField.setBounds(100, 150, 140, 40);
+
+        playScreen.add(playBackButton);
+        playScreen.add(playButton);
+        playScreen.add(nameLabel);
+        playScreen.add(nameField);
+
+        playScreen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        playBackButton.addActionListener(this);
+        playButton.addActionListener(this);
+    }
+    
+    public void addPersonToHighScore(){
+        
+       gameData.addPlayerToArray("kristian" + " wave:  1");
+       gameData.addPlayerToArray("ahmet wave: 5");
+       gameData.addPlayerToArray("nicolai wave: 10000");
+    }
 }
