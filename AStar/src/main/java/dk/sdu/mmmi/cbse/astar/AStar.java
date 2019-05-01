@@ -41,6 +41,7 @@ public class AStar {
 
     public LinkedList<Point> calculateRoute(Point start, Point end) {
         openList.clear();
+        
         closedList.clear();
         LinkedList<Point> route = new LinkedList<>();
 
@@ -53,12 +54,13 @@ public class AStar {
         Node endNode = new Node(end, 0, 0, null);
         findNeighbours(startNode, endNode);
         Node nextNode = openList.poll();
-
+        System.out.println("pre while");
         while (!openList.isEmpty() && !nextNode.equals(endNode)) {
             findNeighbours(nextNode, endNode);
             closedList.add(nextNode);
             nextNode = openList.poll();
         }
+        System.out.println("we left this ppoop");
 
         if (nextNode.equals(endNode)) {
             route.addFirst(end);
@@ -82,6 +84,7 @@ public class AStar {
     }
 
     private void findNeighbours(Node parent, Node end) {
+        
         ArrayList<Node> neighbors = new ArrayList<>();
         int index = gridWidth * (int) parent.getPoint().getY()%(cellSize/2) + (int) parent.getPoint().getX()%(cellSize/2);
 
@@ -111,19 +114,27 @@ public class AStar {
         if (index % gridWidth != gridWidth - 1 && index + gridWidth <= gridWidth * gridHeight - 1 && !grid[index + gridWidth]) {
             neighbors.add(createNode(1, 1, parent, end, diagonal));
         }
-
+        int i = 0;
         //Loop for checking wether a node is previously walked on
         for (Node node : neighbors) {
+            System.out.println("running neightbors " + i);
+            System.out.println("neightbors size " + neighbors.size());
+            i++;
             //If it is not in the previously marked nodes, and is not in the fringe, it is added to the fringe
             if (closedList.contains(node)) {
                 continue;
             }
             if (!openList.contains(node)) {
+                System.out.println("Adding node "+ node.toString());
                 openList.add(node);
             //checks for each node in the fringe if there is another node in the fringe that is better
                 //compared to the one we are standing on, based on the cost and heuristic of the pathfinding
             } else {
+                int j = 0;
                 for (Node temp : openList) {
+                    System.out.println("Size" + openList.size());
+                    System.out.println("running fore in openList " + j);
+                    j++;
                     if (temp.equals(node)) {
                         if (temp.compareTo(node) > 0) {
                             temp.updateNode(node);
@@ -136,7 +147,7 @@ public class AStar {
     }
 
     private Node createNode(int x, int y, Node parent, Node end, float cost) {
-        Point newPoint = new Point(parent.getPoint().getX() + x, parent.getPoint().getY() + y);
+        Point newPoint = new Point(parent.getPoint().getX() + x*(cellSize/2), parent.getPoint().getY() + y*(cellSize/2));
         return new Node(newPoint, calculateHeuristic(newPoint, end.getPoint()), cost + parent.getCost(), parent);
     }
 

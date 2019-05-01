@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.data.entityparts.AIPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
@@ -32,7 +33,7 @@ public class EnemyControlSystem implements IEntityProcessingService{
     public void process(GameData gameData, World world) {
         for (Entity player : world.getEntities(Enemy.class)) {
             PositionPart positionPart = player.getPart(PositionPart.class);
-            MovingPart move = player.getPart(MovingPart.class);
+            AIPart move = player.getPart(AIPart.class);
 
             move.process(gameData, player);
             positionPart.process(gameData, player);

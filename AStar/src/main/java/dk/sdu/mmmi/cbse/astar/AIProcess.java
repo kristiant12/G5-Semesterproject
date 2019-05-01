@@ -51,20 +51,27 @@ public class AIProcess implements IPostEntityProcessingService{
             return;
 
         // Finds all enemies, and get a hold of their movingpart
+        System.out.println("pre for 2");
         for (Entity enemy : world.getEntities()) {
-            if (enemy.getType() == 2 ) {
+            if (enemy instanceof IEnemy ) {
                 AIPart AIPart = enemy.getPart(AIPart.class);
 
                 // Checks if the timelimit for updating the path has been exceeded
                 // Updates the list of points to walk to get to the player
                 if (AIPart.needUpdate()) {
+                    System.out.println("inside if");
                     PositionPart positionPart = enemy.getPart(PositionPart.class);
+                    System.out.println("get part");
+                    System.out.println(playerPos.getX());
                     LinkedList<Point> route = aStar.calculateRoute(new Point(positionPart.getX(), positionPart.getY()), new Point(playerPos.getX(), playerPos.getY()));
+
+                    System.out.println("post calculateroute");
                     AIPart.setRoute(route);
                 }
             }
 
         }
+        System.out.println("post for 2");
     }
     
 }

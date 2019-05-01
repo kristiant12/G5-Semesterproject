@@ -11,7 +11,7 @@ import dk.sdu.mmmi.cbse.common.data.Point;
  *
  * @author kaspe
  */
-public class Node implements Comparable {
+public class Node implements Comparable<Node> {
 
     private Point point;
     /**
@@ -79,24 +79,22 @@ public class Node implements Comparable {
     /**
      * @see Comparable#compareTo(Object)
      */
-    public int compareTo(Object other) {
-        Node o = (Node) other;
-
-        float f = heuristic + cost;
-        float of = o.heuristic + o.cost;
-
-        if (f < of) {
-            return -1;
-        } else if (f > of) {
-            return 1;
-        } else {
-            return 0;
-        }
+    public int compareTo(Node o) {
+        return Double.compare(cost + heuristic, o.cost + o.heuristic);
     }
     
     public void updateNode(Node node) {
         cost = node.cost;
         heuristic = node.heuristic;
         parent = node.parent;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Node) {
+            Node other = ((Node) o);
+            return point.getX() == other.getPoint().getX() && point.getY() == other.getPoint().getY();
+        }
+        return false;
     }
 }

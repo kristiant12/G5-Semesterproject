@@ -20,7 +20,6 @@ public class MapCollision implements IMap {
 
     private ArrayList<TiledMapTileLayer> mapList;
     private String blockedKey = "blocked";
-    
 
     @Override
     public void process(GameData gameData, World world, ArrayList<TiledMapTileLayer> map) {
@@ -47,54 +46,50 @@ public class MapCollision implements IMap {
     public void mapCollision(World world, GameData gameData) {
         //long preTime = System.currentTimeMillis();
         for (Entity entity : world.getEntities()) {
-      
-    
-            PositionPart positionPart = entity.getPart(PositionPart.class);
-            MovingPart mp = entity.getPart(MovingPart.class);
-            mp.setCollisionX(false);
-            mp.setCollisionY(false);
-            
-            float oldX = positionPart.getX(), oldY = positionPart.getY(), tiledWith = mapList.get(0).getTileWidth(), tiledHeight = mapList.get(0).getTileHeight();
-            boolean collisionX = false;
-            boolean collisionY = false;
-            boolean left = false;
-            boolean right = false;
-            boolean up = false;
-            boolean down = false;
+
+            if (entity instanceof IPlayer) {
+
+                PositionPart positionPart = entity.getPart(PositionPart.class);
+                MovingPart mp = entity.getPart(MovingPart.class);
+                mp.setCollisionX(false);
+                mp.setCollisionY(false);
+
+                float oldX = positionPart.getX(), oldY = positionPart.getY(), tiledWith = mapList.get(0).getTileWidth(), tiledHeight = mapList.get(0).getTileHeight();
+                boolean collisionX = false;
+                boolean collisionY = false;
+                boolean left = false;
+                boolean right = false;
+                boolean up = false;
+                boolean down = false;
             // move on x
-            
-            if (isCellBlocked(positionPart.getX() - entity.getWidth()/2, positionPart.getY())) {
-                left = true;
-                mp.setCollisionX(left);
-            }
-            else if (isCellBlocked(positionPart.getX() + entity.getWidth()/2, positionPart.getY())) {
-                right = true;
-                mp.setCollisionX(right);
-            }
-            else if (isCellBlocked(positionPart.getX(), positionPart.getY() - entity.getHeight()/2)) {
-                down = true;
-                mp.setCollisionY(true);
-            }
-            else if (isCellBlocked(positionPart.getX(), positionPart.getY() + entity.getHeight()/2)) {
-                up = true;
-                mp.setCollisionY(true);
-            }
-            
-            
-            if (left) {
-                positionPart.setX(positionPart.getX()+1);
-            }
-            if (right) {
-                positionPart.setX(positionPart.getX()-1);
-            }
-            if (down) {
-                positionPart.setY(positionPart.getY()+1);
-            }
-            if (up) {
-                positionPart.setY(positionPart.getY()-1);
-            }
-            
-            
+
+                if (isCellBlocked(positionPart.getX() - entity.getWidth() / 2, positionPart.getY())) {
+                    left = true;
+                    mp.setCollisionX(left);
+                } else if (isCellBlocked(positionPart.getX() + entity.getWidth() / 2, positionPart.getY())) {
+                    right = true;
+                    mp.setCollisionX(right);
+                } else if (isCellBlocked(positionPart.getX(), positionPart.getY() - entity.getHeight() / 2)) {
+                    down = true;
+                    mp.setCollisionY(true);
+                } else if (isCellBlocked(positionPart.getX(), positionPart.getY() + entity.getHeight() / 2)) {
+                    up = true;
+                    mp.setCollisionY(true);
+                }
+
+                if (left) {
+                    positionPart.setX(positionPart.getX() + 1);
+                }
+                if (right) {
+                    positionPart.setX(positionPart.getX() - 1);
+                }
+                if (down) {
+                    positionPart.setY(positionPart.getY() + 1);
+                }
+                if (up) {
+                    positionPart.setY(positionPart.getY() - 1);
+                }
+
 //           if (positionPart.getX() > 0) {
 //                collisionX = isCellBlocked(positionPart.getX() + 65, positionPart.getY() + 55);
 //                
@@ -138,10 +133,8 @@ public class MapCollision implements IMap {
 //                    movingPart.setSpeed(200);
 //                }
 //            }
-            
-        
+            }
+            //System.out.println("Time to run collision " + (System.currentTimeMillis()-preTime) );
         }
-        //System.out.println("Time to run collision " + (System.currentTimeMillis()-preTime) );
     }
-
 }

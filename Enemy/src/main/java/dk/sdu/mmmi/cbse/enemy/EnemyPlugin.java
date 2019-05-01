@@ -36,7 +36,7 @@ public class EnemyPlugin {
     
 
     public Entity createNormalEnemy(GameData gameData, World world, AssetManager manager) {
-
+        System.out.println("Creating normal enemy");
         float speed = 110;
         int life = 50;
 
@@ -47,7 +47,9 @@ public class EnemyPlugin {
         enemyEntity.setHeight(enemyEntity.getImage().getHeight());
 
         enemyEntity.setType(1);
-        enemyEntity.add(new MovingPart(speed, world));
+        System.out.println("Pre ai");
+        enemyEntity.add(new AIPart(speed));
+        System.out.println("Post AI");
         enemyEntity.add(new PositionPart(rand.nextInt(400) + 150, rand.nextInt(355) + 275, 3));
         enemyEntity.add(new LifePart(life));
 
@@ -56,7 +58,7 @@ public class EnemyPlugin {
     }
 
     public Entity createRunnerEnemy(GameData gameData, World world, AssetManager manager) {
-
+        System.out.println("Creating runner enemy");
         float speed = 170;
         int life = 25;
 
@@ -67,7 +69,9 @@ public class EnemyPlugin {
         enemyEntity.setHeight(enemyEntity.getImage().getHeight());
 
         enemyEntity.setType(2);
+        System.out.println("Pre ai");
         enemyEntity.add(new AIPart(speed));
+        System.out.println("Post AI");
         enemyEntity.add(new PositionPart(rand.nextInt(400) + 150, rand.nextInt(355) + 275, 3));
         enemyEntity.add(new LifePart(life));
 
@@ -75,7 +79,7 @@ public class EnemyPlugin {
     }
 
     public Entity createFattyEnemy(GameData gameData, World world, AssetManager manager) {
-
+        System.out.println("fatty");
         float speed = 90;
         int life = 100;
 
@@ -86,16 +90,17 @@ public class EnemyPlugin {
         enemyEntity.setHeight(enemyEntity.getImage().getHeight());
 
         enemyEntity.setType(3);
-        enemyEntity.add(new MovingPart(speed, world));
+        System.out.println("Pre ai");
+        enemyEntity.add(new AIPart(speed));
+        System.out.println("Post AI");
         enemyEntity.add(new PositionPart(rand.nextInt(400) + 150, rand.nextInt(355) + 275, 3));
-
         enemyEntity.add(new LifePart(life));
 
         return enemyEntity;
     }
 
     public Entity createBossEnemy(GameData gameData, World world, AssetManager manager) {
-
+        System.out.println("boss");
         float speed = 100;
         int life = 200;
 
@@ -106,9 +111,10 @@ public class EnemyPlugin {
         enemyEntity.setHeight(enemyEntity.getImage().getHeight());
 
         enemyEntity.setType(4);
-        enemyEntity.add(new MovingPart(speed, world));
+        System.out.println("Pre ai");
+        enemyEntity.add(new AIPart(speed));
+        System.out.println("Post AI");
         enemyEntity.add(new PositionPart(rand.nextInt(400) + 150, rand.nextInt(355) + 275, 3));
-
         enemyEntity.add(new LifePart(life));
 
         return enemyEntity;

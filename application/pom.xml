@@ -97,6 +97,11 @@
             <artifactId>MapCollision</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>AStar</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
