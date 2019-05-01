@@ -1,5 +1,6 @@
 package dk.sdu.mmmi.cbse.common.data;
 
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import dk.sdu.mmmi.cbse.common.events.Event;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ public class GameData {
     private int mouseY;
     private boolean mouseClicked;
     private int wave = 0;
+    private ArrayList<TiledMapTileLayer> mapList;
 
     public int getWave() {
         return wave;
@@ -80,6 +82,16 @@ public class GameData {
     public void setMouseX(int mouseX) {
         this.mouseX = mouseX;
     }
+
+    public ArrayList<TiledMapTileLayer> getMapList() {
+        return mapList;
+    }
+
+    public void setMapList(ArrayList<TiledMapTileLayer> mapList) {
+        this.mapList = mapList;
+    }
+    
+    
 
     public int getMouseY() {
         return mouseY;

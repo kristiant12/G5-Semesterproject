@@ -75,6 +75,7 @@
         <module>Weapon</module>
         <module>Map</module>
         <module>EntityCollision</module>
+        <module>AStar</module>
     </modules>
 
     <properties>

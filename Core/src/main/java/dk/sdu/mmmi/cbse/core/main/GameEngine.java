@@ -88,12 +88,14 @@ public class GameEngine extends JPanel implements ApplicationListener, ActionLis
         gameSound = Gdx.audio.newMusic(Gdx.files.internal("assets\\images\\Doom.mp3"));
 
         tmr = new OrthogonalTiledMapRenderer(tileMapNew);
+              
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
         cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
         cam.update();
         this.mapList = new ArrayList<>();
         getLayer();
+        gameData.setMapList(mapList);
         sr = new ShapeRenderer();
         ab = new SpriteBatch();
         System.out.println(Assets.getInstance().getManger().getAssetNames());
@@ -208,6 +210,7 @@ public class GameEngine extends JPanel implements ApplicationListener, ActionLis
                 ab.begin();
                 font.draw(ab, "Wave: " + gameData.getWave(), positionPart.getX() - (Gdx.graphics.getWidth() / 2), positionPart.getY() + (Gdx.graphics.getHeight() / 2) - 40);
                 ab.end();
+//                System.out.println(positionPart.getX() + "   " + positionPart.getY());
                 cam.update();
             } else if (entity instanceof IEnemy) {
                 if (entity.getType() == 1) {
