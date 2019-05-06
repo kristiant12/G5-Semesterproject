@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dk.sdu.mmmi.cbse.common.data;
+package dk.sdu.mmmi.cbse.core.main;
 
 import dk.sdu.mmmi.cbse.common.services.IHighScore;
+
 
 /**
  *
@@ -21,22 +22,32 @@ public class HighScore implements IHighScore{
         this.wave = wave;
     }
 
+    @Override
     public int getWave() {
         return wave;
     }
 
+    @Override
     public void setWave(int wave) {
         this.wave = wave;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
     
+    
+    
+    @Override
+    public String toString(){
+        return getName() + " wave: "+getWave();
+    }
     
     
 }

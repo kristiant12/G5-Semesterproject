@@ -1,6 +1,7 @@
 package dk.sdu.mmmi.cbse.common.data;
 
 import dk.sdu.mmmi.cbse.common.events.Event;
+import dk.sdu.mmmi.cbse.common.services.IHighScore;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -17,6 +18,8 @@ public class GameData {
     private String playerName;
     private int HighScoreIndex = 0;
     private String[] HighScore = new String[10];
+    private IHighScore[] mildHighScore = new IHighScore[10];
+    private SortingAlgorithm sort = new SortingAlgorithm();
 
     public int getWave() {
         return wave;
@@ -125,4 +128,7 @@ public class GameData {
     public String[] getHighScoreArray() {
         return HighScore;
     }
+
+ 
+
 }

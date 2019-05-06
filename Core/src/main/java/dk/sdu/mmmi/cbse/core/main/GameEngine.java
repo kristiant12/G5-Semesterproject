@@ -89,12 +89,15 @@ public class GameEngine extends JPanel implements ApplicationListener, ActionLis
     private JLabel nameLabel;
 
     private JTextField nameField;
-    
-    private JList<String> scoreList;
+
+    private JList<HighScore> scoreList;
 
     private BitmapFont font;
     private Music sound;
     private Music gameSound;
+    
+    private SortingAlgorithm sort;
+    
 
     @Override
 
@@ -115,6 +118,9 @@ public class GameEngine extends JPanel implements ApplicationListener, ActionLis
         sr = new ShapeRenderer();
         ab = new SpriteBatch();
         System.out.println(Assets.getInstance().getManger().getAssetNames());
+        
+        sort = new SortingAlgorithm();
+        addPersonToHighScore();
         createJPlayScreen();
         createJMainScreen();
         createJHighscoreScreen();
@@ -125,9 +131,8 @@ public class GameEngine extends JPanel implements ApplicationListener, ActionLis
         result = lookup.lookupResult(IGamePluginService.class);
         result.addLookupListener(lookupListener);
         result.allItems();
-        //   getLayer();
-       addPersonToHighScore();
-       createAllIGamePluginService();
+        
+        createAllIGamePluginService();
     }
 
     public void createAllIGamePluginService() {
@@ -177,10 +182,12 @@ public class GameEngine extends JPanel implements ApplicationListener, ActionLis
             gameSound.stop();
             removeAllIGamePluginService();
             MainMenu.setVisible(true);
-            gameData.addPlayerToArray(gameData.getPlayerName()+" Wave: "+gameData.getWave());
+            sort.addPlayerToNewArray(new HighScore(gameData.getWave(), gameData.getPlayerName()));
+         //   gameData.addPlayerToNewArray(new HighScore(gameData.getWave(), gameData.getPlayerName()));
             highScoreScreen.remove(scoreList);
-            scoreList = new JList(gameData.getHighScoreArray());
-            scoreList.setBounds(70, 10, 200,250);
+            
+            scoreList = new JList(sort.getNewHighScoreArray());
+            scoreList.setBounds(70, 10, 200, 250);
             highScoreScreen.add(scoreList);
         }
 
@@ -420,13 +427,10 @@ public class GameEngine extends JPanel implements ApplicationListener, ActionLis
     public void createJHighscoreScreen() {
         highScoreScreen = new JFrame();
         highscoreBackButton = new JButton("Back");
-        
-       
-        scoreList = new JList(gameData.getHighScoreArray());
-        
-        scoreList.setBounds(70, 10, 200,250);
-        
-       
+       // sort.sort();
+        scoreList = new JList(sort.getNewHighScoreArray());
+
+        scoreList.setBounds(70, 10, 200, 250);
 
         highScoreScreen.setSize(350, 400);
         highScoreScreen.setLayout(null);
@@ -467,11 +471,15 @@ public class GameEngine extends JPanel implements ApplicationListener, ActionLis
         playBackButton.addActionListener(this);
         playButton.addActionListener(this);
     }
+
     
-    public void addPersonToHighScore(){
+
+    public void addPersonToHighScore() {
+        sort.addPlayerToNewArray(new HighScore(1, "kristian"));
+        sort.addPlayerToNewArray(new HighScore(4, "ahmet"));
+        sort.addPlayerToNewArray(new HighScore(4000, "nicolai"));
         
-       gameData.addPlayerToArray("kristian" + " wave:  1");
-       gameData.addPlayerToArray("ahmet wave: 5");
-       gameData.addPlayerToArray("nicolai wave: 10000");
+       
+       // sotering.sort(gameData.getNewHighScoreArray());
     }
 }
