@@ -7,11 +7,10 @@ import org.openide.modules.ModuleInstall;
 public class Installer extends ModuleInstall {
 
     private GameEngine g;
-    //private Main m;
 
     @Override
     public void restored() {
-        //     m = new Main();
+
 
         g = new GameEngine();
 

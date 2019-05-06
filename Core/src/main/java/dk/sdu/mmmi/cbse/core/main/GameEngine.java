@@ -3,21 +3,18 @@ package dk.sdu.mmmi.cbse.core.main;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
@@ -27,7 +24,6 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IEnemy;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
-import dk.sdu.mmmi.cbse.common.services.IHighScore;
 import dk.sdu.mmmi.cbse.common.services.IMap;
 import dk.sdu.mmmi.cbse.common.services.IPlayer;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
@@ -71,7 +67,6 @@ public class GameEngine extends JPanel implements ApplicationListener, ActionLis
     private Texture Fatties;
     private Texture Boss;
     private TextButton startButton;
-    // prøver Map collision
     private ArrayList<TiledMapTileLayer> mapList;
     private String blockedKey = "blocked";
     private Vector2 velocity;
@@ -79,30 +74,22 @@ public class GameEngine extends JPanel implements ApplicationListener, ActionLis
     private JFrame MainMenu;
     private JFrame highScoreScreen;
     private JFrame playScreen;
-
     private JButton playButton;
     private JButton playScreenButton;
     private JButton highscoreButton;
     private JButton highscoreBackButton;
     private JButton playBackButton;
-
     private JLabel nameLabel;
-
     private JTextField nameField;
-
     private JList<HighScore> scoreList;
-
     private BitmapFont font;
     private Music sound;
     private Music gameSound;
-    
     private SortingAlgorithm sort;
-    
 
     @Override
 
     public void create() {
-        // tileMap = new TmxMapLoader().load("assets\\images\\NewMap.tmx");
         Map map = new Map();
         tileMapNew = map.getMap();
         sound = Gdx.audio.newMusic(Gdx.files.internal("assets\\images\\Soundtrack.mp3"));
@@ -117,21 +104,16 @@ public class GameEngine extends JPanel implements ApplicationListener, ActionLis
         getLayer();
         sr = new ShapeRenderer();
         ab = new SpriteBatch();
-        System.out.println(Assets.getInstance().getManger().getAssetNames());
-        
         sort = new SortingAlgorithm();
         addPersonToHighScore();
         createJPlayScreen();
         createJMainScreen();
         createJHighscoreScreen();
         font = new BitmapFont();
-
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
-
         result = lookup.lookupResult(IGamePluginService.class);
         result.addLookupListener(lookupListener);
         result.allItems();
-        
         createAllIGamePluginService();
     }
 
@@ -157,9 +139,7 @@ public class GameEngine extends JPanel implements ApplicationListener, ActionLis
         tmr.setView(cam);
         tmr.render();
         gameData.setDelta(Gdx.graphics.getDeltaTime());
-
         gameData.getKeys().update();
-        //renderer.setView(cam);
 
         if (GameScreen == true) {
             sound.dispose();
@@ -183,16 +163,12 @@ public class GameEngine extends JPanel implements ApplicationListener, ActionLis
             removeAllIGamePluginService();
             MainMenu.setVisible(true);
             sort.addPlayerToNewArray(new HighScore(gameData.getWave(), gameData.getPlayerName()));
-         //   gameData.addPlayerToNewArray(new HighScore(gameData.getWave(), gameData.getPlayerName()));
             highScoreScreen.remove(scoreList);
-            
             scoreList = new JList(sort.getNewHighScoreArray());
             scoreList.setBounds(70, 10, 200, 250);
             highScoreScreen.add(scoreList);
         }
 
-        //    mapCollision(world);
-        //tmr.setView(cam);
         gameData.setMouseX(Gdx.input.getX() - Gdx.graphics.getWidth() / 2);
         gameData.setMouseY(Gdx.graphics.getHeight() / 2 - Gdx.input.getY());
         gameData.setMouseClicked(Gdx.input.isTouched());
@@ -427,15 +403,11 @@ public class GameEngine extends JPanel implements ApplicationListener, ActionLis
     public void createJHighscoreScreen() {
         highScoreScreen = new JFrame();
         highscoreBackButton = new JButton("Back");
-       // sort.sort();
         scoreList = new JList(sort.getNewHighScoreArray());
-
         scoreList.setBounds(70, 10, 200, 250);
-
         highScoreScreen.setSize(350, 400);
         highScoreScreen.setLayout(null);
         highScoreScreen.setVisible(false);
-
         highscoreBackButton.setBounds(25, 295, 70, 40);
         highScoreScreen.add(highscoreBackButton);
         highScoreScreen.add(scoreList);
@@ -449,10 +421,8 @@ public class GameEngine extends JPanel implements ApplicationListener, ActionLis
         playScreen.setSize(350, 400);
         playScreen.setLayout(null);
         playScreen.setVisible(false);
-
         playBackButton = new JButton("Back");
         playBackButton.setBounds(25, 295, 70, 40);
-
         playButton = new JButton("Play");
         playButton.setBounds(100, 200, 140, 40);
 
@@ -472,14 +442,10 @@ public class GameEngine extends JPanel implements ApplicationListener, ActionLis
         playButton.addActionListener(this);
     }
 
-    
-
     public void addPersonToHighScore() {
         sort.addPlayerToNewArray(new HighScore(1, "kristian"));
         sort.addPlayerToNewArray(new HighScore(4, "ahmet"));
         sort.addPlayerToNewArray(new HighScore(4000, "nicolai"));
-        
-       
-       // sotering.sort(gameData.getNewHighScoreArray());
+
     }
 }
