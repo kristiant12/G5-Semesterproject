@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import dk.sdu.mmmi.cbse.common.data.entityparts.EntityPart;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,7 +20,6 @@ public class Entity extends Sprite implements Serializable {
     private Texture image;
     private int damage;
     private Map<Class, EntityPart> parts;
-//    private Texture texture;
 
     public Entity() {
         parts = new ConcurrentHashMap<>();
@@ -81,12 +79,6 @@ public class Entity extends Sprite implements Serializable {
         return type;
     }
 
-//    public void setTexture(Texture texture){
-//        this.texture = texture;
-//    }
-//    public Texture getTexture(){
-//        return texture;
-//    }
     @Override
     public float getHeight() {
         return height;

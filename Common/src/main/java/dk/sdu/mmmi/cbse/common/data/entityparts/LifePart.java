@@ -1,17 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dk.sdu.mmmi.cbse.common.data.entityparts;
 
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 
-/**
- *
- * @author Someone
- */
 public class LifePart implements EntityPart {
     private boolean dead = false;
     private int life;
@@ -66,13 +57,5 @@ public class LifePart implements EntityPart {
     
     @Override
     public void process(GameData gameData, Entity entity) {
-//        if (isHit) {
-//            life =- 1;
-//            isHit = false;
-//        }
-//        if (life <= 0) {
-//            dead = true;
-//        }
-        
     }
 }

@@ -10,10 +10,6 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.sqrt;
 
-/**
- *
- * @author Alexander
- */
 public class MovingPart implements EntityPart {
 
     private World world;
