@@ -16,10 +16,7 @@ public class GameData {
     private boolean mouseClicked;
     private int wave = 0;
     private String playerName;
-    private int HighScoreIndex = 0;
-    private String[] HighScore = new String[10];
-    private IHighScore[] mildHighScore = new IHighScore[10];
-    private SortingAlgorithm sort = new SortingAlgorithm();
+   
 
     public int getWave() {
         return wave;
@@ -117,18 +114,5 @@ public class GameData {
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
-
-    public void addPlayerToArray(String name) {
-        if (HighScoreIndex <= 10) {
-            HighScore[HighScoreIndex] = name;
-            HighScoreIndex++;
-        }
-    }
-
-    public String[] getHighScoreArray() {
-        return HighScore;
-    }
-
- 
 
 }

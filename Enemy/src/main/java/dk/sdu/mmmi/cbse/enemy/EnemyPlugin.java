@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.data.entityparts.AIMove;
 import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
@@ -37,7 +38,7 @@ public class EnemyPlugin {
         enemyEntity.setHeight(enemyEntity.getImage().getHeight());
 
         enemyEntity.setType(1);
-        enemyEntity.add(new MovingPart(speed, world));
+        enemyEntity.add(new AIMove(speed, world));
         enemyEntity.add(new PositionPart(rand.nextInt(400) + 150, rand.nextInt(355) + 275, 3));
         enemyEntity.add(new LifePart(life));
 
@@ -57,7 +58,7 @@ public class EnemyPlugin {
         enemyEntity.setHeight(enemyEntity.getImage().getHeight());
 
         enemyEntity.setType(2);
-        enemyEntity.add(new MovingPart(speed, world));
+        enemyEntity.add(new AIMove(speed, world));
         enemyEntity.add(new PositionPart(rand.nextInt(400) + 150, rand.nextInt(355) + 275, 3));
         enemyEntity.add(new LifePart(life));
 
@@ -76,7 +77,7 @@ public class EnemyPlugin {
         enemyEntity.setHeight(enemyEntity.getImage().getHeight());
 
         enemyEntity.setType(3);
-        enemyEntity.add(new MovingPart(speed, world));
+        enemyEntity.add(new AIMove(speed, world));
         enemyEntity.add(new PositionPart(rand.nextInt(400) + 150, rand.nextInt(355) + 275, 3));
 
         enemyEntity.add(new LifePart(life));
@@ -96,7 +97,7 @@ public class EnemyPlugin {
         enemyEntity.setHeight(enemyEntity.getImage().getHeight());
 
         enemyEntity.setType(4);
-        enemyEntity.add(new MovingPart(speed, world));
+        enemyEntity.add(new AIMove(speed, world));
         enemyEntity.add(new PositionPart(rand.nextInt(400) + 150, rand.nextInt(355) + 275, 3));
 
         enemyEntity.add(new LifePart(life));

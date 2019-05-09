@@ -32,6 +32,8 @@ public class MovingPart implements EntityPart {
         this.world = world;
     }
 
+   
+
     public float getDx() {
         return dx;
     }
@@ -105,14 +107,14 @@ public class MovingPart implements EntityPart {
         } else if (entity instanceof IEnemy) {
             float playerX = 0;
             float playerY = 0;
-            
+
             for (Entity player : world.getEntities()) {
                 if (player instanceof IPlayer) {
                     PositionPart poPlayer = player.getPart(PositionPart.class);
-                     playerX = poPlayer.getX();
-                     playerY = poPlayer.getY();
-                    
-                    radians = (float) Math.atan2(playerY- y,playerX - x );
+                    playerX = poPlayer.getX();
+                    playerY = poPlayer.getY();
+
+                    radians = (float) Math.atan2(playerY - y, playerX - x);
 
                     if (x < playerX) {
                         x += speed * dt;
