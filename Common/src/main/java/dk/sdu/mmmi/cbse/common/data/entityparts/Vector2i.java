@@ -49,31 +49,19 @@ public class Vector2i {
         return this;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        return hash;
-    }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
+        if(!(obj instanceof Vector2i)){
+            return false;
+        }
+        Vector2i vec = (Vector2i) obj;
+        if(vec.getX() == this.getX() && vec.getY() == this.getY()){
             return true;
         }
-        if (obj == null) {
+        else{
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Vector2i other = (Vector2i) obj;
-        if (this.x != other.x) {
-            return false;
-        }
-        if (this.y != other.y) {
-            return false;
-        }
-        return true;
     }
  
     @Override

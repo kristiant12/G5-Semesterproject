@@ -22,7 +22,7 @@ public class AIMove implements EntityPart {
 
     private float speed;
     private World world;
-    private List<Node> path = null;
+    private List<Node> path = new ArrayList();
     private float dx, dy;
     private int time = 0;
     private int xa, ya;
@@ -48,24 +48,29 @@ public class AIMove implements EntityPart {
     }
 
     public List<Node> findPath(Vector2i start, Vector2i goal) {
-        //System.out.println(start.toString() +" "+goal.toString());
         List<Node> openList = new ArrayList<Node>();
         List<Node> closedList = new ArrayList<Node>();
         Node current = new Node(start, null, 0, getDistance(start, goal));
-       // System.out.println(getDistance(start, goal));
         openList.add(current);
         while (openList.size() > 0) {
             Collections.sort(openList, nodeSorter);
             current = openList.get(0);
             if (current.tile.equals(goal)) {
-                System.out.println("negger");
                 List<Node> path = new ArrayList<Node>();
                 while (current.parent != null) {
                     path.add(current);
                     current = current.parent;
                 }
                 openList.clear();
-                closedList.clear();
+                if (closedList.size() <= 10) {
+                    closedList.add(new Node(goal, null, 0, 0));
+                    return closedList;
+                } else {
+                    for (int i = 0; i < 10; i++) {
+                        path.add(closedList.get(i));
+                    }
+                    System.out.println("noget");
+                }
                 return path;
             }
             openList.remove(current);
@@ -124,49 +129,54 @@ public class AIMove implements EntityPart {
 
     @Override
     public void process(GameData gameData, Entity entity) {
-        
+
         PositionPart positionPart = entity.getPart(PositionPart.class);
         Vector2i start = new Vector2i((int) positionPart.getX() / 32, (int) positionPart.getY() / 32);
+        System.out.println("Start: " + start);
         Vector2i destination = getPlayerLocation();
+        System.out.println("destination: " + destination);
+        System.out.println("player position: " + destination.getX() + "," + destination.getY());
         int x = (int) (positionPart.getX() / 32);
         int y = (int) (positionPart.getY() / 32);
         float dt = gameData.getDelta();
         float radins = 4;
         path = findPath(start, destination);
-        for (Node node : path) {
-            System.out.println(node.tile);
-        }
+       
+        
         if (path != null) {
+            
             System.out.println("ting");
             System.out.println(path.size());
             if (path.size() > 0) {
                 Vector2i vec = path.get(path.size() - 1).tile;
-                if (x < vec.getX() / 32) {
-                    testX = (int) ((int)(vec.getX() + speed) * dt);
-                    System.out.println("x");
+                radins = (float) Math.atan2(destination.getY() - y, destination.getX() - x);
+                if (x < vec.getX()) {
+                    testX += ((vec.getX() + speed) * dt);
+                    System.out.println("x1");
                 }
-                if (x > vec.getX() / 32) {
-                    testX = (int) ((int) (vec.getX() - speed)*dt);
-                    System.out.println("x");
+                if (x > vec.getX()) {
+                    testX -= ((vec.getX() + speed) * dt);
+                    System.out.println("x2");
 
                 }
-                if (y < vec.getY() / 32) {
-                    testY = (int) ((int) (vec.getY() + speed)* dt);
-                    System.out.println("x");
+                if (y < vec.getY()) {
+                    testY += ((vec.getY() + speed) * dt);
+                    System.out.println("y1");
 
                 }
-                if (y > vec.getY() / 32) {
-                    testY = (int) ((int) (vec.getY() - speed)* dt);
-                    System.out.println("x");
+                if (y > vec.getY()) {
+                    testY -= ((vec.getY() + speed) * dt);
+                    System.out.println("y2");
 
                 }
 
             }
         }
-
         positionPart.setX(testX);
         positionPart.setY(testY);
         positionPart.setRadians(radins);
+        path.clear();
+
         // time++;
     }
 

@@ -36,8 +36,8 @@ public class Wave implements IPostEntityProcessingService, IGamePluginService {
     private void createWave(GameData gameData, World world, AssetManager manager) {
         
         gameData.increaseWave();
-       // points = 3 + gameData.getWave() * 5;
-       points = 1;
+        points = 3 + gameData.getWave() * 5;
+     //  points = 1;
         while (points > 0) {
             int s = rand.nextInt(13);
             if(s < 6){

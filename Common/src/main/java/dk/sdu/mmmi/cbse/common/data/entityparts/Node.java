@@ -21,5 +21,9 @@ public class Node {
         this.fCost = this.gCost+this.hCost;
     }
     
+    public String toString(){
+        return "Vector: "+tile.getX()+","+tile.getY()+" gCost: "+gCost+" hCost :"+hCost;
+    }
+    
     
 }
