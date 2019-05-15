@@ -7,6 +7,7 @@ import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IMap;
+import dk.sdu.mmmi.cbse.common.services.IPlayer;
 import java.util.ArrayList;
 import org.openide.util.lookup.ServiceProvider;
 import org.openide.util.lookup.ServiceProviders;
@@ -40,7 +41,9 @@ public class MapCollision implements IMap {
 
     public void mapCollision(World world, GameData gameData) {
         for (Entity entity : world.getEntities()) {
-      
+            if(entity instanceof IPlayer){
+                
+            
     
             PositionPart positionPart = entity.getPart(PositionPart.class);
             MovingPart mp = entity.getPart(MovingPart.class);
@@ -85,7 +88,7 @@ public class MapCollision implements IMap {
             if (up) {
                 positionPart.setY(positionPart.getY()-1);
             }
-           
+            }
         }
     }
 

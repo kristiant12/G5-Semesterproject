@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -26,8 +27,10 @@ public class AIMove implements EntityPart {
     private float dx, dy;
     private int time = 0;
     private int xa, ya;
-    private int testX = 0;
-    private int testY = 0;
+    private Random rand = new Random();
+    private int testX = (rand.nextInt(400) + 150) ;
+    private int testY = (rand.nextInt(355) + 275);
+    
 
     private Comparator<Node> nodeSorter = new Comparator<Node>() {
         @Override
@@ -62,14 +65,14 @@ public class AIMove implements EntityPart {
                     current = current.parent;
                 }
                 openList.clear();
-                if (closedList.size() <= 10) {
+                if (closedList.size() <= 5) {
                     closedList.add(new Node(goal, null, 0, 0));
                     return closedList;
                 } else {
-                    for (int i = 0; i < 10; i++) {
+                    for (int i = 0; i < 5; i++) {
                         path.add(closedList.get(i));
                     }
-                    System.out.println("noget");
+//                    System.out.println("noget");
                 }
                 return path;
             }
@@ -132,10 +135,11 @@ public class AIMove implements EntityPart {
 
         PositionPart positionPart = entity.getPart(PositionPart.class);
         Vector2i start = new Vector2i((int) positionPart.getX() / 32, (int) positionPart.getY() / 32);
-        System.out.println("Start: " + start);
+//        System.out.println("Start: " + start);
         Vector2i destination = getPlayerLocation();
-        System.out.println("destination: " + destination);
-        System.out.println("player position: " + destination.getX() + "," + destination.getY());
+//        System.out.println("destination: " + destination);
+//        System.out.println("player position: " + destination.getX() + "," + destination.getY());
+    
         int x = (int) (positionPart.getX() / 32);
         int y = (int) (positionPart.getY() / 32);
         float dt = gameData.getDelta();
@@ -145,28 +149,28 @@ public class AIMove implements EntityPart {
         
         if (path != null) {
             
-            System.out.println("ting");
-            System.out.println(path.size());
+//            System.out.println("ting");
+//            System.out.println(path.size());
             if (path.size() > 0) {
                 Vector2i vec = path.get(path.size() - 1).tile;
                 radins = (float) Math.atan2(destination.getY() - y, destination.getX() - x);
                 if (x < vec.getX()) {
-                    testX += ((vec.getX() + speed) * dt);
-                    System.out.println("x1");
+                    testX += speed * dt;
+//                    System.out.println("x1");
                 }
                 if (x > vec.getX()) {
-                    testX -= ((vec.getX() + speed) * dt);
-                    System.out.println("x2");
+                    testX -= speed * dt;
+//                    System.out.println("x2");
 
                 }
                 if (y < vec.getY()) {
-                    testY += ((vec.getY() + speed) * dt);
-                    System.out.println("y1");
+                    testY += speed * dt;
+//                    System.out.println("y1");
 
                 }
                 if (y > vec.getY()) {
-                    testY -= ((vec.getY() + speed) * dt);
-                    System.out.println("y2");
+                    testY -= speed * dt;
+//                    System.out.println("y2");
 
                 }
 
