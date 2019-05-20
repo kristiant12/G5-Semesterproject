@@ -9,7 +9,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
-import dk.sdu.mmmi.cbse.texturplayer.TexturPlayer;
+import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -47,14 +47,18 @@ public class CollisionTest {
      */
     @Test
     public void testProcess() {
-        System.out.println("process");
-        GameData gameData = null;
-        World world = null;
-        AssetManager manager = null;
-        Collision instance = new Collision();
-        instance.process(gameData, world, manager);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+//        System.out.println("process");
+//        GameData gameData = new GameData();
+//        World world = new World();
+//        AssetManager manager = new AssetManager();
+//        Collision instance = new Collision();
+//        Entity p = new Entity();
+//        Entity e = new Entity();
+//        world.addEntity(e);
+//        world.addEntity(p);
+//        instance.process(gameData, world, manager);
+//        // TODO review the generated test code and remove the default call to fail.
+//        //fail("The test case is a prototype.");
     }
 
     /**
@@ -63,16 +67,22 @@ public class CollisionTest {
     @Test
     public void testCollides() {
         System.out.println("Collides");
-        Entity entity = null;
-        Entity entity2 = null;
+        Entity entity = new Entity();
+        PositionPart part = new PositionPart(0, 0, 0);
+        entity.add(part);
+        entity.setWidth(10);
+        entity.setHeight(10);
+        Entity entity2 = new Entity();
+        entity2.add(part);
+        entity2.setWidth(10);
+        entity2.setHeight(10);
         Collision instance = new Collision();
-        Boolean expResult = null;
+        Boolean expResult = true;
         Boolean result = instance.Collides(entity, entity2);
         assertEquals(expResult, result);
        
         
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

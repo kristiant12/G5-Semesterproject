@@ -21,11 +21,20 @@ import org.openide.util.lookup.ServiceProviders;
     @ServiceProvider(service = IPostEntityProcessingService.class)
 })
 public class Collision implements IPostEntityProcessingService {
-    private Music sound = Gdx.audio.newMusic(Gdx.files.internal("assets\\images\\Oof.wav"));
-   
+
+    private Music sound = null;
+
+    public void test() {
+        if (Gdx.files.internal("assets\\images\\Oof.wav").exists()) {
+            sound = Gdx.audio.newMusic(Gdx.files.internal("assets\\images\\Oof.wav"));
+        }
+    }
+
     @Override
-    public void process(GameData gameData, World world,AssetManager manager) {
-       
+    public void process(GameData gameData, World world, AssetManager manager) {
+        if (sound == null) {
+            test();
+        }
         for (Entity entity : world.getEntities()) {
             for (Entity collisionDetection : world.getEntities()) {
                 if ((entity.getType() == 6 || entity.getType() == 5) && (collisionDetection.getType() == 6 || collisionDetection.getType() == 5)) {
@@ -47,12 +56,14 @@ public class Collision implements IPostEntityProcessingService {
                         // if entity has been hit, and should have its life reduced
                         if (entityLife.getLife() > 0) {
                             entityLife.setLife(entityLife.getLife() - collisionDetection.getDamage());
-                            if(collisionDetection.getType() == 6){
+                            if (collisionDetection.getType() == 6) {
                                 world.removeEntity(collisionDetection);
                             }
                             // if entity is out of life - remove
                             if (entityLife.getLife() <= 0) {
-                                sound.play();
+                                if (sound != null) {
+                                    sound.play();
+                                }
                                 world.removeEntity(entity);
                             }
                         }

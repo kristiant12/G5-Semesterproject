@@ -87,6 +87,11 @@
             <artifactId>SilentUpdate</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>EntityCollision</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
