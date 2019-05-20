@@ -58,12 +58,12 @@ public class AIMove implements EntityPart {
         while (openList.size() > 0) {
             Collections.sort(openList, nodeSorter);
             current = openList.get(0);
-            if (current.tile.equals(goal)) {
+            if (current.tile.equals(goal)) {  
                 List<Node> path = new ArrayList<Node>();
-                while (current.parent != null) {
-                    path.add(current);
-                    current = current.parent;
-                }
+//                while (current.parent != null) {
+//                    path.add(current);
+//                    current = current.parent;
+//                }
                 openList.clear();
                 if (closedList.size() <= 5) {
                     closedList.add(new Node(goal, null, 0, 0));
@@ -72,7 +72,6 @@ public class AIMove implements EntityPart {
                     for (int i = 0; i < 5; i++) {
                         path.add(closedList.get(i));
                     }
-//                    System.out.println("noget");
                 }
                 return path;
             }
@@ -135,53 +134,35 @@ public class AIMove implements EntityPart {
 
         PositionPart positionPart = entity.getPart(PositionPart.class);
         Vector2i start = new Vector2i((int) positionPart.getX() / 32, (int) positionPart.getY() / 32);
-//        System.out.println("Start: " + start);
         Vector2i destination = getPlayerLocation();
-//        System.out.println("destination: " + destination);
-//        System.out.println("player position: " + destination.getX() + "," + destination.getY());
-    
         int x = (int) (positionPart.getX() / 32);
         int y = (int) (positionPart.getY() / 32);
         float dt = gameData.getDelta();
         float radins = 4;
         path = findPath(start, destination);
-       
         
         if (path != null) {
-            
-//            System.out.println("ting");
-//            System.out.println(path.size());
             if (path.size() > 0) {
                 Vector2i vec = path.get(path.size() - 1).tile;
                 radins = (float) Math.atan2(destination.getY() - y, destination.getX() - x);
                 if (x < vec.getX()) {
                     testX += speed * dt;
-//                    System.out.println("x1");
                 }
                 if (x > vec.getX()) {
                     testX -= speed * dt;
-//                    System.out.println("x2");
-
                 }
                 if (y < vec.getY()) {
                     testY += speed * dt;
-//                    System.out.println("y1");
-
                 }
                 if (y > vec.getY()) {
                     testY -= speed * dt;
-//                    System.out.println("y2");
-
                 }
-
             }
         }
         positionPart.setX(testX);
         positionPart.setY(testY);
         positionPart.setRadians(radins);
         path.clear();
-
-        // time++;
     }
 
 }

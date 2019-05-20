@@ -186,7 +186,7 @@ public class GameEngine extends JPanel implements ApplicationListener, ActionLis
         for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
             postEntityProcessorService.process(gameData, world, Assets.getInstance().getManger());
         }
-
+        // map Update
         for (IMap mapCollision : getMapCollisonServices()) {
             mapCollision.process(gameData, world, mapList);
         }
