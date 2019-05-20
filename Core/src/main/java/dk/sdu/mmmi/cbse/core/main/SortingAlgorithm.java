@@ -9,7 +9,7 @@ public class SortingAlgorithm {
         this.highscore = new HighScore[10];
     }
     
-    public void sort()
+    private  void sort()
     {
         for (int i = 1; i < HighScoreIndex; i++) {
             HighScore key = highscore[i];

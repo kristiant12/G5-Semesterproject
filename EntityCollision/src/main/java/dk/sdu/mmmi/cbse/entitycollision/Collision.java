@@ -27,12 +27,15 @@ public class Collision implements IPostEntityProcessingService {
     public void test() {
         if (Gdx.files.internal("assets\\images\\Oof.wav").exists()) {
             sound = Gdx.audio.newMusic(Gdx.files.internal("assets\\images\\Oof.wav"));
+        }else{
+            sound = null;
         }
+        
     }
 
     @Override
     public void process(GameData gameData, World world, AssetManager manager) {
-        if (sound == null) {
+        if (sound == null && manager.getAssetNames().size>2) {
             test();
         }
         for (Entity entity : world.getEntities()) {
