@@ -28,7 +28,7 @@ public class MapCollision implements IMap {
 
     }
 
-    private boolean isCellBlocked(float x, float y) {
+    public boolean isCellBlocked(float x, float y) {
         for (int i = 0; i < mapList.size(); i++) {
             TiledMapTileLayer.Cell cell = mapList.get(i).getCell((int) (x / mapList.get(i).getTileWidth()), (int) (y / mapList.get(i).getTileHeight()));
             if (cell != null && cell.getTile() != null && cell.getTile().getProperties().containsKey(blockedKey)) {
